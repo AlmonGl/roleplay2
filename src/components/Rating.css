@@ -1,0 +1,326 @@
+/* FantasyScoreTable.css */
+.fantasy-table-container {
+    
+    
+    padding: 10px;
+    background: linear-gradient(145deg, #1a1a2e, #16213e);
+    border-radius: 20px;
+    border: 2px solid #c9a959;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(201, 169, 89, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+    /* Декоративные элементы */
+    .fantasy-table-container::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient( circle, rgba(201, 169, 89, 0.1) 0%, transparent 70% );
+        animation: magicalGlow 10s infinite;
+        pointer-events: none;
+    }
+
+.fantasy-table-header {
+    text-align: center;
+    margin-bottom: 25px;
+    position: relative;
+    z-index: 1;
+}
+
+.fantasy-title {
+    color: #c9a959;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(201, 169, 89, 0.8), 0 0 20px rgba(201, 169, 89, 0.5);
+    margin: 0;
+    font-family: 'Georgia', serif;
+}
+
+.magical-divider {
+    height: 3px;
+    background: linear-gradient( 90deg, transparent, #c9a959, transparent );
+    margin: 15px auto;
+    width: 80%;
+    position: relative;
+}
+
+    .magical-divider::after {
+        content: '✨';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background: #1a1a2e;
+        padding: 0 10px;
+        font-size: 1.2rem;
+    }
+
+/* Таблица */
+.fantasy-table {
+    position: relative;
+    z-index: 1;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 1fr;
+    gap: 10px;
+    padding: 15px;
+    background: rgba(201, 169, 89, 0.2);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #c9a959;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 1fr;
+    gap: 10px;
+    padding: 15px;
+    margin-bottom: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    animation: rowAppear 0.5s ease;
+    border: 1px solid transparent;
+}
+
+    .table-row:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(201, 169, 89, 0.5);
+        transform: translateX(5px);
+    }
+
+/* Топ игроки */
+.top-player {
+    background: rgba(201, 169, 89, 0.15);
+    border-color: rgba(201, 169, 89, 0.3);
+}
+
+    .top-player:nth-child(2) {
+        background: rgba(255, 215, 0, 0.2);
+        border-color: rgba(255, 215, 0, 0.5);
+    }
+
+/* Элементы строки */
+.row-rank {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rank-badge {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #c9a959;
+    text-shadow: 0 0 5px rgba(201, 169, 89, 0.5);
+}
+
+.row-player {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.player-avatar {
+    font-size: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.table-row:hover .player-avatar {
+    transform: scale(1.2) rotate(10deg);
+}
+
+.player-name {
+    color: #e0e0e0;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.row-class {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.class-icon {
+    font-size: 1.3rem;
+}
+
+.class-name {
+    color: #b0b0b0;
+    font-style: italic;
+}
+
+/* Очки с анимацией */
+.row-score {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.hp-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ff4444;
+    
+    
+}
+
+.score-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    transition: all 0.3s ease;
+}
+
+.score-points {
+    color: #888;
+    font-size: 0.8rem;
+}
+
+/* Анимации для очков */
+.score-increase .score-value {
+    animation: scoreIncrease 1s ease;
+}
+
+.score-decrease .score-value {
+    animation: scoreDecrease 1s ease;
+}
+
+@keyframes scoreIncrease {
+    0% {
+        transform: scale(1);
+        color: #02a40a;
+    }
+
+    30% {
+        transform: scale(1.5);
+        color: #35db05;
+        text-shadow: 0 0 20px rgba(255, 107, 107, 1);
+    }
+
+    60% {
+        transform: scale(1.2);
+        color: #cde406;
+    }
+
+    100% {
+        transform: scale(1);
+        color: #ffd700;
+    }
+}
+
+@keyframes scoreDecrease {
+    0% {
+        transform: scale(1);
+        color: #ffd700;
+    }
+
+    30% {
+        transform: scale(0.8);
+        color: #ff4444;
+        text-shadow: 0 0 20px rgba(255, 68, 68, 1);
+    }
+
+    60% {
+        transform: scale(1.1);
+        color: #ff6b6b;
+    }
+
+    100% {
+        transform: scale(1);
+        color: #ffd700;
+    }
+}
+
+@keyframes rowAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes magicalGlow {
+    0%, 100% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) rotate(180deg);
+    }
+}
+
+/* Футер */
+.fantasy-footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #c9a959;
+    font-style: italic;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-rune {
+    margin: 0 10px;
+    animation: runeGlow 2s infinite;
+}
+
+@keyframes runeGlow {
+    0%, 100% {
+        opacity: 1;
+        text-shadow: 0 0 5px rgba(201, 169, 89, 0.5);
+    }
+
+    50% {
+        opacity: 0.5;
+        text-shadow: 0 0 20px rgba(201, 169, 89, 1);
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+    .fantasy-table-container {
+        padding: 15px;
+        margin: 20px auto;
+    }
+
+    .fantasy-title {
+        font-size: 1.8rem;
+    }
+
+    .table-header,
+    .table-row {
+        grid-template-columns: 60px 1fr 80px;
+    }
+
+    .header-class,
+    .row-class {
+        display: none;
+    }
+
+    .score-value {
+        font-size: 1.4rem;
+    }
+
+    .player-avatar {
+        font-size: 1.5rem;
+    }
+}

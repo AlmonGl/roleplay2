@@ -1,0 +1,365 @@
+/* FantasyMap.css */
+.fantasy-map {
+    display: inline-block;
+    background: #2d1810;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(74, 44, 26, 0.5), inset 0 0 50px rgba(0,0,0,0.5);
+    border: 3px solid #4a2c1a;
+}
+
+.map-row {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 4px;
+}
+
+    .map-row:last-child {
+        margin-bottom: 0;
+    }
+
+.map-cell {
+    width: 80px;
+    height: 80px;
+    background: #3d2817;
+    border: 2px solid #5a3a2a;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+}
+
+    .map-cell:hover {
+        transform: scale(1.05);
+        border-color: #8b6b4d;
+        box-shadow: 0 0 20px rgba(139, 107, 77, 0.3);
+    }
+.exit {
+    font-size: 44px;
+    border: 2px solid #4CAF50;
+    color: #4CAF50;
+}
+
+.empty-cell {
+    font-size: 24px;
+    opacity: 0.3;
+    color: #5a3a2a;
+}
+.cell-party {
+    font-size: 24px;
+    color: #8b1a1a;
+    
+    width: 100%;
+}
+
+.player-token {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #4CAF50;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 -2px 10px rgba(0,0,0,0.2);
+    border: 2px solid rgba(255,255,255,0.2);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    position: relative;
+}
+.neutral-token {
+    width: 60px;
+    height: 60px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #4CAF50;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 -2px 10px rgba(0,0,0,0.2);
+    border: 2px solid rgba(255,255,255,0.2);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    position: relative;
+}
+.exit-token {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    color: white;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 7px 15px #4CAF50, inset 0 -2px 10px rgba(0,0,0,0.2);
+    border: 2px solid rgba(0,0,0,0.3);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+
+
+.player-token:hover {
+    transform: scale(1.1) rotate(-5deg);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+
+.player-icon {
+    font-size: 24px;
+    line-height: 1;
+}
+.exit-icon {
+    font-size: 48px;
+    line-height: 1;
+}
+
+.player-name {
+    font-size: 10px;
+    margin-top: 2px;
+    background: rgba(0,0,0,0.3);
+    font-weight: initial;
+    padding: 1px 6px;
+    border-radius: 10px;
+    white-space: nowrap;
+}
+
+
+.enemy-name {
+    color: #000000;
+    font-size: 20px;
+    margin-top: 2px;
+    background: white;
+    padding: 1px 6px;
+    border-radius: 10px;
+    white-space: nowrap;
+}
+
+/* Анимация для пульсации */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.player-token.active {
+    animation: pulse 2s infinite;
+}
+
+/* Редкие клетки с сокровищами */
+.map-cell.treasure {
+    background: #4a3520;
+    border-color: #4CAF50;
+    border-width: 5px;
+    box-shadow: inset 0 0 30px rgba(201, 168, 124, 0.2);
+}
+
+/* Клетки с ловушками */
+.map-cell.monster {
+    background: #2a1a10;
+    border-color: #8b1a1a;
+    border-width: 5px;
+    box-shadow: inset 0 0 30px rgba(139, 26, 26, 0.2);
+}
+/* Выход */
+.map-cell.exit {
+    background: #2a1a10;
+    border-color: #ffd405;
+    border-width: 5px;
+    box-shadow: inset 0 0 30px rgba(139, 26, 26, 0.2);
+}
+
+/* FantasyMap.css - дополнение */
+.fantasy-map-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #1a0e0a, #2d1810);
+    border-radius: 16px;
+    min-height: 600px;
+}
+
+.map-title {
+    color: #c9a87c;
+    font-family: 'Georgia', serif;
+    font-size: 28px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    margin: 0;
+}
+
+.map-legend {
+    display: flex;
+    gap: 30px;
+    color: #b8a582;
+    font-size: 14px;
+    background: rgba(0,0,0,0.3);
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #4a2c1a;
+}
+
+.player-level {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #c0392b;
+    color: white;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: bold;
+    border: 1px solid #8b1a1a;
+}
+
+.player-info {
+    background: rgba(0,0,0,0.6);
+    padding: 20px 30px;
+    border-radius: 12px;
+    border: 1px solid #4a2c1a;
+    color: #c9a87c;
+    min-width: 200px;
+    text-align: center;
+}
+
+    .player-info h3 {
+        margin: 0 0 10px 0;
+        font-size: 20px;
+    }
+
+    .player-info p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: #b8a582;
+    }
+
+/* Адаптивность */
+@media (min-width: 2800px) {
+    .map-cell {
+        width: 250px;
+        height: 250px;
+    }
+
+    .player-token {
+        width: 200px;
+        height: 200px;
+    }
+    .exit-token {
+        width: 200px;
+        height: 200px;
+    }
+    .neutral-token {
+        width: 200px;
+        height: 200px;
+    }
+    .exit-icon {
+        font-size: 80px;
+    }
+    .neutral-icon {
+        font-size: 80px;
+    }
+    .player-icon {
+        font-size: 80px;
+    }
+
+    .player-name {
+        font-size: 40px;
+    }
+
+    .fantasy-map {
+        padding: 50px;
+    }
+}
+@media (min-width: 1400px) {
+    .map-cell {
+        width: 125px;
+        height: 125px;
+    }
+
+    .player-token {
+        width: 100px;
+        height: 100px;
+    }
+
+    .player-icon {
+        font-size: 40px;
+    }
+
+    .player-name {
+        font-size: 20px;
+    }
+
+    .fantasy-map {
+        padding: 25px;
+    }
+}
+@media (max-width: 1400px) {
+    .map-cell {
+        width: 100px;
+        height: 100px;
+    }
+
+    .player-token {
+        width: 80px;
+        height: 80px;
+    }
+
+    .player-icon {
+        font-size: 32px;
+    }
+
+    .player-name {
+        font-size: 16px;
+    }
+
+    .fantasy-map {
+        padding: 20px;
+    }
+}
+@media (max-width: 600px) {
+    .map-cell {
+        width: 50px;
+        height: 50px;
+    }
+
+    .player-token {
+        width: 40px;
+        height: 40px;
+    }
+
+    .player-icon {
+        font-size: 16px;
+    }
+
+    .player-name {
+        font-size: 8px;
+    }
+
+    .fantasy-map {
+        padding: 10px;
+    }
+}

@@ -1,0 +1,22 @@
+export const monstersList = [
+    { id: 0, name: 'Дракон', emoji: '🐉', color: '#e74c3c', power: 95 },
+    { id: 1, name: 'Гоблин', emoji: '👺', color: '#27ae60', power: 30 },
+    { id: 2, name: 'Скелет', emoji: '💀', color: '#ecf0f1', power: 45 },
+    { id: 3, name: 'Зомби', emoji: '🧟', color: '#95a5a6', power: 40 },
+    { id: 4, name: 'Вампир', emoji: '🧛', color: '#8e44ad', power: 75 },
+    { id: 5, name: 'Оборотень', emoji: '🐺', color: '#7f8c8d', power: 80 },
+    { id: 6, name: 'Тролль', emoji: '👹', color: '#d35400', power: 70 },
+    { id: 7, name: 'Огр', emoji: '☃️', color: '#c0392b', power: 65 },
+    { id: 8, name: 'Феникс', emoji: '🔥', color: '#f39c12', power: 90 },
+    { id: 9, name: 'Грифон', emoji: '🦅', color: '#f1c40f', power: 85 },
+    { id: 10, name: 'Кентавр', emoji: '🐴', color: '#d4a574', power: 60 },
+    { id: 11, name: 'Минотавр', emoji: '🐂', color: '#935116', power: 75 },
+    { id: 12, name: 'Гидра', emoji: '🐍', color: '#16a085', power: 92 },
+    { id: 13, name: 'Цербер', emoji: '🐕', color: '#2c3e50', power: 88 },
+    { id: 14, name: 'Медуза', emoji: '🐍', color: '#27ae60', power: 82 },
+    { id: 15, name: 'Кракен', emoji: '🐙', color: '#2980b9', power: 93 },
+    { id: 16, name: 'Элементаль', emoji: '🌪️', color: '#3498db', power: 78 },
+    { id: 17, name: 'Демон', emoji: '😈', color: '#c0392b', power: 90 },
+    { id: 18, name: 'Ангел', emoji: '👼', color: '#fdfefe', power: 85 },
+    { id: 19, name: 'Левиафан', emoji: '🐋', color: '#34495e', power: 96 }
+];

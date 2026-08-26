@@ -1,0 +1,16 @@
+export const treasureList = [
+    { id: 0, name: 'Мешок', emoji: '💰', color: '#e74c3c', power: 95 },
+    { id: 1, name: 'Сундук', emoji: '📦', color: '#8B5A2B', power: 85 },
+    { id: 2, name: 'Алмаз', emoji: '💎', color: '#00bfff', power: 100 },
+    { id: 3, name: 'Корона', emoji: '👑', color: '#f39c12', power: 88 },
+    { id: 4, name: 'Золотой слиток', emoji: '🏅', color: '#d4af37', power: 80 },
+    { id: 5, name: 'Кубок', emoji: '🏆', color: '#f1c40f', power: 92 },
+    { id: 6, name: 'Компас', emoji: '🧭', color: '#2c3e50', power: 70 },
+    { id: 7, name: 'Старый ключ', emoji: '🗝️', color: '#7f8c8d', power: 65 },
+    { id: 8, name: 'Свиток', emoji: '📜', color: '#d4a574', power: 78 },
+    { id: 9, name: 'Череп пирата', emoji: '☠️', color: '#ecf0f1', power: 60 },
+    { id: 10, name: 'Амфора', emoji: '🏺', color: '#cd853f', power: 74 },
+    { id: 11, name: 'Волшебная лампа', emoji: '🪔', color: '#f1c40f', power: 96 },
+    { id: 12, name: 'Золотой кубок', emoji: '🍷', color: '#f1c40f', power: 86 },
+    { id: 13, name: 'Сокровище пиратов', emoji: '⚓', color: '#34495e', power: 99 },
+];

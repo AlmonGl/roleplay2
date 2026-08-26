@@ -1,0 +1,191 @@
+
+
+/* Основные стили кнопок (из первого блока) */
+.compass-controls {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+}
+
+.compass-btn {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: 3px solid #6b4c2a;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #2d1810, #1a0e0a);
+    color: #c9a87c;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: all 0.15s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Georgia', serif;
+    touch-action: manipulation;
+}
+
+    .compass-btn:active {
+        transform: scale(0.92);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.5), inset 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+.btn-north {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+    .btn-north:active {
+        transform: translateX(-50%) scale(0.92);
+    }
+
+.btn-south {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+    .btn-south:active {
+        transform: translateX(-50%) scale(0.92);
+    }
+
+.btn-west {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+    .btn-west:active {
+        transform: translateY(-50%) scale(0.92);
+    }
+
+.btn-east {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+    .btn-east:active {
+        transform: translateY(-50%) scale(0.92);
+    }
+
+.compass-btn .direction-icon {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.compass-btn .direction-label {
+    font-size: 10px;
+    margin-top: 2px;
+    opacity: 0.8;
+    letter-spacing: 1px;
+}
+
+.btn-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, #4a2c1a, #1a0e0a);
+    border: 2px solid #6b4c2a;
+    color: #c9a87c;
+    font-size: 20px;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 30px rgba(74, 44, 26, 0.3), inset 0 0 20px rgba(0,0,0,0.5);
+    font-family: 'Georgia', serif;
+    pointer-events: none;
+}
+
+/* Дополнительная информация */
+.info-panel {
+    color: #b8a582;
+    text-align: center;
+    font-size: 14px;
+    padding: 10px 20px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 8px;
+    border: 1px solid #4a2c1a;
+    min-width: 150px;
+}
+
+    .info-panel span {
+        color: #c9a87c;
+        font-weight: bold;
+    }
+
+/* Адаптация для маленьких экранов */
+@media (max-width: 480px) {
+    .compass-controls {
+        width: 160px;
+        height: 160px;
+    }
+
+    .compass-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 12px;
+        border-width: 2px;
+        border-radius: 10px;
+    }
+
+        .compass-btn .direction-icon {
+            font-size: 18px;
+        }
+
+        .compass-btn .direction-label {
+            font-size: 8px;
+        }
+
+    .btn-center {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .info-panel {
+        font-size: 12px;
+        padding: 8px 15px;
+    }
+}
+
+@media (max-width: 380px) {
+    .compass-controls {
+        width: 140px;
+        height: 140px;
+    }
+
+    .compass-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 10px;
+        border-radius: 8px;
+    }
+
+        .compass-btn .direction-icon {
+            font-size: 15px;
+        }
+
+        .compass-btn .direction-label {
+            font-size: 7px;
+        }
+
+    .btn-center {
+        width: 34px;
+        height: 34px;
+        font-size: 14px;
+    }
+}

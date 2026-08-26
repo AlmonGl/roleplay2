@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "booklist-b486e"
+  },
+  "targets": {
+    "booklist-b486e": {
+      "hosting": {
+        "main": [
+          "roleplay2"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
