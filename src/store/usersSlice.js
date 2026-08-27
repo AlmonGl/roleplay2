@@ -36,7 +36,7 @@ export function checkUser(login) {
             else { return false; }
 }
 export function checkAdmin(login) {
-choco install git
+
             if (login == '558899')
             { return true; }
             else { return false; }
