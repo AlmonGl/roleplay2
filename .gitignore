@@ -25,4 +25,4 @@ dist-ssr
 *.sw?
 
 #DB acsess
-firebase/config.js
+src/firebase/config.js
