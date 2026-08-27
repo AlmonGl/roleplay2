@@ -14,7 +14,7 @@ function BooksPage() {
     
     const currentUserId = useSelector(selectCurrentUserId);
    
-    const pageTitle = `Привет, ${player.name}`;
+    const pageTitle = `Привет, ${player.name}!`;
 
     useEffect(() => {
             
