@@ -268,13 +268,6 @@ function FantasyMap ({
 
 
 
-
-
-
-                                                                            
-
-
-
                                                                             : cell.exit ?
                                                                                 <div
                                                                                 className='exit-token'>

@@ -20,6 +20,7 @@ function AdminPage() {
     const [players, setPlayers] = useState([]);
     const [isCheckedMap, setIsCheckedMap] = useState(false);
     const [isCheckedRating, setIsCheckedRating] = useState(false);
+    const [isCheckedMonster, setIsCheckedMonster] = useState(false);
 
     useEffect(() => {
         onSnapshot(collection(db, "players"), (querySnap) => {
@@ -37,8 +38,8 @@ function AdminPage() {
             
            setIsCheckedMap(docSnap.data().activeGlobalPageMap);
 
-           setIsCheckedRating(docSnap.data().activeGlobalPageRating);
-            
+            setIsCheckedRating(docSnap.data().activeGlobalPageRating);
+            setIsCheckedMonster(docSnap.data().activeGlobalPageMonster); 
             
         }
         fetchData();
@@ -97,6 +98,27 @@ function AdminPage() {
                                     updateDoc(doc(db, "players", currentUserId), { activeGlobalPageRating: !isCheckedRating });
                                     setIsCheckedRating(!isCheckedRating);
                                     
+                                }}
+                                style={{
+                                    width: '18px',
+                                    height: '18px',
+                                    cursor: 'pointer'
+                                }}
+                            />
+                        </div>
+                        <div >
+                            <label htmlFor="myCheck" style={{ fontSize: '14px', fontWeight: '500' }}>
+                                Монстр
+                            </label>
+                            <input
+                                id="myCheck"
+                                type="checkbox"
+                                checked={isCheckedMonster}
+                                onChange={() => {
+
+                                    updateDoc(doc(db, "players", currentUserId), { activeGlobalPageMonster: !isCheckedMonster });
+                                    setIsCheckedRating(!isCheckedMonster);
+
                                 }}
                                 style={{
                                     width: '18px',

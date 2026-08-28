@@ -1,12 +1,17 @@
-import FantasyMap from "./FantasyMap.jsx"
+import FantasyMap from "../components/FantasyMap.jsx"
 import Header from '../components/Header.jsx';
 import Rating from '../components/Rating.jsx';
+import MonsterDisplay from '../components/MonsterDisplay.jsx';
 import { useEffect, useState } from 'react'
 import { collection, query, where, getDocs, doc, getDoc, onSnapshot, updateDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/config.js";
 import { useSelector } from 'react-redux';
 import { selectCurrentUserId } from '../store/usersSlice.js';
 import './GlobalPage.css';
+
+
+
+
 function GlobalPage() {
     const pageTitle = "Let's see what is going on.";
     const [player, setPlayer] = useState([]);
@@ -72,10 +77,13 @@ function GlobalPage() {
                                 />
                             }
                         
-                            {player.activeGlobalPageRating  &&
+                            
+                        {player.activeGlobalPageMonster &&
+                            <MonsterDisplay id={'004_1'} level={3} />
+                            }
+                            {player.activeGlobalPageRating &&
                                 <Rating players={players} />
                             }
-
 
 
                             

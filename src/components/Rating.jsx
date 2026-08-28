@@ -75,7 +75,7 @@ const Rating = ({ players }) => {
     return (
         <div className="fantasy-table-container">
             <div className="fantasy-table-header">
-                <h2 className="fantasy-title">⚔️ Турнирная таблица ⚔️</h2>
+                <h2 className="fantasy-title">🏆 Статистика 🏆</h2>
                 <div className="magical-divider"></div>
             </div>
 
