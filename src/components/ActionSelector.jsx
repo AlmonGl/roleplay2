@@ -15,7 +15,8 @@ const ActionSelector = ({ players }) => {
         { id: 2, name: "teleport" },
         { id: 3, name: "removeItem" },
         { id: 4, name: "addItem" },
-        { id: 5, name: "removeNeutral" }
+        { id: 5, name: "removeNeutral" },
+        { id: 6, name: "moveToMap" }
     ]
     const handleRemoveToken = async (mapId, x, y) => {
         const mapSnap2 = await getDoc(doc(db, "maps", mapId.toString()));
@@ -68,9 +69,10 @@ const ActionSelector = ({ players }) => {
                 updateDoc(doc(db, "players", selectedPlayer), { items: arrayUnion(ItemsList[itemId]) });
                 break;
             case '5':
-
                 handleRemoveToken(itemId, coordX, coordY);
-                
+                break;
+            case '6':
+                updateDoc(doc(db, "players", selectedPlayer), { currentMap: coordX.toString() });
                 break;
             default:
                 console.log("Неизвестный фрукт.");
@@ -122,7 +124,7 @@ const ActionSelector = ({ players }) => {
                 onChange={(e) => setCoordX(e.target.value)}
             >
                 <option value="">X</option>
-                {[0, 1, 2, 3, 4, 5].map(x => (
+                {[0, 1, 2, 3, 4, 5, 6].map(x => (
                     <option key={x} value={x}>{x}</option>
                 ))}
             </select>

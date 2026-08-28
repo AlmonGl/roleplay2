@@ -2,6 +2,7 @@ import FantasyMap from "../components/FantasyMap.jsx"
 import Header from '../components/Header.jsx';
 import Rating from '../components/Rating.jsx';
 import MonsterDisplay from '../components/MonsterDisplay.jsx';
+import WorldMap from '../components/WorldMap.jsx';
 import { useEffect, useState } from 'react'
 import { collection, query, where, getDocs, doc, getDoc, onSnapshot, updateDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/config.js";
@@ -80,7 +81,10 @@ function GlobalPage() {
                             
                         {player.activeGlobalPageMonster &&
                             <MonsterDisplay id={'004_1'} level={3} />
-                            }
+                        }
+                        {player.activeGlobalPageWorldMap &&
+                            <WorldMap id={'1444'}  />
+                        }
                             {player.activeGlobalPageRating &&
                                 <Rating players={players} />
                             }

@@ -1,9 +1,43 @@
-export const Questions = [
+export const QuestionsTotal = 400;
+
+export const QuestionsTopicCount = [
+    {
+        id: 0,
+        topic: "Николай I",
+        idStart: 0,
+        idFinish: 3,
+    },
     {
         id: 1,
+        topic: "Александр I",
+        idStart: 4,
+        idFinish: 6,
+    }
+
+]
+
+
+
+
+export const Questions = [
+    {
+        id: 0,
+        topic: "Николай I",
         right: "Амстердам",
-        text: "Какой город является столицей Нидерландов?",
-        tip: "География: столицы мира",
+        text: "Q0 about N1",
+        tip: "some info",
+        v1: "Роттердам",
+        v2: "Гаага",
+        v3: "Амстердам",
+        v4: "Утрехт",
+        used: false
+    },
+    {
+        id: 1,
+        topic: "Николай I",
+        right: "Амстердам",
+        text: "Q1 about N1",
+        tip: "some info",
         v1: "Роттердам",
         v2: "Гаага",
         v3: "Амстердам",
@@ -12,9 +46,10 @@ export const Questions = [
     },
     {
         id: 2,
+        topic: "Николай I",
         right: "1859",
-        text: "В каком году Чарльз Дарвин опубликовал «Происхождение видов»?",
-        tip: "Биология",
+        text: "Q2 about N1",
+        tip: "some info",
         v1: "1835",
         v2: "1859",
         v3: "1872",
@@ -22,8 +57,10 @@ export const Questions = [
         used: false
     },
     {
-        id: 3, right: "А.С. Пушкин",
-        text: "Кто написал поэму «Медный всадник»?",
+        id: 3,
+        topic: "Николай I",
+        right: "А.С. Пушкин",
+        text: "Q3 about N1",
         tip: "Литература: русская классика",
         v1: "М.Ю. Лермонтов",
         v2: "А.С. Пушкин",
@@ -32,8 +69,10 @@ export const Questions = [
         used: false
     },
     {
-        id: 4, right: "H2SO4",
-        text: "Какая химическая формула у серной кислоты?",
+        id: 4,
+        topic: "Александр I",
+        right: "H2SO4",
+        text: "Q4 about A1",
         tip: "Химия: кислоты",
         v1: "HCl",
         v2: "H2SO4",
@@ -42,8 +81,10 @@ export const Questions = [
         used: false
     },
     {
-        id: 5, right: "Фотосинтез",
-        text: "Как называется процесс образования органических веществ из углекислого газа и воды на свету?",
+        id: 5,
+        topic: "Александр I",
+        right: "Фотосинтез",
+        text: "Q5 about A1",
         tip: "Биология: процессы растений",
         v1: "Дыхание",
         v2: "Фотосинтез",
@@ -52,8 +93,10 @@ export const Questions = [
         used: false
     },
     {
-        id: 6, right: "Интеграл",
-        text: "Какое математическое понятие обозначает площадь под кривой функции?",
+        id: 6,
+        topic: "Александр I",
+        right: "Интеграл",
+        text: "Q6 about A1",
         tip: "Математика: анализ",
         v1: "Производная",
         v2: "Интеграл",

@@ -3,7 +3,7 @@ import { db } from "../firebase/config.js";
 import { useState, useEffect} from 'react';
 import './ChoicePage.css';
 import { Questions } from "../data/Questions.js"
-import { QuestionsOGE } from "../data/QuestionsOGE.js"
+
 
 
 function ChoicePage ({player}) {
@@ -13,7 +13,7 @@ function ChoicePage ({player}) {
     const [question, setQuestion] = useState("");
     function handleTestChoice(e, choice) {
         e.preventDefault();
-        updateDoc(doc(db, "players", player.id), { status: 'idle', choiceIsMade: true, lastAnswer: `${choice} ; tip: ${question.right}` });
+        updateDoc(doc(db, "players", player.id), { status: 'idle', choiceIsMade: true, lastAnswer: `${choice}` });
         setQuestion("");
 
     }
@@ -27,9 +27,7 @@ function ChoicePage ({player}) {
       }, []);
       function loadQuestion(id)  {
                      
-          
-          setQuestion(QuestionsOGE[id]);
-          
+          setQuestion(Questions[id]);
      
     }
     const randomOrders = () => {
@@ -43,9 +41,10 @@ function ChoicePage ({player}) {
     return(
         <>
         
-            <h2>Есть вопрос для вас, {player.name }:</h2>
+            <h3>Есть вопрос для вас, {player.name }:</h3>
             <br />
-
+            <h3>Тема вопроса: {question.topic || "общий вопрос"}.</h3>
+            <br />
         {
         player.choiceIsMade ? 
 
@@ -54,7 +53,7 @@ function ChoicePage ({player}) {
                     :
                     question ?
                     <div>
-                            <h2>{question.text} </h2>
+                            <h3>{question.text} </h3>
                             <br />
                             <div className="answers-container" style={randomOrders()}>
                             
