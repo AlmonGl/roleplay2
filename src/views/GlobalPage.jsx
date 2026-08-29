@@ -15,14 +15,14 @@ import './GlobalPage.css';
 
 function GlobalPage() {
     const pageTitle = "Let's see what is going on.";
-    const [player, setPlayer] = useState([]);
+    const [admin, setAdmin] = useState([]);
     const [players, setPlayers] = useState([]);
     const currentUserId = useSelector(selectCurrentUserId);
     
     useEffect(() => {
 
         onSnapshot(doc(db, "players", currentUserId), (docSnap1) => {
-            setPlayer({ ...docSnap1.data(), id: docSnap1.id });
+            setAdmin({ ...docSnap1.data(), id: docSnap1.id });
         });
               
     }, []); 
@@ -45,13 +45,7 @@ function GlobalPage() {
 
     }, []);
 
-    const handlePlayerClick = (player) => {
-        console.log('Выбран игрок:', player);
-    };
-
-    const handleCellClick = (row, col) => {
-        console.log(`Клетка [${row}][${col}] нажата`);
-    };
+   
     
 	return (
 		<>
@@ -61,16 +55,14 @@ function GlobalPage() {
                 
 
 
-                {!player.id || !players ? <p>Loading... </p>
+                {!admin.id || !players ? <p>Loading... </p>
                     :  
 
                         <div className="global-container">
-                            {player.activeGlobalPageMap  &&
-                                <FantasyMap
-
-
-                                    onPlayerClick={handlePlayerClick}
-                                    onCellClick={handleCellClick}
+                            {admin.activeGlobalPageMap  &&
+                            <FantasyMap
+                                    players={players.filter(pl => pl.active && pl.currentMap.toString() == admin.activeMap)}
+                                    activeMap={admin.activeMap}
                                     showTooltips={true}
                                     gridSize={6}
                                     emptyCellSymbol="🌿"
@@ -79,14 +71,14 @@ function GlobalPage() {
                             }
                         
                             
-                        {player.activeGlobalPageMonster &&
-                            <MonsterDisplay id={'004_1'} level={3} />
+                        {admin.activeGlobalPageMonster &&
+                            <MonsterDisplay id={'004_1'} level={3} players={players.filter(pl => pl.active) } />
                         }
-                        {player.activeGlobalPageWorldMap &&
+                        {admin.activeGlobalPageWorldMap &&
                             <WorldMap id={'1444'}  />
                         }
-                            {player.activeGlobalPageRating &&
-                                <Rating players={players} />
+                            {admin.activeGlobalPageRating &&
+                            <Rating players={players.filter(pl => pl.active)} />
                             }
 
 
@@ -102,3 +94,12 @@ function GlobalPage() {
 
 
 export default GlobalPage
+
+
+/*const handlePlayerClick = (admin) => {
+    console.log('Выбран игрок:', admin);
+};
+
+const handleCellClick = (row, col) => {
+    console.log(`Клетка [${row}][${col}] нажата`);
+};*/

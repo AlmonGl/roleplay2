@@ -12,6 +12,7 @@ function PlayerStatsBlock({player}) {
              <div className="playerStats">
                 
                         <div className="fantasy-text-block">
+                            {player.rightLastAnswer == 5 ? '✅' : player.rightLastAnswer == 2 ? '❌' : '□'}
                             {`${player.status} | ${player.icon} | ${player.name} | ID: ${player.login}. | Hp: ${player.HP}. Sc: ${player.score}. Mov:${player.movePoints}. |   `}
                             {player.questionId && `Question: ${Questions[player.questionId].text}.`} {`| Answer: ${player.lastAnswer}.`} {player.questionId && ` | Right: ${Questions[player.questionId].right}. | `}
                             {` task: ${player.task} |`}{` act: ${player.currentAction}     `}
@@ -74,8 +75,8 @@ function PlayerStatsBlock({player}) {
                         className="btn">
                         Set random question
                                 </button>
-                    <button onClick={() => {
-                                    updateDoc(doc(db, "players", player.id), { status: "idle", currentAction: "", lastAnswer: "-"  });
+                                <button onClick={() => {
+                                    updateDoc(doc(db, "players", player.id), { status: "idle", currentAction: "", lastAnswer: "-", rightLastAnswer: 0 });
                     }
                     }
                         className="btn">

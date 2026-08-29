@@ -4,8 +4,16 @@ import { RoomTasks } from "../data/RoomTasks.js"
 import { QuestionsTotal, QuestionsTopicCount } from "../data/Questions.js"
 
 
-export function setupQuestions(questionTopic, questionId) {
-    const id = questionId == -1 ? Math.floor(Math.random() * QuestionsTotal) : questionId;
+export function setupQuestions(questionTopicAndSection, questionId, same) {
+    const random = questionId == -1 ? true : false;
+    const topic = questionTopicAndSection == "" ? false : true;
+    let id = questionId == -1 ? Math.floor(Math.random() * QuestionsTotal) : questionId;
+    let topicIds = [];
+    let topicQuestionId = 0;
+    if (random && questionTopicAndSection != '') {
+        topicIds = QuestionsTopicCount.find(item => `${item.section} ${item.topic}` == questionTopicAndSection).ids;
+        topicQuestionId = topicIds[Math.floor(Math.random() * topicIds.length)]
+    }
     
     const setup = async () => {
 
@@ -14,12 +22,32 @@ export function setupQuestions(questionTopic, questionId) {
 
         querySnapshot.forEach((it) => {
 
-            
-
-            updateDoc(doc(db, "players", it.id.toString()),
-                { status: "dialog", questionId: id.toString(), lastAnswer: "", choiceIsMade: false, task: "" });
 
 
+            if (!random) {
+                updateDoc(doc(db, "players", it.id.toString()),
+                    { status: "dialog", questionId: id.toString(), rightLastAnswer: 0, lastAnswer: "", choiceIsMade: false, task: "" });
+
+            } else {
+                if (!topic) {
+
+                    updateDoc(doc(db, "players", it.id.toString()),
+                        { status: "dialog", questionId: id.toString(), rightLastAnswer: 0, lastAnswer: "", choiceIsMade: false, task: "" });
+                    if (!same) {
+                        id = Math.floor(Math.random() * QuestionsTotal);
+                    }
+
+                    // if topic
+                } else {
+                    updateDoc(doc(db, "players", it.id.toString()),
+                        { status: "dialog", questionId: topicQuestionId.toString(), rightLastAnswer: 0, lastAnswer: "", choiceIsMade: false, task: "" });
+
+                    if (!same) {
+                        topicQuestionId = topicIds[Math.floor(Math.random() * topicIds.length)];
+                    } 
+                   
+                }
+            }
 
 
             /*const rand = Math.floor(Math.random() * 101)

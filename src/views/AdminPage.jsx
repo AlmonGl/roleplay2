@@ -9,25 +9,23 @@ import StatsManagment from '../components/StatsManagment.jsx';
 import MapMaking from '../components/MapMaking.jsx';
 import MapSelection from '../components/MapSelection.jsx';
 import AdminCheckBoxes from '../components/AdminCheckBoxes.jsx';
-
+import ChooseQuestionBlock from '../components/ChooseQuestionBlock.jsx';
 import ActionSelector from '../components/ActionSelector.jsx';
 import { handleEndOfRound, handleStartOfRound } from '../functions/handleRound.js';
 
-import { setupQuestions } from '../functions/handleQuestions.js';
+
 import { selectCurrentUserId } from '../store/usersSlice.js';
 import { ItemsList } from '../data/ItemsList.js';
-import './AdminPage.css';
-import { QuestionsTopicCount, QuestionsTotal } from "../data/Questions.js"
+
+
 
 
 function AdminPage() {
     const currentUserId = useSelector(selectCurrentUserId);
     // const books = useSelector(selectBooks);
     const [players, setPlayers] = useState([]);
-   
 
-    const [topic, setTopic] = useState('');
-    const [qid, setQid] = useState('');
+    
 
     useEffect(() => {
         onSnapshot(collection(db, "players"), (querySnap) => {
@@ -78,47 +76,13 @@ function AdminPage() {
                             className="btn">
                             новый раунд
                         </button>
-                        <button
-                            onClick={() => {
-
-                                if (!qid) {
-                                    setupQuestions(topic, -1);
-                                } else 
-                                if (qid >= 0 && qid <= QuestionsTotal) {
-                                    setupQuestions(topic, qid);
-                                } else {
-                                    setupQuestions(topic, -1);
-                                }
-                                
-                                console.log(topic, qid);
-                            }}
-                            className="btn">
-                            вопросы
-                        </button>
-                       
                         
                     </div>
-                    <div className="admin-text-field">
-                        <input
-                            type="text"
-                            placeholder="номер"
-                            value={qid}
 
-                            onChange={(e) => setQid(e.target.value)}
-                        />
-                        
-                        <select
-                            className="select-actions2"
-                            placeholder="темы"
-                            onChange={(e) => setTopic(e.target.value)}
-                        >
-                            <option value="">topics</option>
-                            {QuestionsTopicCount.map(y => (
-                                <option key={y.id} value={y.topic}>{y.topic} ids: {y.idStart} {y.idFinish}</option>
-                            ))}
-                        </select>
-                    </div>
-                    <StatsManagment players={players} />  
+                    <ChooseQuestionBlock />
+
+                    {players.map(player => player.rightLasAnswer == 5 ? '✅' : player.rightLasAnswer == 2 ? '❌' : '')}
+                    <StatsManagment players={players.filter(pl => pl.active)} />  
                 </div>
                 : <p>Loading...</p>
             }

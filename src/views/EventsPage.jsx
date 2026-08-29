@@ -52,7 +52,7 @@ function EventsPage() {
      : player.status == "item-use" ?
      <ItemUsageSelection player={player} /> 
      : player.status == "idle" ?
-       <Idle /> 
+       <Idle player={player}/> 
      : player.status == "task" ?
        <Task player={player} /> 
      :

@@ -13,7 +13,12 @@ function ChoicePage ({player}) {
     const [question, setQuestion] = useState("");
     function handleTestChoice(e, choice) {
         e.preventDefault();
-        updateDoc(doc(db, "players", player.id), { status: 'idle', choiceIsMade: true, lastAnswer: `${choice}` });
+        updateDoc(doc(db, "players", player.id), {
+            status: 'idle',
+            choiceIsMade: true,
+            lastAnswer: `${choice}`,
+            rightLastAnswer: choice == question.right ? 5 : 2
+        });
         setQuestion("");
 
     }

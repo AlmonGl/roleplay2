@@ -1,7 +1,7 @@
 
 import './MonsterDisplay.css';
 
-const MonsterDisplay = ({ id, level }) => {
+const MonsterDisplay = ({ players, id, level }) => {
 
 
 
@@ -102,8 +102,9 @@ const MonsterDisplay = ({ id, level }) => {
                                         {attack.type === 'monolog' ? '⚡ Выступление' :
                                             attack.type === 'difficult' ? '🔥 Сложный' :
                                                 attack.type === 'solo' ? '✨ Одна цель' : '✨ Обычный'}
-                                                
+
                                     </div>
+                                    {players.map(player => player.rightLastAnswer == 5 ? '✅' : player.rightLastAnswer == 2 ? '❌' : '')}
                                 </div>
                             ))}
                         </div>
