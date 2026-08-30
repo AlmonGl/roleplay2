@@ -2,6 +2,17 @@ import { doc, updateDoc, query, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/config.js";
 import { RoomTasks } from "../data/RoomTasks.js"
 import { QuestionsTotal } from "../data/Questions.js"
+
+export function setAllActiveIdle(players) {
+    players.forEach((it) => {
+        updateDoc(doc(db, "players", it.id), {  status: "idle" });
+
+    })
+
+
+
+}
+
 export function handleEndOfRound() {
     
 

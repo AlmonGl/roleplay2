@@ -20,7 +20,13 @@
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
-
+.wrong-answer {
+    background-color: #ffcccc; /* светло-красный фон */
+    border: 2px solid #ff0000; /* красная граница */
+    color: #ff0000; /* красный текст */
+    /* дополнительные эффекты по желанию */
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); /* лёгкое красное свечение */
+}
 .answer-btn:nth-child(1) {
     order: var(--order-1, 0);
 }

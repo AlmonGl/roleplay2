@@ -4,67 +4,12 @@ import  './WorldMap.scss';
 // Импорт изображения карты (если есть)
 //import worldMapImage from '../assets/maps/world-map.png';
 //`/assets/monsters/${id}.png`
-const WorldMap = ({ id }) => {
+const WorldMap = ({ id, players }) => {
     // Список игроков с координатами
-    const [players, setPlayers] = useState([
-        {
-            id: 1,
-            name: 'Артемий',
-            x: 15,
-            y: 30,
-            level: 42,
-            status: 'online',
-            color: '#ff6b4a'
-        },
-        {
-            id: 2,
-            name: 'Эльфийка',
-            x: 65,
-            y: 45,
-            level: 38,
-            status: 'online',
-            color: '#4CAF50'
-        },
-        {
-            id: 3,
-            name: 'Тёмный маг',
-            x: 30,
-            y: 70,
-            level: 55,
-            status: 'offline',
-            color: '#9C27B0'
-        },
-        {
-            id: 4,
-            name: 'Рыцарь',
-            x: 80,
-            y: 20,
-            level: 47,
-            status: 'online',
-            color: '#2196F3'
-        },
-        {
-            id: 5,
-            name: 'Друид',
-            x: 50,
-            y: 55,
-            level: 33,
-            status: 'online',
-            color: '#FF9800'
-        },
-        {
-            id: 6,
-            name: 'Варвар',
-            x: 85,
-            y: 75,
-            level: 60,
-            status: 'offline',
-            color: '#f44336'
-        }
-    ]);
+
 
     // Состояние для выбранного игрока
-    const [selectedPlayer, setSelectedPlayer] = useState(null);
+
 
     // Анимация пульсации для онлайн игроков
     useEffect(() => {
@@ -75,98 +20,64 @@ const WorldMap = ({ id }) => {
     }, []);
 
     return (
-        <div className = "world-map">
-        <div className="worldmap-container">
-            <div className="worldmap-card">
-                {/* Заголовок карты */} 
-                <div className="worldmap-header">
-                    <h2 className="worldmap-title">🗺️ Карта мира</h2>
-                    <div className="worldmap-stats">
-                        <span className="stat-item">
-                            <span className="stat-dot online"></span>
-                            Онлайн: {players.filter(p => p.status === 'online').length}
-                        </span>
-                        <span className="stat-item">
-                            <span className="stat-dot offline"></span>
-                            Офлайн: {players.filter(p => p.status === 'offline').length}
-                        </span>
-                        <span className="stat-item">👥 Всего: {players.length}</span>
-                    </div>
-                </div>
+        <>
+        {!players ? <p>Loading... </p>
+        :
+        <div className="world-map">
+            <div className="worldmap-container">
+                <div className="worldmap-card">
+                    {/* Заголовок карты */}
+                    <div className="worldmap-header">
+                        <h2 className="worldmap-title">🗺️ Карта мира</h2>
+                        <div className="worldmap-stats">
 
-                {/* Карта */}
-                <div className="map-container">
-                    {/* Изображение карты */}
-                    <div className="map-background">
-                        {/* Если есть изображение карты */}
-                        <img src={`/assets/maps/${id}.png`} alt="Карта мира" className="map-image" /> 
-
-                        
-                    </div>
-
-                    {/* Игроки на карте */}
-                    {players.map((player) => (
-                        <div
-                            key={player.id}
-                            className={`player-marker-wm ${player.status} ${selectedPlayer?.id === player.id ? 'selected' : ''}`}
-                            style={{
-                                left: `${player.x}%`,
-                                top: `${player.y}%`,
-                                transform: 'translate(-50%, -50%)'
-                            }}
-                            onClick={() => setSelectedPlayer(player)}
-                        >
-                            {/* Пульсирующее свечение для онлайн игроков */}
-                            {player.status === 'online' && (
-                                <div className="player-pulse-wm" style={{ borderColor: player.color }}></div>
-                            )}
-
-                            {/* Иконка игрока */}
-                            <div className="player-icon-wm" style={{ backgroundColor: player.color }}>
-                                {player.status === 'online' ? '⚔️' : '💤'}
-                            </div>
-
-                            {/* Имя игрока (показывается при наведении) */}
-                            <div className="player-tooltip-wm">
-                                <span className="player-name-wm">{player.name}</span>
-                                <span className="player-level-wm">Lv.{player.level}</span>
-                            </div>
+                            <span className="stat-item">👥 Всего: {players.length}</span>
                         </div>
-                    ))}
-                </div>
+                    </div>
 
-                {/* Информация о выбранном игроке */}
-                {selectedPlayer && (
-                    <div className="player-info-panel-wm">
-                        <div className="player-info-header-wm">
-                            <div className="player-avatar-wm" style={{ backgroundColor: selectedPlayer.color }}>
-                                {selectedPlayer.status === 'online' ? '⚔️' : '💤'}
-                            </div>
-                            <div className="player-info-details-wm">
-                                <h3 className="player-info-name-wm">{selectedPlayer.name}</h3>
-                                <div className="player-info-stats-wm">
-                                    <span className="info-stat-wm">Уровень {selectedPlayer.level}</span>
-                                    <span className={`info-status-wm ${selectedPlayer.status}`}>
-                                        {selectedPlayer.status === 'online' ? '🟢 Онлайн' : '🔴 Офлайн'}
-                                    </span>
+                    {/* Карта */}
+                    <div className="map-container">
+                        {/* Изображение карты */}
+                        <div className="map-background">
+                            {/* Если есть изображение карты */}
+                            <img src={`/assets/maps/${id}.png`} alt="Карта мира" className="map-image" />
+
+
+                        </div>
+
+                        {/* Игроки на карте */}
+                        {players.map((player) => (
+                            <div
+                                key={player.id}
+                                className={`player-marker-wm`}
+                                style={{
+                                    left: `${player.x}%`,
+                                    top: `${player.y}%`,
+                                    transform: 'translate(-50%, -50%)'
+                                }}
+
+                            >
+
+                                {/* Иконка игрока */}
+                                <div className="player-icon-wm" style={{ backgroundColor: player.color }}>
+                                    {player.icon }
+                                </div>
+
+                                {/* Имя игрока (показывается при наведении) */}
+                                <div className="player-tooltip-wm">
+                                    <span className="player-name-wm">{player.name}</span>
+                                    
                                 </div>
                             </div>
-                            <button
-                                className="player-info-close-wm"
-                                onClick={() => setSelectedPlayer(null)}
-                            >
-                                ✕
-                            </button>
-                        </div>
-                        <div className="player-info-coords-wm">
-                            <span>📍 Координаты: {selectedPlayer.x}, {selectedPlayer.y}</span>
-                        </div>
+                        ))}
                     </div>
-                )}
+
+
+                </div>
             </div>
         </div>
-        </div>
-    );
+    }
+        </>);
 };
 
 export default WorldMap;

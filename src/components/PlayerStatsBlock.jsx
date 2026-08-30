@@ -16,7 +16,7 @@ function PlayerStatsBlock({player}) {
                             {`${player.status} | ${player.icon} | ${player.name} | ID: ${player.login}. | Hp: ${player.HP}. Sc: ${player.score}. Mov:${player.movePoints}. |   `}
                             {player.questionId && `Question: ${Questions[player.questionId].text}.`} {`| Answer: ${player.lastAnswer}.`} {player.questionId && ` | Right: ${Questions[player.questionId].right}. | `}
                             {` task: ${player.task} |`}{` act: ${player.currentAction}     `}
-
+                            {`bonus: ${player.currentActionBonus}` }
                                 
                                
                  </div>
@@ -76,7 +76,7 @@ function PlayerStatsBlock({player}) {
                         Set random question
                                 </button>
                                 <button onClick={() => {
-                                    updateDoc(doc(db, "players", player.id), { status: "idle", currentAction: "", lastAnswer: "-", rightLastAnswer: 0 });
+                                    updateDoc(doc(db, "players", player.id), { currentAction: "", lastAnswer: "-", rightLastAnswer: 0, currentActionBonus: -1 });
                     }
                     }
                         className="btn">

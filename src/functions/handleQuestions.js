@@ -26,13 +26,13 @@ export function setupQuestions(questionTopicAndSection, questionId, same) {
 
             if (!random) {
                 updateDoc(doc(db, "players", it.id.toString()),
-                    { status: "dialog", questionId: id.toString(), rightLastAnswer: 0, lastAnswer: "", choiceIsMade: false, task: "" });
+                    { status: "dialog", questionId: id.toString(), rightLastAnswer: 0, lastAnswer: "", choiceIsMade: false, task: "", currentActionBonus: -1 });
 
             } else {
                 if (!topic) {
 
                     updateDoc(doc(db, "players", it.id.toString()),
-                        { status: "dialog", questionId: id.toString(), rightLastAnswer: 0, lastAnswer: "", choiceIsMade: false, task: "" });
+                        { status: "dialog", questionId: id.toString(), rightLastAnswer: 0, lastAnswer: "", choiceIsMade: false, task: "", currentActionBonus: -1 });
                     if (!same) {
                         id = Math.floor(Math.random() * QuestionsTotal);
                     }
@@ -40,7 +40,7 @@ export function setupQuestions(questionTopicAndSection, questionId, same) {
                     // if topic
                 } else {
                     updateDoc(doc(db, "players", it.id.toString()),
-                        { status: "dialog", questionId: topicQuestionId.toString(), rightLastAnswer: 0, lastAnswer: "", choiceIsMade: false, task: "" });
+                        { status: "dialog", questionId: topicQuestionId.toString(), rightLastAnswer: 0, lastAnswer: "", choiceIsMade: false, task: "", currentActionBonus: -1 });
 
                     if (!same) {
                         topicQuestionId = topicIds[Math.floor(Math.random() * topicIds.length)];

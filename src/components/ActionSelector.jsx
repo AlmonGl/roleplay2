@@ -18,7 +18,8 @@ const ActionSelector = ({ players }) => {
         { id: 5, name: "removeNeutral (x y)" },
         { id: 6, name: "moveToMap (coordX)" },
         { id: 7, name: "Active" },
-        { id: 8, name: "Inactive" }
+        { id: 8, name: "Inactive" },
+        { id: 9, name: "RemoveAllItems" }
     ]
     const handleRemoveToken = async (mapId, x, y) => {
         const mapSnap2 = await getDoc(doc(db, "maps", mapId.toString()));
@@ -81,6 +82,9 @@ const ActionSelector = ({ players }) => {
                 break;
             case '8':
                 updateDoc(doc(db, "players", selectedPlayer), { active: false });
+                break;
+            case '9':
+                updateDoc(doc(db, "players", selectedPlayer), { items: [] });
                 break;
             default:
                 console.log("Неизвестный фрукт.");

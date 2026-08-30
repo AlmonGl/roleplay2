@@ -1,8 +1,8 @@
 import { doc, updateDoc, getDoc, setDoc, getDocs, query, collection, arrayRemove } from "firebase/firestore";
 import { db } from "../firebase/config.js";
 import './ItemUsageSelection.css';
-import { useState, useEffect } from 'react';
-import { IdleMessages } from '../data/IdleMessages.js';
+import { useState } from 'react';
+
 import { ItemsList } from '../data/ItemsList.js';
 
 
@@ -13,10 +13,11 @@ const ItemUsageSelection = ({ player }) => {
     const [selectedTarget, setSelectedTarget] = useState(null);
     const [message, setMessage] = useState('');
     const [mockTargets, setMockTargets] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);
  
     // Определяем, требует ли предмет выбора цели
     const needsTarget = (id) => {
-        return [0, 1, 6, 8, 9, 12, 16, 17, 18, 19].includes(id);
+        return ItemsList[id].target == 'needed';
     };
 
     // Моковые цели (в реальном приложении брать из игры)
@@ -28,7 +29,7 @@ const ItemUsageSelection = ({ player }) => {
 
         querySnapshot.forEach((it) => {
 
-            if (it.data().login != "558899") {
+            if (it.data().login != "558899" && it.data().active) {
                 playerList.push({ id: it.id, ...it.data() })
             }
 
@@ -71,108 +72,117 @@ const ItemUsageSelection = ({ player }) => {
             }!`
             
         );
-        console.log(message);
+       
         updateDoc(doc(db, "players", player.id), {
-            currentAction: `Предмет "${selectedItem.icon} ${selectedItem.name}" использован${selectedTarget ? ` на цель ${selectedTarget.name}` : ''
-                }!`, status: 'idle'
-        });
-        if ([3, 4, 5, 8, 12, 13, 15, 17, 18, 19].includes(selectedItem.id)) {
-            updateDoc(doc(db, "players", player.id), { items: arrayRemove(ItemsList[selectedItem.id]) });
-            }
+            currentAction: `Предмет "${selectedItem.icon} ${selectedItem.name}" использован${selectedTarget ? ` на цель ${selectedTarget.name}` : ''}!`, 
+            currentActionBonus: selectedItem.id
 
+        });
+        
+        if (selectedItem.type == "consumable") {
+            updateDoc(doc(db, "players", player.id), { items: arrayRemove(ItemsList[selectedItem.id]) });
+        }
+        
         // Сброс выбора
-        /*setTimeout(() => {
+        setTimeout(() => {
             setSelectedItem(null);
             setShowTargets(false);
             setSelectedTarget(null);
             setMessage('');
-        }, 2000);*/
+            setIsOpen(false);
+        }, 2000);
     };
 
     return (
 
         <div className="item-usage-container">
             <div className="item-usage-header">
-                <h2 className="item-usage-title">🗡️ Инвентарь</h2>
-                <p className="item-usage-subtitle">Выберите предмет для использования. Только один за раунд!</p>
-            </div>
-
-            <div className="items-vertical-list">
-                {player.items && player.items.length > 0 ? (
-                    player.items.map((item, index) => {
-                        
-                        const isSelected = selectedItem?.id === item.id;
-
-                        return (
-                            <div
-                                key={item.id || index}
-                                className={`item-row ${isSelected ? 'item-row-selected' : ''}`}
-                                onClick={() => handleItemClick(item)}
-                            >
-                                <div className="item-row-icon">
-                                    <span className="item-type-icon">{item.icon || '📦'}</span>
-                                </div>
-                                <div className="item-row-content">
-                                    <div className="item-row-name">{item.name}</div>
-                                    {item.description && (
-                                        <div className="item-row-description">{item.description}</div>
-                                    )}
-                                    
-                                </div>
-                                
-                            </div>
-                        );
-                    })
-                ) : (
-                   <div>
-                    <div className="items-empty">
-                        <span className="items-empty-icon">🎒</span>
-                        <p>Инвентарь пуст</p>
-                        </div>
-                    <button
-                                className="confirm-use-button"
-                                onClick={() => { updateDoc(doc(db, "players", player.id), { status: 'idle' }) }}
+                <h2
+                    className="item-usage-title confirm-use-button"
+                    onClick={() => {setIsOpen(!isOpen) } }
+                >🗡️ Инвентарь</h2>
                 
-            >
-                Далее
-                            </button>
-                        </div>
-                )}
             </div>
+            {isOpen && player.currentActionBonus == -1 ?
+            
+            
+               
+                    <div>
+                        <p className="item-usage-subtitle">Выберите предмет для использования. Только один за раунд!</p>
+                        <div className="items-vertical-list">
+                            {player.items && player.items.length > 0 ? (
+                                player.items.map((item, index) => {
 
-            {showTargets && selectedItem && (
-                <div className="targets-section">
-                    <h3 className="targets-title">
-                        Выберите цель для: {selectedItem.icon} {selectedItem.name}
-                    </h3>
-                    <div className="targets-list">
-                        {mockTargets.map(target => (
-                            <div
-                                key={target.id}
-                                className={`target-row ${selectedTarget?.id === target.id ? 'target-row-selected' : ''}`}
-                                onClick={() => handleTargetSelect(target)}
-                            >
-                                <span className="target-icon">{target.icon}</span>
-                                <span className="target-name">{target.name}</span>
+                                    const isSelected = selectedItem?.id === item.id;
+
+                                    return (
+                                        <div
+                                            key={item.id || index}
+                                            className={`item-row ${isSelected ? 'item-row-selected' : ''}`}
+                                            onClick={() => handleItemClick(item)}
+                                        >
+                                            <div className="item-row-icon">
+                                                <span className="item-type-icon">{item.icon || '📦'}</span>
+                                            </div>
+                                            <div className="item-row-content">
+                                                <div className="item-row-name">{item.name}</div>
+                                                {item.description && (
+                                                    <div className="item-row-description">{item.description}</div>
+                                                )}
+
+                                            </div>
+
+                                        </div>
+                                    );
+                                })
+                            ) : (
+                                <div>
+                                    <div className="items-empty">
+                                        <span className="items-empty-icon">🎒</span>
+                                        <p>Инвентарь пуст</p>
+                                    </div>
+
+                                </div>
+                            )}
+                        </div>
+
+                        {showTargets && selectedItem && (
+                            <div className="targets-section">
+                                <h3 className="targets-title">
+                                    Выберите цель для: {selectedItem.icon} {selectedItem.name}
+                                </h3>
+                                <div className="targets-list">
+                                    {mockTargets.map(target => (
+                                        <div
+                                            key={target.id}
+                                            className={`target-row ${selectedTarget?.id === target.id ? 'target-row-selected' : ''}`}
+                                            onClick={() => handleTargetSelect(target)}
+                                        >
+                                            <span className="target-icon">{target.icon}</span>
+                                            <span className="target-name">{target.name}</span>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                        ))}
+                        )}
+
+                        {message && (
+                            <div className="item-message">
+                                {message}
+                            </div>
+                        )}
+
+                        <button
+                            className="confirm-use-button"
+                            onClick={handleUseItem}
+                            disabled={!selectedItem}
+                        >
+                            Подтвердить использование
+                        </button>
                     </div>
-                </div>
-            )}
-
-            {message && (
-                <div className="item-message">
-                    {message}
-                </div>
-            )}
-
-            <button
-                className="confirm-use-button"
-                onClick={handleUseItem}
-                disabled={!selectedItem}
-            >
-                Подтвердить использование
-            </button>
+                : isOpen ? <div> В этот раунд уже использован.</div>
+                : <p></p>
+            }
         </div>
     );
 };

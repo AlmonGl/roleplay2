@@ -75,7 +75,7 @@ function GlobalPage() {
                             <MonsterDisplay id={'004_1'} level={3} players={players.filter(pl => pl.active) } />
                         }
                         {admin.activeGlobalPageWorldMap &&
-                            <WorldMap id={'1444'}  />
+                            <WorldMap id={'1444'} players={players.filter(pl => pl.active)} />
                         }
                             {admin.activeGlobalPageRating &&
                             <Rating players={players.filter(pl => pl.active)} />

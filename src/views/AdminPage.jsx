@@ -11,8 +11,8 @@ import MapSelection from '../components/MapSelection.jsx';
 import AdminCheckBoxes from '../components/AdminCheckBoxes.jsx';
 import ChooseQuestionBlock from '../components/ChooseQuestionBlock.jsx';
 import ActionSelector from '../components/ActionSelector.jsx';
-import { handleEndOfRound, handleStartOfRound } from '../functions/handleRound.js';
-
+import { handleEndOfRound, handleStartOfRound, setAllActiveIdle } from '../functions/handleRound.js';
+import { handleSetWorldMap } from '../functions/handleWorldMap.js';
 
 import { selectCurrentUserId } from '../store/usersSlice.js';
 import { ItemsList } from '../data/ItemsList.js';
@@ -76,12 +76,28 @@ function AdminPage() {
                             className="btn">
                             новый раунд
                         </button>
+                        <button
+                            onClick={() => {
+                                setAllActiveIdle(players.filter(pl => pl.active));
+                            }}
+                            className="btn">
+                            Idle
+                        </button>
+
+                        
+                        <button
+                            onClick={() => {
+                                handleSetWorldMap(players.filter(pl => pl.active));
+                            }}
+                            className="btn">
+                            на world map
+                        </button>
                         
                     </div>
 
                     <ChooseQuestionBlock />
 
-                    {players.map(player => player.rightLasAnswer == 5 ? '✅' : player.rightLasAnswer == 2 ? '❌' : '')}
+                  
                     <StatsManagment players={players.filter(pl => pl.active)} />  
                 </div>
                 : <p>Loading...</p>
@@ -91,3 +107,4 @@ function AdminPage() {
 }
 export default AdminPage
 
+// 

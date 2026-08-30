@@ -12,6 +12,8 @@ import NavigateButtons from '../components/NavigateButtons.jsx';
 import ItemUsageSelection from '../components/ItemUsageSelection.jsx';
 import Idle from '../components/Idle.jsx';
 import Task from '../components/Task.jsx';
+import NavigateWorldButtons from '../components/NavigateWorldButtons.jsx';
+
 
 function EventsPage() {
     const [player, setPlayer] = useState([]);
@@ -26,8 +28,7 @@ function EventsPage() {
            setPlayer({...docSnap1.data(), id: docSnap1.id });
            });    
 
-
-   }, []); 
+   }, []);
     
     
     
@@ -55,6 +56,8 @@ function EventsPage() {
        <Idle player={player}/> 
      : player.status == "task" ?
        <Task player={player} /> 
+     : player.status == "navigateWorld" ?
+       <NavigateWorldButtons player={player} /> 
      :
      <p>ERROR</p>
      }
