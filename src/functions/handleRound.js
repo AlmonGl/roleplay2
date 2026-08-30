@@ -1,6 +1,18 @@
 import { doc, updateDoc, query, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/config.js";
 import { RoomTasks } from "../data/RoomTasks.js"
+import { QuestionsTotal } from "../data/Questions.js"
+
+export function setAllActiveIdle(players) {
+    players.forEach((it) => {
+        updateDoc(doc(db, "players", it.id), {  status: "idle" });
+
+    })
+
+
+
+}
+
 export function handleEndOfRound() {
     
 
@@ -60,38 +72,3 @@ export function handleStartOfRound() {
 
 
 
-export function setupQuestions() {
-
-
-    const setup = async () => {
-
-        const q = query(collection(db, "players"));
-        const querySnapshot = await getDocs(q);
-
-        querySnapshot.forEach((it) => {
-
-            const id = Math.floor(Math.random() * 2);
-            updateDoc(doc(db, "players", it.id.toString()),
-                { status: "dialog", questionId: id.toString(), lastAnswer: "", choiceIsMade: false, task: "" });
-           /* const id = Math.floor(Math.random() * 370) + 1
-            const id2 = Math.floor(Math.random() * 101)
-
-            const rand = Math.floor(Math.random() * 101)
-            if (rand > 85) {
-                updateDoc(doc(db, "players", it.id.toString()),
-                    { status: "task", taskId: id2.toString(), task: RoomTasks[id2].content, lastAnswer: "", choiceIsMade: false });
-            } else {
-                updateDoc(doc(db, "players", it.id.toString()),
-                    { status: "dialog", questionId: id.toString(), lastAnswer: "", choiceIsMade: false, task: "" });
-            }*/
-            
-            
-        });
-
-
-    }
-    setup()
-
-
-
-}

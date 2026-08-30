@@ -1,0 +1,14 @@
+.admin-text-field {
+    display: flex;
+    gap: 8px; /* расстояние между полями */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+
+.admin-text-field-small {
+    width: 100px;
+    
+}

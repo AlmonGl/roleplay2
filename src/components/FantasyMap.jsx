@@ -6,32 +6,31 @@ import { monstersList } from '../data/MonsterList.js';
 import { treasureList } from '../data/TreasureList.js';
 function FantasyMap ({
    
-    onPlayerClick,
-    onCellClick,
+    players,
+    activeMap,
     showTooltips,
     gridSize,
     emptyCellSymbol
 })  {
-    const [selectedPlayer, setSelectedPlayer] = useState(null);
-    const [hoveredCell, setHoveredCell] = useState(null);
-    const [players, setPlayers] = useState([]);
+  
+    //const [players, setPlayers] = useState([]);
     const [map, setMap] = useState();
      
 
-    const [activeMap, setActiveMap] = useState("0");
+   // const [activeMap, setActiveMap] = useState("0");
 
-    useEffect(() => {
+   /* useEffect(() => {
 
         onSnapshot(doc(db, "players", "S2y1gyVwUbpJa4jf9v8y"), (docSnap1) => {
             setActiveMap(docSnap1.data().activeMap);
         });
 
-    }, []);
+    }, []);*/
 
 
 
     
-    useEffect(() => {
+  /*  useEffect(() => {
         onSnapshot(collection(db, "players"), (querySnap) => {
             let playerList = [];
            
@@ -48,37 +47,8 @@ function FantasyMap ({
             
         });
 
-    }, [activeMap]);
-  /*  useEffect(() => {
-        console.log(222222222);
-        onSnapshot(doc(db, "maps", "1"), (docSnap) => {
-            const map = [];
-          const mapData = docSnap.data();
-            
-            for (let i = 0; i < gridSize; i++) {
-                const row = [];
-                for (let j = 0; j < gridSize; j++) {
-                    row.push({
-                        type: mapData[i][j].type,
-                     //   type: 'empty',
-                        treasure: mapData[i][j].treasure,
-                       // treasure: i+j ==7,
-                       trap: mapData[i][j].trap,
-                    //   trap: i+j==8,
-                        player: mapData[i][j].player
-                    //  player: null
-                    });
-                }
-                map.push(row);
-            }
-            
-           
-            //setDoc(doc(db, "maps", "1"), { ...map });
-            setMap(map);
-            
-        });
+    }, [activeMap]);*/
 
-    }, []);*/
 
     const regenerateMap = async () => {
 
@@ -132,19 +102,10 @@ function FantasyMap ({
 
         regenerateMap();
 
-        
-       // setDoc(doc(db, "maps", "1"), { ...map });
         }
     , [players, gridSize]);
 
-    const handlePlayerClick = (player, row, col) => {
-        setSelectedPlayer(player);
-        if (onPlayerClick) onPlayerClick(player);
-    };
-
-    const handleCellClick = (row, col) => {
-        if (onCellClick) onCellClick(row, col);
-    };
+  
 
     return (
         <>
@@ -156,26 +117,19 @@ function FantasyMap ({
                         {map.map((row, rowIndex) => (
                             <div key={rowIndex} className="map-row">
                                 {row.map((cell, colIndex) => {
-                                    const isSelected = selectedPlayer &&
-                                        cell.player &&
-                                        selectedPlayer.id === cell.player.id;
+                                   
 
                                     return (
                                         <div
                                             key={`${rowIndex}-${colIndex}`}
                                             className={`map-cell  ${cell.treasure != -1 ? 'treasure' : ''} ${cell.monster != -1 ? 'monster' : ''} ${cell.exit ? 'exit' : ''}`}
-                                            onClick={() => handleCellClick(rowIndex, colIndex)}
-                                           // onMouseEnter={() => setHoveredCell({ row: rowIndex, col: colIndex })}
-                                            //onMouseLeave={() => setHoveredCell(null)}
+                                            
                                         >
                                             {cell.player && (cell.players.length <= 1) ? 
                                                 <div
-                                                    className={`player-token ${isSelected ? 'active' : ''}`}
+                                                    className={`player-token`}
                                                     style={{ backgroundColor: cell.player.color || '#4CAF50' }}
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handlePlayerClick(cell.player, rowIndex, colIndex);
-                                                    }}
+                                                   
                                                 >
                                                     <span className="player-icon">{cell.player.icon || '🧙'}</span>
                                                     <span className="player-name">{cell.player.name || `P${cell.player.id}`}</span>
@@ -268,13 +222,6 @@ function FantasyMap ({
 
 
 
-
-
-
-                                                                            
-
-
-
                                                                             : cell.exit ?
                                                                                 <div
                                                                                 className='exit-token'>
@@ -316,17 +263,7 @@ function FantasyMap ({
                         ))}
                     </div>
 
-                    {/* Информация о выбранном игроке */}
-                    {selectedPlayer && showTooltips && (
-                        <div className="player-info">
-                            <h3>
-                                {selectedPlayer.icon} {selectedPlayer.name}
-                            </h3>
-                            <p>Уровень: {selectedPlayer.level || 1}</p>
-                            <p>Класс: {selectedPlayer.class || 'Странник'}</p>
-                            <p>❤️ {selectedPlayer.hp || 100} HP</p>
-                        </div>
-                    )}
+                   
                 </div>
                 : <p>Loading....</p>
             }
@@ -335,3 +272,4 @@ function FantasyMap ({
 }
 
 export default FantasyMap
+

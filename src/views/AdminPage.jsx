@@ -8,18 +8,24 @@ import { useEffect, useState } from "react";
 import StatsManagment from '../components/StatsManagment.jsx';
 import MapMaking from '../components/MapMaking.jsx';
 import MapSelection from '../components/MapSelection.jsx';
+import AdminCheckBoxes from '../components/AdminCheckBoxes.jsx';
+import ChooseQuestionBlock from '../components/ChooseQuestionBlock.jsx';
 import ActionSelector from '../components/ActionSelector.jsx';
-import { handleEndOfRound, handleStartOfRound, setupQuestions } from '../functions/handleRound.js';
+import { handleEndOfRound, handleStartOfRound, setAllActiveIdle } from '../functions/handleRound.js';
+import { handleSetWorldMap } from '../functions/handleWorldMap.js';
+
 import { selectCurrentUserId } from '../store/usersSlice.js';
 import { ItemsList } from '../data/ItemsList.js';
+
+
 
 
 function AdminPage() {
     const currentUserId = useSelector(selectCurrentUserId);
     // const books = useSelector(selectBooks);
     const [players, setPlayers] = useState([]);
-    const [isCheckedMap, setIsCheckedMap] = useState(false);
-    const [isCheckedRating, setIsCheckedRating] = useState(false);
+
+    
 
     useEffect(() => {
         onSnapshot(collection(db, "players"), (querySnap) => {
@@ -32,16 +38,7 @@ function AdminPage() {
             setPlayers(playerList);
         });
 
-        const fetchData = async () => {
-            const docSnap = await getDoc(doc(db, "players", currentUserId.toString()));
-            
-           setIsCheckedMap(docSnap.data().activeGlobalPageMap);
-
-           setIsCheckedRating(docSnap.data().activeGlobalPageRating);
-            
-            
-        }
-        fetchData();
+        
 
         
 
@@ -62,49 +59,8 @@ function AdminPage() {
                     <div className="admin-buttons">
                         <MapMaking />
                         <MapSelection />
-                       
-                        <div >
-                            <label htmlFor="myCheck" style={{ fontSize: '14px', fontWeight: '500' }}>
-                                Карта
-                            </label>
-                            <input
-                                id="myCheck"
-                                type="checkbox"
-                                checked={isCheckedMap}
-                                onChange={() => {
-
-                                    updateDoc(doc(db, "players", currentUserId), { activeGlobalPageMap: !isCheckedMap });
-                                    setIsCheckedMap(!isCheckedMap);
-                                    
-                                }}
-                                style={{
-                                    width: '18px',
-                                    height: '18px',
-                                    cursor: 'pointer'
-                                }}
-                            />
-                        </div>
-                        <div >
-                            <label htmlFor="myCheck" style={{ fontSize: '14px', fontWeight: '500' }}>
-                                Рейтинг
-                            </label>
-                            <input
-                                id="myCheck"
-                                type="checkbox"
-                                checked={isCheckedRating}
-                                onChange={() => {
-
-                                    updateDoc(doc(db, "players", currentUserId), { activeGlobalPageRating: !isCheckedRating });
-                                    setIsCheckedRating(!isCheckedRating);
-                                    
-                                }}
-                                style={{
-                                    width: '18px',
-                                    height: '18px',
-                                    cursor: 'pointer'
-                                }}
-                            />
-                        </div>
+                        <AdminCheckBoxes currentUserId={currentUserId} />
+                        
 
                         <button
                             onClick={() => {
@@ -122,15 +78,27 @@ function AdminPage() {
                         </button>
                         <button
                             onClick={() => {
-                                setupQuestions();
+                                setAllActiveIdle(players.filter(pl => pl.active));
                             }}
                             className="btn">
-                            вопросы
+                            Idle
                         </button>
-                       
-                    </div>
-                    <StatsManagment players={players} />
 
+                        
+                        <button
+                            onClick={() => {
+                                handleSetWorldMap(players.filter(pl => pl.active));
+                            }}
+                            className="btn">
+                            на world map
+                        </button>
+                        
+                    </div>
+
+                    <ChooseQuestionBlock />
+
+                  
+                    <StatsManagment players={players.filter(pl => pl.active)} />  
                 </div>
                 : <p>Loading...</p>
             }
@@ -139,3 +107,4 @@ function AdminPage() {
 }
 export default AdminPage
 
+// 

@@ -1,67 +1,22 @@
 import { doc, updateDoc, query, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/config.js";
-import {useState, useEffect}  from 'react';
-
+import { useState, useEffect } from 'react';
+import { QuestionsTotal, Questions } from "../data/Questions.js"
 
 function PlayerStatsBlock({player}) {
            
-    
-    const [selectedMap, setSelectedMap] = useState('0');
-          
-    
-    const [maps, setMaps] = useState('');
-          {console.log(999);}
-
-          
-            
-
-    const handleChangeMap = (e) => {
-        setSelectedMap(e.target.value);
-
-    }; 
-               
-           
-            
-            function handleSetMap() {
-
-                if (selectedMap != "0") {
-                    updateDoc(doc(db, "players", player.id), { status: "navigate", currentMap: selectedMap.toString() });
-
-                }
-
-                
-    }
-
-        useEffect(() => {
-        const fetchData = async () => {
-            
-            
-                        
-
-            const q2 = query(collection(db, "maps"));
-            const querySnapshot2 = await getDocs(q2);
-            let mapsList = [];
-            querySnapshot2.forEach((it) => {
-                mapsList.push({ id: it.id})
-                
-            });
-            setMaps(mapsList);
-        }
-        fetchData();
-
-    }, []);
-
-
 
             return (
         <>  
-           {  maps ?
+           
              <div className="playerStats">
                 
-                            <div className="fantasy-text-block">
-                                {`${player.status}${player.icon} ${player.name} ID: ${player.login}. Hp: ${player.HP}. Sc: ${player.score}. Mov:${player.movePoints}. Answer: ${player.lastAnswer}     `}
-                                {` task: ${player.task}     `}{` act: ${player.currentAction}     `}
-
+                        <div className="fantasy-text-block">
+                            {player.rightLastAnswer == 5 ? '✅' : player.rightLastAnswer == 2 ? '❌' : '□'}
+                            {`${player.status} | ${player.icon} | ${player.name} | ID: ${player.login}. | Hp: ${player.HP}. Sc: ${player.score}. Mov:${player.movePoints}. |   `}
+                            {player.questionId && `Question: ${Questions[player.questionId].text}.`} {`| Answer: ${player.lastAnswer}.`} {player.questionId && ` | Right: ${Questions[player.questionId].right}. | `}
+                            {` task: ${player.task} |`}{` act: ${player.currentAction}     `}
+                            {`bonus: ${player.currentActionBonus}` }
                                 
                                
                  </div>
@@ -113,12 +68,19 @@ function PlayerStatsBlock({player}) {
                         className="btn">
                         +SC
                     </button>
-                     <button onClick={() => {
-                                        updateDoc(doc(db, "players", player.id), { status: "dialog", lastAnswer: "", questionId: Math.floor(Math.random() * 400), choiceIsMade: false });
+                                    <button onClick={() => {
+                                        updateDoc(doc(db, "players", player.id), { status: "dialog", lastAnswer: "", questionId: Math.floor(Math.random() * QuestionsTotal), choiceIsMade: false });
                     }
                     }
                         className="btn">
                         Set random question
+                                </button>
+                                <button onClick={() => {
+                                    updateDoc(doc(db, "players", player.id), { currentAction: "", lastAnswer: "-", rightLastAnswer: 0, currentActionBonus: -1 });
+                    }
+                    }
+                        className="btn">
+                        Refresh act/que
                     </button>
 
                                     {/*BUTTONS END*/}
@@ -130,36 +92,6 @@ function PlayerStatsBlock({player}) {
 
 
                    
-                      <div className = "select-question-text">
-
-     
-      
-
-
-
-
-
-                                        <select value={selectedMap} onChange={handleChangeMap}>
-                                            <option value="0">Maps</option>
-                                            {
-                                                maps.map(m =>
-
-                                                    <option key={`${m.id}+${player.id}`} value={m.id}>{m.id}</option>
-                                                )
-                                            }
-
-                                        </select>
-                                        <p>Выбор: {(selectedMap) || 'no'}</p>
-                                        <button onClick={handleSetMap}
-
-
-                                            className="btn">
-                                            Navigate
-                                        </button> 
-
-
-
-    </div>
 
 
                      </div>
@@ -169,8 +101,8 @@ function PlayerStatsBlock({player}) {
                      
             </div>
             </div>
-            : <p>Loading....</p>
-            }
+            
+            
         </>
     )
     

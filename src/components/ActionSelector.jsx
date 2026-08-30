@@ -15,7 +15,11 @@ const ActionSelector = ({ players }) => {
         { id: 2, name: "teleport" },
         { id: 3, name: "removeItem" },
         { id: 4, name: "addItem" },
-        { id: 5, name: "removeNeutral" }
+        { id: 5, name: "removeNeutral (x y)" },
+        { id: 6, name: "moveToMap (coordX)" },
+        { id: 7, name: "Active" },
+        { id: 8, name: "Inactive" },
+        { id: 9, name: "RemoveAllItems" }
     ]
     const handleRemoveToken = async (mapId, x, y) => {
         const mapSnap2 = await getDoc(doc(db, "maps", mapId.toString()));
@@ -68,9 +72,19 @@ const ActionSelector = ({ players }) => {
                 updateDoc(doc(db, "players", selectedPlayer), { items: arrayUnion(ItemsList[itemId]) });
                 break;
             case '5':
-
                 handleRemoveToken(itemId, coordX, coordY);
-                
+                break;
+            case '6':
+                updateDoc(doc(db, "players", selectedPlayer), { currentMap: coordX.toString() });
+                break;
+            case '7':
+                updateDoc(doc(db, "players", selectedPlayer), { active: true });
+                break;
+            case '8':
+                updateDoc(doc(db, "players", selectedPlayer), { active: false });
+                break;
+            case '9':
+                updateDoc(doc(db, "players", selectedPlayer), { items: [] });
                 break;
             default:
                 console.log("Неизвестный фрукт.");
@@ -122,7 +136,7 @@ const ActionSelector = ({ players }) => {
                 onChange={(e) => setCoordX(e.target.value)}
             >
                 <option value="">X</option>
-                {[0, 1, 2, 3, 4, 5].map(x => (
+                {[0, 1, 2, 3, 4, 5, 6,7,8,9,10,11,12,13,14].map(x => (
                     <option key={x} value={x}>{x}</option>
                 ))}
             </select>
@@ -133,7 +147,7 @@ const ActionSelector = ({ players }) => {
                 onChange={(e) => setCoordY(e.target.value)}
             >
                 <option value="">Y</option>
-                {[0, 1, 2, 3, 4, 5].map(y => (
+                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(y => (
                     <option key={y} value={y}>{y}</option>
                 ))}
             </select>

@@ -8,13 +8,15 @@ import { useEffect, useState } from "react";
 import {  selectCurrentUserId } from '../store/usersSlice.js';
 import PlayerStatsFullTable from '../components/PlayerStatsFullTable.jsx';
 import PlayerCard from '../components/PlayerCard.jsx';
+import ItemUsageSelection from '../components/ItemUsageSelection.jsx';
+
 function BooksPage() {
 
     const [player, setPlayer] = useState([]);
     
     const currentUserId = useSelector(selectCurrentUserId);
    
-    const pageTitle = `Привет, ${player.name}!!!!!`;
+    const pageTitle = `Привет, ${player.name}!!`;
 
     useEffect(() => {
             
@@ -36,7 +38,7 @@ function BooksPage() {
             <Header pageTitle={pageTitle} />
 
                 <PlayerCard player={player} />
-            
+                <ItemUsageSelection player={player} />
            
              {/*player.id ? <PlayerStatsFullTable player = {player} /> : <p>Loading... </p> */}
           

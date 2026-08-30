@@ -15,7 +15,7 @@ function StatsManagment({ players }) {
     return (
       <>
            
-            <h1>Stats:</h1>
+            <h1>Stats: {players.map(player => player.rightLastAnswer == 5 ? '✅' : player.rightLastAnswer == 2 ? '❌' : '')}</h1>
            <div className="stats-container">
                     <div className="player-list">
 
