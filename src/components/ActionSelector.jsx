@@ -2,13 +2,27 @@ import { useState } from 'react';
 import { collection, query, where, getDocs, doc, getDoc, onSnapshot, updateDoc, arrayUnion,  arrayRemove, setDoc } from "firebase/firestore";
 import { db } from "../firebase/config.js";
 import { ItemsList } from "../data/ItemsList.js"
+import { setAllFromGroupActive, setAllFromGroupInactive } from "../functions/handleRound.js"
+
 
 const ActionSelector = ({ players }) => {
     const [selectedPlayer, setSelectedPlayer] = useState('');
     const [selectedAction, setSelectedAction] = useState('');
+    const [selectedGroup, setSelectedGroup] = useState('');
     const [coordX, setCoordX] = useState('');
     const [coordY, setCoordY] = useState('');
     const [itemId, setItemId] = useState('');
+    const groups = [
+        { id: 0, name: "friends" },
+        { id: 1, name: "class9" },
+        { id: 2, name: "class8" },
+        { id: 3, name: "class7" },
+        { id: 4, name: "class6" },
+        { id: 5, name: "class5" },
+        { id: 6, name: "testGroup" },
+        
+    ]
+
     const actions = [
         { id: 0, name: "frog" },
         { id: 1, name: "sheep" },
@@ -19,7 +33,9 @@ const ActionSelector = ({ players }) => {
         { id: 6, name: "moveToMap (coordX)" },
         { id: 7, name: "Active" },
         { id: 8, name: "Inactive" },
-        { id: 9, name: "RemoveAllItems" }
+        { id: 9, name: "RemoveAllItems" },
+        { id: 10, name: "Set group Active" },
+        { id: 11, name: "Set group Inactive" },
     ]
     const handleRemoveToken = async (mapId, x, y) => {
         const mapSnap2 = await getDoc(doc(db, "maps", mapId.toString()));
@@ -86,6 +102,12 @@ const ActionSelector = ({ players }) => {
             case '9':
                 updateDoc(doc(db, "players", selectedPlayer), { items: [] });
                 break;
+            case '10':
+                setAllFromGroupActive(players.filter(pl => pl.group == selectedGroup))
+                break;
+            case '11':
+                setAllFromGroupInactive(players.filter(pl => pl.group == selectedGroup))
+                break;
             default:
                 console.log("Неизвестный фрукт.");
         }
@@ -111,8 +133,22 @@ const ActionSelector = ({ players }) => {
             >
                 <option value="">Выберите игрока</option>
                 {players.map(player => (
+                    player.group == selectedGroup &&
                     <option key={player.id} value={player.id}>
                         {player.name}
+                    </option>
+                ))}
+            </select>
+
+            <select
+                className="select-actions2"
+                value={selectedGroup}
+                onChange={(e) => setSelectedGroup(e.target.value)}
+            >
+                <option value="">Группа</option>
+                {groups.map(gr => (
+                    <option key={gr.id} value={gr.name}>
+                        {gr.name}
                     </option>
                 ))}
             </select>

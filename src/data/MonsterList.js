@@ -1,3 +1,84 @@
+
+export const soloMonsters = [
+    {
+        id: 0, name: 'Краб', imageId: '001_1', maxHealth: 15,
+        attacks:
+            [
+            { name: 'Николай I', damage: 5, type: 'Разные вопросы' },
+            { name: 'Николай I', damage: 3, type: 'Карта' },
+            { name: 'Александр I', damage: 3, type: 'Разные вопросы (командный итог)' },
+            { name: 'История науки', damage: 2, type: 'Один вопрос всем (командный итог)' }
+            ],
+        tip: "Н1 + карта + 1 история науки", level: 1
+    },
+    {
+        id: 1, name: 'Цветочек', imageId: '002_2', maxHealth: 10,
+        attacks:
+            [
+                { name: 'Николай I', damage: 2, type: 'Один вопрос всем' },
+                {
+                    name: 'Николай I', damage: 2, type: 'Разные вопросы' },
+                { name: 'Александр I', damage: 3, type: 'Карта' },
+                { name: 'История искусства', damage: 5, type: 'Разные вопросы (командный итог)' }
+            ], tip: "Н1 + карта + 1 история науки", level: 1 },
+    {
+        id: 2, name: 'Глазастик', imageId: '003_3', maxHealth: 20,
+        attacks:
+            [
+                { name: 'Николай I', damage: 2, type: 'Один вопрос всем' },
+                {
+                    name: 'Николай I', damage: 2, type: 'Разные вопросы'
+                },
+                { name: 'Александр I', damage: 3, type: 'Карта' },
+                { name: 'История искусства', damage: 6, type: 'Разные вопросы (командный итог)' }
+            ], tip: "Н1 + карта + 1 история науки", level: 1
+    },
+    {
+        id: 3, name: 'Рыцарь', imageId: '004_1', maxHealth: 10,
+        attacks:
+            [
+                { name: 'Николай I', damage: 5, type: 'Один вопрос всем (командный итог)' },
+                {
+                    name: 'Николай I', damage: 2, type: 'Разные вопросы'
+                },
+                { name: 'Александр I', damage: 3, type: 'Карта' },
+                { name: 'История искусства', damage: 2, type: 'Разные вопросы' }
+            ], tip: "Н1 + карта + 1 история науки", level: 1
+    },
+    {
+        id: 4, name: 'Маг', imageId: '005_2', maxHealth: 8,
+
+            attacks:
+            [
+                    { name: 'Николай I', damage: 5, type: 'Один вопрос всем (командный итог)' },
+                {
+                    name: 'Николай I', damage: 1, type: 'Разные вопросы'
+                },
+                { name: 'Александр I', damage: 3, type: 'Карта' },
+                { name: 'История искусства', damage: 2, type: 'Разные вопросы' }
+            ],
+            tip: "Н1 + карта + 1 история науки", level: 1
+    },
+    {
+        id: 5, name: 'Зомби', imageId: '006_3', maxHealth: 12, attacks:
+            [
+                { name: 'Николай I', damage: 2, type: 'Один вопрос всем' },
+                {
+                    name: 'Николай I', damage: 4, type: 'Разные вопросы (командный итог)'
+                },
+                { name: 'Александр I', damage: 3, type: 'Карта' },
+                { name: 'История искусства', damage: 2, type: 'Разные вопросы' }
+            ], tip: "Н1 + карта + 1 история науки", level: 1
+    },
+   
+];
+
+/* потеря предмета
+    получение предмета
+    бонусный балл
+    риск бонусным баллом
+*/ 
+
 export const monstersList = [
     { id: 0, name: 'Дракон', emoji: '🐉', color: '#e74c3c', power: 95 },
     { id: 1, name: 'Гоблин', emoji: '👺', color: '#27ae60', power: 30 },

@@ -1,13 +1,14 @@
-import  { useState, useEffect } from 'react';
-import  './WorldMap.scss';
+import { useState, useEffect } from 'react';
+import './WorldMap.scss';
+import { WorldMaps } from '../data/Images.js';
 
 // Импорт изображения карты (если есть)
 //import worldMapImage from '../assets/maps/world-map.png';
 //`/assets/monsters/${id}.png`
-const WorldMap = ({ id, players }) => {
+const WorldMap = ({ admin, players }) => {
     // Список игроков с координатами
 
-
+    
     // Состояние для выбранного игрока
 
 
@@ -28,7 +29,7 @@ const WorldMap = ({ id, players }) => {
                 <div className="worldmap-card">
                     {/* Заголовок карты */}
                     <div className="worldmap-header">
-                        <h2 className="worldmap-title">🗺️ Карта мира</h2>
+                                <h2 className="worldmap-title">🗺️ {WorldMaps[admin.worldMapId].name }</h2>
                         <div className="worldmap-stats">
 
                             <span className="stat-item">👥 Всего: {players.length}</span>
@@ -39,8 +40,8 @@ const WorldMap = ({ id, players }) => {
                     <div className="map-container">
                         {/* Изображение карты */}
                         <div className="map-background">
-                            {/* Если есть изображение карты */}
-                            <img src={`/assets/maps/${id}.png`} alt="Карта мира" className="map-image" />
+                                    {/* Если есть изображение карты */}
+                                    <img src={WorldMaps[admin.worldMapId].path} alt="Карта мира" className="map-image" />
 
 
                         </div>

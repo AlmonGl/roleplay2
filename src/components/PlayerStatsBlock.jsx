@@ -8,7 +8,7 @@ function PlayerStatsBlock({player}) {
 
             return (
         <>  
-           
+                    <div style={{ borderTop: '2px dashed #999', margin: '15px 0' }} />  
              <div className="playerStats">
                 
                         <div className="fantasy-text-block">

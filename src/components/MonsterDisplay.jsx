@@ -1,25 +1,13 @@
 
 import './MonsterDisplay.css';
-
-const MonsterDisplay = ({ players, id, level }) => {
-
-
+import { soloMonsters } from "../data/MonsterList.js"
+const MonsterDisplay = ({ id, health, players }) => {
 
 
-    const monster = {
-        name: 'Древний Лесной Дух',
-        health: 150,
-        maxHealth: 150,
-        attacks: [
-            { name: 'Николай I', damage: 55, type: 'monolog' },
-            { name: 'Николай I', damage: 30, type: 'solo' },
-            { name: 'Александр I', damage: 30, type: 'difficult' },
-            { name: 'Александр I', damage: 20, type: 'normal' }
-        ],
-        image: `/assets/monsters/${id}.png`
-    };
+    console.log(id, health);
 
-    const healthPercentage = (monster.health / monster.maxHealth) * 100;
+
+    const healthPercentage = (health / soloMonsters[id].maxHealth) * 100;
 
     const getHealthColor = () => {
         if (healthPercentage > 60) return '#4CAF50';
@@ -30,24 +18,25 @@ const MonsterDisplay = ({ players, id, level }) => {
     function handleMonsterClick() {
         
     }
-    
-    return (
 
+    return (
+        <>
+            {!id ? <p>Loading... </p> :
         <div className="monster-container">
 
             
             <div className="monster-card">
                 <div className="monster-header">
-                    <h2 className="monster-name">{monster.name}</h2>
-                    <span className="monster-level">Уровень {level}</span>
+                            <h2 className="monster-name">{soloMonsters[id].name}</h2>
+                    <span className="monster-level">Уровень {soloMonsters[id].level}</span>
                 </div>
 
                 <div className="monster-top-section">
                     <div className="monster-image-container">
                         <div className="monster-image">
                             <img
-                                src={monster.image}
-                                alt={monster.name}
+                                src={`/assets/monsters/${soloMonsters[id].imageId}.png`}
+                                alt={soloMonsters[id].name}
                                 className="monster-img-full"
                             />
                             <div className="monster-glow"></div>
@@ -58,7 +47,7 @@ const MonsterDisplay = ({ players, id, level }) => {
                     <div className="health-side-section">
                         <div className="health-stat-label">
                             <span className="health-icon">❤️</span>
-                            <span className="health-numbers">{monster.health}/{monster.maxHealth}</span>
+                            <span className="health-numbers">{health}/{soloMonsters[id].maxHealth}</span>
                         </div>
                         <div className="health-bar-vertical-wrapper">
                             <div className="health-bar-vertical-bg">
@@ -75,6 +64,9 @@ const MonsterDisplay = ({ players, id, level }) => {
                             {Math.round(healthPercentage)}%
                         </div>
                     </div>
+                    <div className = 'answer-icons'>
+                        {players.map(player => player.rightLastAnswer == 5 ? '✅' : player.rightLastAnswer == 2 ? '❌' : '')}
+                    </div>
                 </div>
 
                 
@@ -85,7 +77,7 @@ const MonsterDisplay = ({ players, id, level }) => {
                     <div className="attacks-section">
                         <h3 className="attacks-title">⚔️ Вопросы и задания</h3>
                         <div className="attacks-grid">
-                            {monster.attacks.map((attack, index) => (
+                            {soloMonsters[id].attacks.map((attack, index) => (
                                 <div key={index}
                                      className="attack-card"
                                      onClick={() => {
@@ -99,12 +91,16 @@ const MonsterDisplay = ({ players, id, level }) => {
                                         {attack.damage} урона
                                     </div>
                                     <div className={`attack-type ${attack.type}`}>
-                                        {attack.type === 'monolog' ? '⚡ Выступление' :
-                                            attack.type === 'difficult' ? '🔥 Сложный' :
-                                                attack.type === 'solo' ? '✨ Одна цель' : '✨ Обычный'}
+                                        {attack.type === 'Разные вопросы (командный итог)' ? '✨ Разные вопросы (командный итог)' :
+                                            attack.type === 'Разные вопросы' ? '✨ Разные вопросы' :
+                                                attack.type === 'Один вопрос всем (командный итог)' ? '⚡ Один вопрос всем (командный итог)' :
+                                                    attack.type === 'Один вопрос всем' ? '⚡ Один вопрос всем' :
+                                                        attack.type === 'Карта (командный итог)' ? '🗺️ Карта (командный итог)' :
+                                                            attack.type === 'Карта' ? '🗺️ Карта' :
+                                                    '⚽ error'}
 
                                     </div>
-                                    {players.map(player => player.rightLastAnswer == 5 ? '✅' : player.rightLastAnswer == 2 ? '❌' : '')}
+                                    
                                 </div>
                             ))}
                         </div>
@@ -112,6 +108,8 @@ const MonsterDisplay = ({ players, id, level }) => {
                 </div>
             </div>
         </div>
+        }
+        </>
     );
 };
 
