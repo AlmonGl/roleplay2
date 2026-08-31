@@ -13,27 +13,25 @@ export function setAllActiveIdle(players) {
 
 }
 
-export function handleEndOfRound() {
-    
 
-    const setRoundEnd = async () => {
+export function setAllFromGroupActive(players) {
+    players.forEach((it) => {
+        updateDoc(doc(db, "players", it.id), { active: true });
 
-        const q = query(collection(db, "players"));
-        const querySnapshot = await getDocs(q);
-        
-        querySnapshot.forEach((it) => {
-
-            updateDoc(doc(db, "players", it.id), { movePoints: 0, status: "item-use" });
-            
-        });
-        
-
-    }
-    setRoundEnd()
-
+    })
 
 
 }
+export function setAllFromGroupInactive(players) {
+    players.forEach((it) => {
+        updateDoc(doc(db, "players", it.id), { active: false });
+
+    })
+
+
+}
+
+
 
 
 export function handleStartOfRound() {
@@ -52,13 +50,18 @@ export function handleStartOfRound() {
                     extraMove = true;
                 }
             }
-
             if (it.data().items) {
                 if (it.data().items.find(p => p.name == 'Обездвижены!')) {
                     restrained = true;
                 }
             }
-            updateDoc(doc(db, "players", it.id), { movePoints: restrained ? 0 : extraMove ? 3 : 2, status: "navigate" });
+            updateDoc(doc(db, "players", it.id), {
+                movePoints: restrained ? 0 : extraMove ? 3 : 2,
+                currentAction: "",
+                lastAnswer: "-",
+                rightLastAnswer: 0,
+                currentActionBonus: -1
+            });
             
         });
 

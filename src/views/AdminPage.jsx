@@ -11,22 +11,31 @@ import MapSelection from '../components/MapSelection.jsx';
 import AdminCheckBoxes from '../components/AdminCheckBoxes.jsx';
 import ChooseQuestionBlock from '../components/ChooseQuestionBlock.jsx';
 import ActionSelector from '../components/ActionSelector.jsx';
-import { handleEndOfRound, handleStartOfRound, setAllActiveIdle } from '../functions/handleRound.js';
+import AddPlayer from '../components/AddPlayer.jsx';
+import { handleStartOfRound, setAllActiveIdle } from '../functions/handleRound.js';
 import { handleSetWorldMap } from '../functions/handleWorldMap.js';
 
 import { selectCurrentUserId } from '../store/usersSlice.js';
 import { ItemsList } from '../data/ItemsList.js';
 
+import { WorldMaps } from '../data/Images.js';
+
 
 
 
 function AdminPage() {
+    
+    const [admin, setAdmin] = useState([]);
     const currentUserId = useSelector(selectCurrentUserId);
-    // const books = useSelector(selectBooks);
     const [players, setPlayers] = useState([]);
 
-    
+    const [selectedMap, setSelectedMap] = useState('0');
+    const handleChangeMap = (e) => {
+        setSelectedMap(e.target.value);
 
+    };
+
+    
     useEffect(() => {
         onSnapshot(collection(db, "players"), (querySnap) => {
             let playerList = [];
@@ -38,18 +47,21 @@ function AdminPage() {
             setPlayers(playerList);
         });
 
-        
-
-        
-
     }, []);
 
+    useEffect(() => {
+
+        onSnapshot(doc(db, "players", currentUserId), (docSnap1) => {
+            setAdmin({ ...docSnap1.data(), id: docSnap1.id });
+        });
+
+    }, []); 
     const pageTitle = "Admin page";
 
 
     return (
         <>
-            {players ?
+            {players && admin ?
                 <div className="container">
                     <Header pageTitle={pageTitle} />
 
@@ -62,13 +74,6 @@ function AdminPage() {
                         <AdminCheckBoxes currentUserId={currentUserId} />
                         
 
-                        <button
-                            onClick={() => {
-                                handleEndOfRound();
-                            }}
-                            className="btn">
-                            Конец рауда(items)
-                        </button>
                         <button
                             onClick={() => {
                                 handleStartOfRound();
@@ -84,18 +89,41 @@ function AdminPage() {
                             Idle
                         </button>
 
+                        <div>
+                            <select className="select-actions2" value={selectedMap} onChange={handleChangeMap}>
+                                <option value="-1">Maps</option>
+                                {
+                                    WorldMaps.map(m =>
+
+                                        <option key={`${m.id}`} value={m.id}>{m.name}</option>
+                                    )
+                                }
+
+                            </select>
+                            
+                            <button
+                                onClick={() => {
+                                    if (selectedMap != -1) {
+
+                                        handleSetWorldMap(players.filter(pl => pl.active), selectedMap, admin.id);
+                                    }
+                                }}
+                                className="btn">
+                                на world map
+                            </button>
+
+
+                        </div>
                         
-                        <button
-                            onClick={() => {
-                                handleSetWorldMap(players.filter(pl => pl.active));
-                            }}
-                            className="btn">
-                            на world map
-                        </button>
+                        <AddPlayer />
+                        
+
+
+                        
                         
                     </div>
-
-                    <ChooseQuestionBlock />
+                    
+                    <ChooseQuestionBlock admin={ admin} />
 
                   
                     <StatsManagment players={players.filter(pl => pl.active)} />  

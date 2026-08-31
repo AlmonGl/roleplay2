@@ -32,7 +32,7 @@ export const usersSlice = createSlice({
 })
 export function checkUser(login) {
    
-    if (['L92N', 'R43J', 'NB7E', 'CFF3', 'WT57', 'O9NB', 'Y5RG', 'B4NH','ZH7R', '558899'].includes(login)) { return true; }
+    if (['L92N', 'R43J', 'NB7E', 'CFF3', 'WT57', 'O9NB', 'Y5RG', 'B4NH','ZH7R', '558899', 'TEST1'].includes(login)) { return true; }
             else { return false; }
 }
 export function checkAdmin(login) {

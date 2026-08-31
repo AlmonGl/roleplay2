@@ -4,68 +4,101 @@ import { db } from "../firebase/config.js";
 import './NavigateWorldButtons.scss';
 
 function NavigateWorldButtons({ player }) {
-  const x = player.x ?? 1;
-  const y = player.y ?? 1;
+    const x = player.x ?? 1;
+    const y = player.y ?? 1;
 
-  const move = (dx, dy) => {
-    const newX = x + dx;
-    const newY = y + dy;
+    const move = (dx, dy) => {
+        const newX = x + dx;
+        const newY = y + dy;
 
-    // Проверка границ: координаты должны быть в пределах [1, 100]
-    if (newX < 1 || newX > 100 || newY < 1 || newY > 100) return;
+        // Проверка границ 1..100
+        if (newX < 1 || newX > 100 || newY < 1 || newY > 100) return;
 
-    updateDoc(doc(db, 'players', player.id), {
-      x: newX,
-      y: newY,
-    });
-  };
+        updateDoc(doc(db, 'players', player.id), {
+            x: newX,
+            y: newY,
+        });
+    };
 
-  const canMoveUp = y > 1;
-  const canMoveDown = y < 100;
-  const canMoveLeft = x > 1;
-  const canMoveRight = x < 100;
+    // Зоны-обработчики
+    const handleMove = (zone) => {
+        switch (zone) {
+            case 'up':
+                move(0, -1);
+                break;
+            case 'down':
+                move(0, 1);
+                break;
+            case 'left':
+                move(-1, 0);
+                break;
+            case 'right':
+                move(1, 0);
+                break;
+            default:
+                break;
+        }
+    };
 
     return (
-      <div className='nav-world-buttons'>
-    <div className="navigate-world-buttons">
-      <button
-        className="nav-btn up"
-        onClick={() => move(0, -1)}
-        disabled={!canMoveUp}
-        aria-label="Вверх"
-      >
-        ▲
-      </button>
+        <div className = 'nav-world-buttons'>
+        <div className="touch-panel">
+            <div
+                className="touch-zone zone-up"
+                onClick={() => handleMove('up')}
+                onTouchStart={(e) => {
+                    e.preventDefault();
+                    handleMove('up');
+                }}
+                role="button"
+                aria-label="Вверх"
+            >
+                <span className="zone-icon">▲</span>
+            </div>
 
-      <div className="middle-row">
-        <button
-          className="nav-btn left"
-          onClick={() => move(-1, 0)}
-          disabled={!canMoveLeft}
-          aria-label="Влево"
-        >
-          ◀
-        </button>
-        <button
-          className="nav-btn right"
-          onClick={() => move(1, 0)}
-          disabled={!canMoveRight}
-          aria-label="Вправо"
-        >
-          ▶
-        </button>
-      </div>
+            <div className="touch-row-middle">
+                <div
+                    className="touch-zone zone-left"
+                    onClick={() => handleMove('left')}
+                    onTouchStart={(e) => {
+                        e.preventDefault();
+                        handleMove('left');
+                    }}
+                    role="button"
+                    aria-label="Влево"
+                >
+                    <span className="zone-icon">◀</span>
+                </div>
 
-      <button
-        className="nav-btn down"
-        onClick={() => move(0, 1)}
-        disabled={!canMoveDown}
-        aria-label="Вниз"
-      >
-        ▼
-      </button>
-    </div>
-        </div>);
+                <div
+                    className="touch-zone zone-right"
+                    onClick={() => handleMove('right')}
+                    onTouchStart={(e) => {
+                        e.preventDefault();
+                        handleMove('right');
+                    }}
+                    role="button"
+                    aria-label="Вправо"
+                >
+                    <span className="zone-icon">▶</span>
+                </div>
+            </div>
+
+            <div
+                className="touch-zone zone-down"
+                onClick={() => handleMove('down')}
+                onTouchStart={(e) => {
+                    e.preventDefault();
+                    handleMove('down');
+                }}
+                role="button"
+                aria-label="Вниз"
+            >
+                <span className="zone-icon">▼</span>
+            </div>
+        </div>
+        </div>
+    );
 }
 
 export default NavigateWorldButtons;

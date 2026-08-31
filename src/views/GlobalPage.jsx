@@ -32,20 +32,14 @@ function GlobalPage() {
             let playerList = [];
             querySnap.forEach((it) => {
 
-
                 if (it.data().login != "558899") {
                     playerList.push({ id: it.id, ...it.data() })
                 }
 
-
             })
             setPlayers(playerList);
-
         });
-
-    }, []);
-
-   
+    }, []);    
     
 	return (
 		<>
@@ -72,10 +66,10 @@ function GlobalPage() {
                         
                             
                         {admin.activeGlobalPageMonster &&
-                            <MonsterDisplay id={'004_1'} level={3} players={players.filter(pl => pl.active) } />
+                            <MonsterDisplay id={admin.currentMonster} health={admin.currentMonsterHP } players={players.filter(pl => pl.active) } />
                         }
                         {admin.activeGlobalPageWorldMap &&
-                            <WorldMap id={'1444'} players={players.filter(pl => pl.active)} />
+                            <WorldMap admin={admin} players={players.filter(pl => pl.active)} />
                         }
                             {admin.activeGlobalPageRating &&
                             <Rating players={players.filter(pl => pl.active)} />
@@ -96,10 +90,3 @@ function GlobalPage() {
 export default GlobalPage
 
 
-/*const handlePlayerClick = (admin) => {
-    console.log('Выбран игрок:', admin);
-};
-
-const handleCellClick = (row, col) => {
-    console.log(`Клетка [${row}][${col}] нажата`);
-};*/
