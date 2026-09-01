@@ -30,16 +30,24 @@ function LoginPage() {
 
     function handleLogIn(e) {
         e.preventDefault();
-         
+
+        checkUser(document.getElementById('id-field').value).then(allowed => { setLoginAttempt(document.getElementById('id-field').value); });
+
+       /* const allowed = await checkUser(document.getElementById('id-field').value);
+        if (allowed) { setLoginAttempt(document.getElementById('id-field').value); } else {
+
+            alert("no such user");
+
+        }*/
         
-        if (checkUser(document.getElementById('id-field').value)) {
+       /* if (checkUser(document.getElementById('id-field').value)) {
             setLoginAttempt(document.getElementById('id-field').value);
             
         } else  {
                         
            alert("no such user");
             
-        }
+        }*/
         
         
     }
