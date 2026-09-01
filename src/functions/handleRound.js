@@ -12,7 +12,15 @@ export function setAllActiveIdle(players) {
 
 
 }
+export function setAllActiveEnterAnswer(players) {
+    players.forEach((it) => {
+        updateDoc(doc(db, "players", it.id), { status: "enterAnswer", lastEnterAnswer: ''});
 
+    })
+
+
+
+}
 
 export function setAllFromGroupActive(players) {
     players.forEach((it) => {

@@ -12,7 +12,7 @@ import AdminCheckBoxes from '../components/AdminCheckBoxes.jsx';
 import ChooseQuestionBlock from '../components/ChooseQuestionBlock.jsx';
 import ActionSelector from '../components/ActionSelector.jsx';
 import AddPlayer from '../components/AddPlayer.jsx';
-import { handleStartOfRound, setAllActiveIdle } from '../functions/handleRound.js';
+import { handleStartOfRound, setAllActiveIdle, setAllActiveEnterAnswer } from '../functions/handleRound.js';
 import { handleSetWorldMap } from '../functions/handleWorldMap.js';
 
 import { selectCurrentUserId } from '../store/usersSlice.js';
@@ -88,7 +88,13 @@ function AdminPage() {
                             className="btn">
                             Idle
                         </button>
-
+                        <button
+                            onClick={() => {
+                                setAllActiveEnterAnswer(players.filter(pl => pl.active));
+                            }}
+                            className="btn">
+                            Поле для ответа
+                        </button>
                         <div>
                             <select className="select-actions2" value={selectedMap} onChange={handleChangeMap}>
                                 <option value="-1">Maps</option>

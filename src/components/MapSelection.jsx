@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 function MapSelection() {
 
-    const [selectedMap, setSelectedMap] = useState('0');
+    const [selectedMap, setSelectedMap] = useState('-1');
     const [maps, setMaps] = useState('');
 
     useEffect(() => {
@@ -72,7 +72,7 @@ function MapSelection() {
             {maps ? 
                 <div>
                     <select className="select-actions2" value={selectedMap} onChange={handleChangeMap}>
-                        <option value="0">Maps</option>
+                        <option value="-1">Maps</option>
                         {
                             maps.map(m =>
 

@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUserId } from '../store/usersSlice.js';
 import './GlobalPage.css';
 
-
+import EnterChoiceDiagram  from "./EnterChoiceDiagram.jsx";
 
 
 function GlobalPage() {
@@ -71,11 +71,16 @@ function GlobalPage() {
                         {admin.activeGlobalPageWorldMap &&
                             <WorldMap admin={admin} players={players.filter(pl => pl.active)} />
                         }
-                            {admin.activeGlobalPageRating &&
-                            <Rating players={players.filter(pl => pl.active)} />
-                            }
+                        {admin.activeEnterChoiceDiagram &&
+                            <EnterChoiceDiagram players={players.filter(pl => pl.active)} admin={admin} />
+                        }
+                        {admin.activeGlobalPageRating &&
+                        <Rating players={players.filter(pl => pl.active)} />
+                        }
 
 
+
+                        
                             
                         </div>
                         

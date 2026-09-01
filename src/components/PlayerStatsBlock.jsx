@@ -15,7 +15,7 @@ function PlayerStatsBlock({player}) {
                             {player.rightLastAnswer == 5 ? '✅' : player.rightLastAnswer == 2 ? '❌' : '□'}
                             {`${player.status} | ${player.icon} | ${player.name} | ID: ${player.login}. | Hp: ${player.HP}. Sc: ${player.score}. Mov:${player.movePoints}. |   `}
                             {player.questionId && `Question: ${Questions[player.questionId].text}.`} {`| Answer: ${player.lastAnswer}.`} {player.questionId && ` | Right: ${Questions[player.questionId].right}. | `}
-                            {` task: ${player.task} |`}{` act: ${player.currentAction}     `}
+                            {` task: ${player.task} |`}{` act: ${player.currentAction} |   ввод: ${player.lastEnterAnswer} |`}
                             {`bonus: ${player.currentActionBonus}` }
                                 
                                
