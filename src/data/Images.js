@@ -7,6 +7,12 @@ export const WorldMaps = [
     { id: 5, name: '1763 г.', path: '/assets/maps/1763.png' },
     { id: 6, name: '1914 г.', path: '/assets/maps/europe191405.svg' },
     { id: 7, name: '1910 г.', path: '/assets/maps/1910.png' },
+    { id: 8, name: 'Евразия', path: '/assets/maps/Eurasia_map_blank.jpg' },
+    { id: 9, name: '1950 г.', path: '/assets/maps/1950.png' },
+    { id: 10, name: '1648 г.', path: '/assets/maps/1648.png' },
+    { id: 11, name: '1850 г.', path: '/assets/maps/1850.png' },
+    { id: 12, name: '1177 г. до н.э.', path: '/assets/maps/1177BC.png' },
+    { id: 13, name: '120 г.', path: '/assets/maps/120.png' },
 ];
 
 export const Images = [
