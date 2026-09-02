@@ -1,3 +1,4 @@
+import './AdminPage.css';
 
 import Header from '../components/Header.jsx';
 import { useSelector } from 'react-redux';
@@ -9,10 +10,11 @@ import StatsManagment from '../components/StatsManagment.jsx';
 import MapMaking from '../components/MapMaking.jsx';
 import MapSelection from '../components/MapSelection.jsx';
 import AdminCheckBoxes from '../components/AdminCheckBoxes.jsx';
+
 import ChooseQuestionBlock from '../components/ChooseQuestionBlock.jsx';
 import ActionSelector from '../components/ActionSelector.jsx';
 import AddPlayer from '../components/AddPlayer.jsx';
-import { handleStartOfRound, setAllActiveIdle } from '../functions/handleRound.js';
+import { handleStartOfRound, setAllActiveIdle, setAllActiveEnterAnswer } from '../functions/handleRound.js';
 import { handleSetWorldMap } from '../functions/handleWorldMap.js';
 
 import { selectCurrentUserId } from '../store/usersSlice.js';
@@ -29,6 +31,7 @@ function AdminPage() {
     const currentUserId = useSelector(selectCurrentUserId);
     const [players, setPlayers] = useState([]);
 
+    
     const [selectedMap, setSelectedMap] = useState('0');
     const handleChangeMap = (e) => {
         setSelectedMap(e.target.value);
@@ -73,56 +76,70 @@ function AdminPage() {
                         <MapSelection />
                         <AdminCheckBoxes currentUserId={currentUserId} />
                         
-
-                        <button
-                            onClick={() => {
-                                handleStartOfRound();
-                            }}
-                            className="btn">
-                            новый раунд
-                        </button>
-                        <button
-                            onClick={() => {
-                                setAllActiveIdle(players.filter(pl => pl.active));
-                            }}
-                            className="btn">
-                            Idle
-                        </button>
-
-                        <div>
-                            <select className="select-actions2" value={selectedMap} onChange={handleChangeMap}>
-                                <option value="-1">Maps</option>
-                                {
-                                    WorldMaps.map(m =>
-
-                                        <option key={`${m.id}`} value={m.id}>{m.name}</option>
-                                    )
-                                }
-
-                            </select>
-                            
-                            <button
-                                onClick={() => {
-                                    if (selectedMap != -1) {
-
-                                        handleSetWorldMap(players.filter(pl => pl.active), selectedMap, admin.id);
-                                    }
-                                }}
-                                className="btn">
-                                на world map
-                            </button>
-
-
-                        </div>
-                        
-                        <AddPlayer />
-                        
-
+                       
 
                         
                         
                     </div>
-                    
+                    <div className="admin-buttons">
+                        <div>
+                            <button
+                                onClick={() => {
+                                    handleStartOfRound(players.filter(pl => pl.active));
+                                }}
+                                className="btn">
+                                новый раунд
+                            </button>
+                            <button
+                                onClick={() => {
+                                    handleStartOfRound(players.filter(pl => pl.active));
+                                    setAllActiveIdle(players.filter(pl => pl.active));
+                                }}
+                                className="btn">
+                                Idle
+                            </button>
+                            <button
+                                onClick={() => {
+                                    handleStartOfRound(players.filter(pl => pl.active));
+                                    setAllActiveEnterAnswer(players.filter(pl => pl.active));
+                                    
+                                }}
+                                className="btn">
+                                Поле для ответа
+                            </button>
+                            <div>
+                                <select className="select-actions2" value={selectedMap} onChange={handleChangeMap}>
+                                    <option value="-1">Maps</option>
+                                    {
+                                        WorldMaps.map(m =>
+
+                                            <option key={`${m.id}`} value={m.id}>{m.name}</option>
+                                        )
+                                    }
+
+                                </select>
+
+                                <button
+                                    onClick={() => {
+                                        if (selectedMap != -1) {
+
+                                            handleStartOfRound(players.filter(pl => pl.active));
+                                            handleSetWorldMap(players.filter(pl => pl.active), selectedMap, admin.id);
+                                        }
+                                    }}
+                                    className="btn">
+                                    на world map
+                                </button>
+
+
+                            </div>
+
+
+
+                        </div>
+                        <AddPlayer />
+                        
+                    </div>
                     <ChooseQuestionBlock admin={ admin} />
 
                   

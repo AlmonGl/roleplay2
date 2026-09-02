@@ -1,0 +1,150 @@
+/* EnterChoiceDiagram.css */
+.answer-diagram {
+
+
+    .diagram-icon-unicode {
+        font-size: 28px; /* или любой другой размер */
+        line-height: 1;
+        margin-bottom: 4px; /* отступ перед именем */
+    }
+
+    .diagram-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        box-sizing: border-box;
+        background: linear-gradient(145deg, #1a1a2e, #16213e);
+        border-radius: 20px;
+        border: 2px solid #c9a959;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(201, 169, 89, 0.1);
+    }
+
+        .diagram-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient( circle, rgba(201, 169, 89, 0.1) 0%, transparent 70% );
+            animation: magicalGlow 10s infinite;
+            pointer-events: none;
+        }
+
+    .diagram-chart {
+        position: relative;
+        border-bottom: 2px solid #333;
+        margin-bottom: 40px; /* место для подписей */
+    }
+
+    .diagram-columns {
+        display: flex;
+        align-items: flex-end;
+        height: 100%;
+        width: 100%;
+    }
+
+    .diagram-column-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        height: 100%;
+    }
+
+    .diagram-column {
+        width: 100%;
+        min-height: 2px;
+        border-radius: 4px 4px 0 0;
+        transition: height 0.3s ease;
+    }
+
+    .diagram-player-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 8px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .diagram-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 4px;
+    }
+
+    .diagram-name {
+        font-size: 14px;
+        font-weight: 500;
+        color: white;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .diagram-right-line-horizontal {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: #ff4d4f;
+        // красный цвет линии z-index: 10;
+    }
+
+    .diagram-right-label {
+        position: absolute;
+        top: -22px;
+        // чуть выше линии left: 0;
+        background: #ff4d4f;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .diagram-right-line {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #ff4d4f;
+        z-index: 10;
+    }
+
+    .diagram-right-label {
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #ff4d4f;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .diagram-deviation {
+        font-size: 12px;
+        color: white;
+        margin-bottom: 4px;
+        text-align: center;
+    }
+
+    .diagram-empty {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 800px;
+        width: 1000px;
+        font-size: 18px;
+        color: #999;
+    }
+}

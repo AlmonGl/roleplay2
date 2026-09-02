@@ -1,10 +1,23 @@
 
-import './MonsterDisplay.css';
+import './MonsterDisplay.scss';
 import { soloMonsters } from "../data/MonsterList.js"
+import { useState } from 'react';
 const MonsterDisplay = ({ id, health, players }) => {
 
 
-    console.log(id, health);
+    const [selectedAttacks, setSelectedAttacks] = useState(new Set());
+
+    const toggleAttack = (index) => {
+        setSelectedAttacks(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(index)) {
+                newSet.delete(index);
+            } else {
+                newSet.add(index);
+            }
+            return newSet;
+        });
+    };
 
 
     const healthPercentage = (health / soloMonsters[id].maxHealth) * 100;
@@ -20,7 +33,7 @@ const MonsterDisplay = ({ id, health, players }) => {
     }
 
     return (
-        <>
+        <div className="monster-display-component">
             {!id ? <p>Loading... </p> :
         <div className="monster-container">
 
@@ -79,10 +92,11 @@ const MonsterDisplay = ({ id, health, players }) => {
                         <div className="attacks-grid">
                             {soloMonsters[id].attacks.map((attack, index) => (
                                 <div key={index}
-                                     className="attack-card"
+                                    className={`attack-card ${selectedAttacks.has(index) ? 'selected' : ''}`}
                                      onClick={() => {
                                          handleMonsterClick();
-
+                                         toggleAttack(index);
+                                         console.log(12);
                                     }
                                     } >
                                     <div className="attack-name">{attack.name}</div>
@@ -109,7 +123,7 @@ const MonsterDisplay = ({ id, health, players }) => {
             </div>
         </div>
         }
-        </>
+        </div>
     );
 };
 

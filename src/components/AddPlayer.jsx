@@ -21,7 +21,7 @@ function AddPlayerForm() {
         await setDoc(doc(db, "players", Math.random().toString(36).substring(2, 12)), {
             name: name.trim(),
             group: group.trim(),
-            login: Math.random().toString(36).substring(3, 6),
+            login: Math.random().toString(36).substring(3, 7),
             icon: PlayerTokenIcons[Math.floor(Math.random() * PlayerTokenIcons.length)],
             color: '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0'),
             currentAction: '',
@@ -35,7 +35,9 @@ function AddPlayerForm() {
             row: 1,
             col: 1,
             x: 1,
-            y: 1, });
+            y: 1,
+            HP: 20
+        });
       alert('Игрок добавлен!');
       setName('');
       setGroup('');

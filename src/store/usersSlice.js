@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-
+import {  collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../firebase/config.js";
 
 export const usersSlice = createSlice({
     name: 'users',
@@ -30,11 +30,19 @@ export const usersSlice = createSlice({
         }
     
 })
-export function checkUser(login) {
+
    
-    if (['L92N', 'R43J', 'NB7E', 'CFF3', 'WT57', 'O9NB', 'Y5RG', 'B4NH','ZH7R', '558899', 'TEST1'].includes(login)) { return true; }
-            else { return false; }
-}
+   /* if (['L92N', 'R43J', 'NB7E', 'CFF3', 'WT57', 'O9NB', 'Y5RG', 'B4NH','ZH7R', '558899', 'TEST1'].includes(login)) { return true; }
+            else { return false; }*/
+
+    export async function checkUser(login) {
+        
+        const usersRef = collection(db, "users");
+        const q = query(usersRef, where("login", "==", login));
+        const querySnapshot = await getDocs(q);
+        return !querySnapshot.empty; // true, если найден хотя бы один документ
+    }
+
 export function checkAdmin(login) {
 
             if (login == '558899')

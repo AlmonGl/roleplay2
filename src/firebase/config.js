@@ -3,12 +3,12 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDELrPue5SAmQB0w6ICAJ95y2JtDRAtK5o",
-    authDomain: "booklist-b486e.firebaseapp.com",
-    projectId: "booklist-b486e",
-    storageBucket: "booklist-b486e.firebasestorage.app",
-    messagingSenderId: "516636389623",
-    appId: "1:516636389623:web:fd0625457c9ee32a6a23f2"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase

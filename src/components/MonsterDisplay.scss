@@ -1,0 +1,375 @@
+.monster-display-component {
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #1a0e0a, #2d1810);
+    border-radius: 16px;
+    min-height: 600px;
+    display: inline-block;
+    background: #2d1810;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(74, 44, 26, 0.5), inset 0 0 50px rgba(0,0,0,0.5);
+    border: 3px solid #4a2c1a;
+    width: 100%;
+    max-width: 1000px;
+
+    .monster-container {
+    }
+
+    .monster-card {
+        width: 100%;
+        color: #e8d5b5;
+        font-family: 'Segoe UI', 'Georgia', serif;
+    }
+
+
+
+    .monster-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 12px;
+        border-bottom: 2px solid rgba(74, 44, 26, 0.6);
+    }
+
+    .monster-name {
+        font-size: 24px;
+        font-weight: 700;
+        color: #ffd700;
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        margin: 0;
+    }
+
+    .monster-level {
+        font-size: 20px;
+        color: #4CAF50;
+        background: rgba(0,0,0,0.4);
+        padding: 4px 12px;
+        border-radius: 20px;
+        border: 1px solid #4a2c1a;
+    }
+
+    .monster-image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 5px 0 5px 0;
+    }
+
+    .monster-image {
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(circle, rgba(74, 44, 26, 0.4) 0%, rgba(0,0,0,0.6) 100%);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 3px solid #4a2c1a;
+        box-shadow: 0 0 40px rgba(74, 44, 26, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+
+    .monster-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Заполняет контейнер без искажений */
+        border-radius: 50%; /* Круглая обрезка */
+    }
+    /* Или если нужно показать монстра целиком без обрезки */
+    .monster-img-full {
+        width: 100%;
+        height: 100%;
+        animation: pulse 3s ease-in-out infinite;
+        font-size: 120px;
+        object-fit: contain; /* Показывает изображение целиком */
+    }
+
+
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+    }
+
+    .monster-stats {
+        margin-top: 2px;
+    }
+
+    .stat-section {
+        background: rgba(0,0,0,0.3);
+        padding: 16px;
+        border-radius: 10px;
+        border: 1px solid rgba(74, 44, 26, 0.4);
+        margin-bottom: 20px;
+    }
+
+    .stat-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+        margin-bottom: 8px;
+        color: #e8d5b5;
+    }
+
+    .health-bar-wrapper {
+        width: 100%;
+    }
+
+    .health-bar-bg {
+        width: 100%;
+        height: 24px;
+        background: rgba(0,0,0,0.6);
+        border-radius: 12px;
+        overflow: hidden;
+        border: 2px solid #3a2218;
+        position: relative;
+    }
+
+    .health-bar-fill {
+        height: 100%;
+        border-radius: 10px;
+        transition: width 0.8s ease, background-color 0.5s ease;
+        background: #4CAF50;
+        box-shadow: inset 0 2px 4px rgba(255,255,255,0.2);
+    }
+
+    .attacks-section {
+        background: rgba(0,0,0,0.3);
+        border-radius: 10px;
+        border: 1px solid rgba(74, 44, 26, 0.4);
+    }
+
+    .attacks-title {
+        font-size: 18px;
+        color: #ffd700;
+        margin: 6px 0 6px 0;
+        text-align: center;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+    }
+
+    .attacks-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    /* Базовый стиль карточки */
+    .attack-card {
+        background: rgba(26, 14, 10, 0.6);
+        padding: 12px 16px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        transition: filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        border: 2px solid transparent;
+        border-radius: 12px;
+        cursor: pointer;
+    }
+
+        .attack-card:hover {
+            background: rgba(74, 44, 26, 0.3);
+            transform: translateX(4px);
+        }
+        /* Состояние "выбрано" */
+        .attack-card.selected {
+            position: relative;
+            filter: grayscale(1) brightness(0.7); /* серость и затемнение */
+            opacity: 0.6;
+           
+            border-color: #555; /* тусклая рамка */
+            box-shadow: none;
+            transition: filter 0.3s, opacity 0.3s;
+        }
+        /* Оверлей с надписью (по умолчанию скрыт) */
+        .attack-card .selected-overlay {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            
+            /* Фэнтезийное оформление текста */
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 0 0 12px #ffd700, 0 0 24px #ff8c00, 2px 2px 4px rgba(0,0,0,0.8);
+            letter-spacing: 2px;
+        }
+        /* Показываем надпись только когда блок выбран */
+        .attack-card.selected .selected-overlay {
+            display: block;
+        }
+        /* Перечёркивание названия */
+        /* Оверлей с подписью "Использовано" */
+        .attack-card.selected::after {
+            content: "Использовано";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ccc;
+            text-shadow: 0 0 8px #000;
+            background: rgba(0,0,0,0.6);
+            padding: 6px 12px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            pointer-events: none;
+        }
+
+        .attack-card.selected .attack-name {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+    .attack-name {
+        font-weight: 600;
+        font-size: 16px;
+        color: #f0e0c0;
+    }
+
+    .attack-damage {
+        font-size: 14px;
+        color: #ff6b4a;
+        margin: 4px 0;
+    }
+
+    .damage-icon {
+        margin-right: 4px;
+    }
+
+    .attack-type {
+        font-size: 12px;
+        padding: 2px 10px;
+        border-radius: 12px;
+        display: inline-block;
+        margin-top: 4px;
+    }
+
+        .attack-type.physical {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .attack-type.fire {
+            background: rgba(244, 67, 54, 0.2);
+            color: #ff6b4a;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        .attack-type.magic {
+            background: rgba(156, 39, 176, 0.2);
+            color: #ce93d8;
+            border: 1px solid rgba(156, 39, 176, 0.3);
+        }
+
+    .monster-top-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+    /* ----- ПОЛОСКА ЗДОРОВЬЯ СБОКУ (ВЕРТИКАЛЬНАЯ) ----- */
+    .health-side-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+        min-width: 60px;
+    }
+
+    .health-stat-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        font-size: 14px;
+        color: #e8d5b5;
+    }
+
+    .health-icon {
+        font-size: 20px;
+    }
+
+    .health-numbers {
+        font-weight: 600;
+        font-size: 13px;
+        color: #f0e0c0;
+    }
+
+    .health-bar-vertical-wrapper {
+        height: 160px;
+        width: 20px;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .health-bar-vertical-bg {
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.6);
+        border-radius: 12px;
+        overflow: hidden;
+        border: 2px solid #3a2218;
+        position: relative;
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .health-bar-vertical-fill {
+        width: 100%;
+        border-radius: 10px;
+        transition: height 0.8s ease, background-color 0.5s ease;
+        background: #4CAF50;
+        box-shadow: inset 0 2px 4px rgba(255,255,255,0.2);
+        min-height: 4px;
+    }
+
+    .health-percentage {
+        font-size: 14px;
+        font-weight: 700;
+        color: #ffd700;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+    }
+    /* Адаптивность для мобильных устройств */
+    @media (max-width: 500px) {
+        .monster-container {
+            padding: 12px;
+            min-height: 500px;
+        }
+
+        .monster-image {
+            width: 150px;
+            height: 150px;
+        }
+
+        .monster-emoji {
+            font-size: 80px;
+        }
+
+        .monster-name {
+            font-size: 20px;
+        }
+    }
+
+
+    .answer-icons {
+        font-size: 40px;
+        background-color: aliceblue;
+    }
+}

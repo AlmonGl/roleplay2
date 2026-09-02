@@ -8,11 +8,13 @@ import { useEffect, useState } from "react";
 import { selectCurrentUserLogin, selectCurrentUserId } from '../store/usersSlice.js';
 import ChoicePage from './ChoicePage.jsx';
 import InfoPage from './InfoPage.jsx';
+import EnterChoicePage from './EnterChoicePage.jsx';
 import NavigateButtons from '../components/NavigateButtons.jsx';
 import ItemUsageSelection from '../components/ItemUsageSelection.jsx';
 import Idle from '../components/Idle.jsx';
 import Task from '../components/Task.jsx';
 import NavigateWorldButtons from '../components/NavigateWorldButtons.jsx';
+
 
 
 function EventsPage() {
@@ -58,6 +60,8 @@ function EventsPage() {
        <Task player={player} /> 
      : player.status == "navigateWorld" ?
        <NavigateWorldButtons player={player} /> 
+       : player.status == "enterAnswer" ?
+       <EnterChoicePage player={player} /> 
      :
      <p>ERROR</p>
      }

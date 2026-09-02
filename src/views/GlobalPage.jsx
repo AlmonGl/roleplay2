@@ -3,6 +3,8 @@ import Header from '../components/Header.jsx';
 import Rating from '../components/Rating.jsx';
 import MonsterDisplay from '../components/MonsterDisplay.jsx';
 import WorldMap from '../components/WorldMap.jsx';
+import Notification from '../components/Notification.jsx';
+
 import { useEffect, useState } from 'react'
 import { collection, query, where, getDocs, doc, getDoc, onSnapshot, updateDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/config.js";
@@ -10,8 +12,8 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUserId } from '../store/usersSlice.js';
 import './GlobalPage.css';
 
-
-
+import EnterChoiceDiagram from "./EnterChoiceDiagram.jsx";
+import ImageView from "./ImageView.jsx";
 
 function GlobalPage() {
     const pageTitle = "Let's see what is going on.";
@@ -71,11 +73,22 @@ function GlobalPage() {
                         {admin.activeGlobalPageWorldMap &&
                             <WorldMap admin={admin} players={players.filter(pl => pl.active)} />
                         }
-                            {admin.activeGlobalPageRating &&
-                            <Rating players={players.filter(pl => pl.active)} />
-                            }
+                        {admin.activeEnterChoiceDiagram &&
+                            <EnterChoiceDiagram players={players.filter(pl => pl.active)} admin={admin} />
+                        }
+                        {admin.activeGlobalPageImageView &&
+                            <ImageView  admin={admin} />
+                        }
+                        {admin.activeGlobalPageMessage &&
+                            <Notification admin={admin} />
+                        }
+                        {admin.activeGlobalPageRating &&
+                        <Rating players={players.filter(pl => pl.active)} />
+                        }
 
 
+                        
+                        
                             
                         </div>
                         

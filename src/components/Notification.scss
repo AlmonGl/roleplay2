@@ -1,0 +1,81 @@
+
+.notification-component {
+    /* Полноэкранный оверлей с затемнением */
+    .fantasy-notification-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+    /* Контент уведомления в фэнтези стиле */
+    .fantasy-notification-content {
+        background: #2a2a3e;
+        border: 3px solid #c9a84c;
+        border-radius: 25px;
+        padding: 30px 50px;
+        box-shadow: 0 0 40px rgba(255, 215, 0, 0.6), inset 0 0 30px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        max-width: 80%;
+        position: relative;
+    }
+        /* Декоративные уголки */
+        .fantasy-notification-content::before,
+        .fantasy-notification-content::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #ffd700;
+        }
+
+        .fantasy-notification-content::before {
+            top: -10px;
+            left: -10px;
+            border-right: none;
+            border-bottom: none;
+            border-top-left-radius: 15px;
+        }
+
+        .fantasy-notification-content::after {
+            bottom: -10px;
+            right: -10px;
+            border-left: none;
+            border-top: none;
+            border-bottom-right-radius: 15px;
+        }
+    /* Текст сообщения */
+    .fantasy-notification-text {
+        font-family: 'Cinzel', 'Times New Roman', serif;
+        font-size: 32px;
+        color: #ffd700;
+        text-shadow: 0 0 15px #ffd700;
+        margin-bottom: 15px;
+    }
+    /* Таймер */
+    .fantasy-timer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .fantasy-timer-digits {
+        font-family: 'Cinzel', serif;
+        font-size: 80px;
+        font-weight: bold;
+        color: #ffd700;
+        text-shadow: 0 0 25px #ff8c00;
+        line-height: 1;
+    }
+
+    .fantasy-timer-label {
+        font-size: 20px;
+        color: #c9a84c;
+        margin-top: 5px;
+    }
+}

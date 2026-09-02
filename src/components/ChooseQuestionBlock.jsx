@@ -11,7 +11,7 @@ import { handleSetMonster } from '../functions/handleSoloMonster.js';
 function ChooseQuestionBlock({ admin }) {
 
     const [sameQuestions, setIsSameQuestions] = useState(false);
-    const [topic, setTopic] = useState('');
+    const [section, setSection] = useState('');
     const [qid, setQid] = useState('');
 
     const [selectedMonster, setSelectedMonster] = useState('-1');
@@ -36,30 +36,30 @@ function ChooseQuestionBlock({ admin }) {
             <select
                 className="select-actions2"
                 placeholder="темы"
-                onChange={(e) => setTopic(e.target.value)}
+                onChange={(e) => setSection(e.target.value)}
             >
-                <option value="">topics</option>
+                <option value="">sections</option>
                 {QuestionsTopicCount.map(y => (
-                    <option key={y.id} value={`${y.section} ${y.topic}`}>{y.section} {y.topic} ids: {y.ids} </option>
+                    <option key={y.id} value={y.section}>{y.section} ids: {y.idStart}-{y.idFinish}  </option>
                 ))}
             </select>
             <button
                 onClick={() => {
 
                     if (!qid) {
-                        setupQuestions(topic, -1, sameQuestions);
+                        setupQuestions(section, -1, sameQuestions);
                     } else
                         if (qid >= 0 && qid <= QuestionsTotal) {
-                            setupQuestions(topic, qid, sameQuestions);
+                            setupQuestions(section, qid, sameQuestions);
                         } else {
-                            setupQuestions(topic, -1, sameQuestions);
+                            setupQuestions(section, -1, sameQuestions);
                         }
 
-                    console.log(topic, qid);
+                    console.log(section, qid);
                 }}
                 className="btn">
-                {sameQuestions ? (qid ? `вопрос ${qid}` : topic ? `один случайный из ${topic}` : 'один случайный каждому') :
-                    (qid ? `вопрос ${qid}` : topic ? `разные случайные из  ${topic}` : 'разный случайный каждому')}
+                {sameQuestions ? (qid ? `вопрос ${qid}` : section ? `один случайный из ${section}` : 'один случайный каждому') :
+                    (qid ? `вопрос ${qid}` : section ? `разные случайные из  ${section}` : 'разный случайный каждому')}
             </button>
             <div>
                 <label htmlFor="myCheck" style={{ fontSize: '14px', fontWeight: '500' }}>

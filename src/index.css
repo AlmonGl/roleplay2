@@ -673,6 +673,21 @@ table tr th {
     min-width: 120px;
     text-align: center;
 }
+.button-top-2 {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffd700;
+    background: linear-gradient(135deg, #8b6914 0%, #6b4c1a 100%);
+    border: 2px solid #daa520;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 1px;
+    min-width: 120px;
+    text-align: center;
+}
 
     .button-top:hover {
         background: linear-gradient(135deg, #daa520 0%, #8b6914 100%);
@@ -683,6 +698,13 @@ table tr th {
     .button-top:active {
         transform: translateY(0);
     }
+
+.simple-border {
+    border: 1px solid #ccc;
+}
+
+    
+
 
 /* Адаптация для мобильных */
 @media (max-width: 768px) {

@@ -1,7 +1,7 @@
 import { doc, updateDoc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/config.js";
 import './NavigateButtons.css';
-import { useState } from 'react';
+
 import { IdleMessages } from '../data/IdleMessages.js';
 
 
