@@ -42,24 +42,23 @@ export function setAllFromGroupInactive(players) {
 
 
 
-export function handleStartOfRound() {
+export function handleStartOfRound(players) {
     
 
-    const setRoundStart = async () => {
+    
 
-        const q = query(collection(db, "players"));
-        const querySnapshot = await getDocs(q);
+        
 
-        querySnapshot.forEach((it) => {
+    players.forEach((it) => {
             let extraMove = false;
             let restrained = false;
-            if (it.data().items) {
-                if (it.data().items.find(p => p.name == 'Сапоги скорости')) {
+            if (it.items) {
+                if (it.items.find(p => p.name == 'Сапоги скорости')) {
                     extraMove = true;
                 }
             }
-            if (it.data().items) {
-                if (it.data().items.find(p => p.name == 'Обездвижены!')) {
+            if (it.items) {
+                if (it.items.find(p => p.name == 'Обездвижены!')) {
                     restrained = true;
                 }
             }
@@ -68,14 +67,15 @@ export function handleStartOfRound() {
                 currentAction: "",
                 lastAnswer: "-",
                 rightLastAnswer: 0,
-                currentActionBonus: -1
+                currentActionBonus: -1,
+                lastEnterAnswer: ''
             });
             
         });
 
 
-    }
-    setRoundStart()
+    
+    
 
 
 
