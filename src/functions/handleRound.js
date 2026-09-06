@@ -9,8 +9,6 @@ export function setAllActiveIdle(players) {
 
     })
 
-
-
 }
 export function setAllActiveEnterAnswer(players) {
     players.forEach((it) => {
@@ -19,6 +17,14 @@ export function setAllActiveEnterAnswer(players) {
     })
 
 
+
+}
+
+export function setAllToVariant(players) {
+    players.forEach((it) => {
+        updateDoc(doc(db, "players", it.id), { status: "chooseVariant", rightLastAnswer: '', choiceIsMade: false });
+
+    })
 
 }
 

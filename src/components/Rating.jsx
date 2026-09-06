@@ -83,8 +83,9 @@ const Rating = ({ players }) => {
                 <div className="table-header">
                     <div className="header-rank">Ранг</div>
                     <div className="header-player">Игрок</div>
-                    <div className="header-class">Жизни</div>
-                    <div className="header-score">Очки</div>
+                    <div className="header-class">Hitpoints</div>
+                    <div className="header-class">Items</div>
+                    <div className="header-score">Рейтинг</div>
                 </div>
 
                 {sortedPlayers.map((player, index) => (
@@ -106,7 +107,21 @@ const Rating = ({ players }) => {
                             
                             <span className="hp-value">{player.HP}</span>
                         </div>
+                        <div className="row-class">
 
+                            <div className="item-badges">
+                                {player.items && player.items.length > 0 ? (
+                                    player.items.map((item, index) => (
+                                        <div
+                                            key={item.id || index}
+                                            className="item-badge"
+                                        >
+                                            {item.icon || '📦'}
+                                        </div>
+                                    ))
+                                ) : null}
+                            </div>
+                        </div>
                         <div className={`row-score ${getAnimationClass(player.id)}`}>
                             <span className="score-value">{player.score}</span>
                            

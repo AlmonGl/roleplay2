@@ -4,7 +4,7 @@ import { RoomTasks } from "../data/RoomTasks.js"
 import { QuestionsTotal, QuestionsTopicCount } from "../data/Questions.js"
 
 
-export function setupQuestions(questionSection, questionId, same) {
+export function setupQuestions(players, questionSection, questionId, same) {
     const random = questionId == -1 ? true : false;
     const topic = questionSection == "" ? false : true;
     let id = questionId == -1 ? Math.floor(Math.random() * QuestionsTotal) : questionId;
@@ -16,12 +16,9 @@ export function setupQuestions(questionSection, questionId, same) {
         topicQuestionId = topicIds[Math.floor(Math.random() * topicIds.length)]
     }
     
-    const setup = async () => {
+    
 
-        const q = query(collection(db, "players"));
-        const querySnapshot = await getDocs(q);
-
-        querySnapshot.forEach((it) => {
+        players.forEach((it) => {
 
 
             
@@ -65,8 +62,6 @@ export function setupQuestions(questionSection, questionId, same) {
         });
 
 
-    }
-    setup()
 
 }
 

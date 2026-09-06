@@ -14,7 +14,7 @@ import AdminCheckBoxes from '../components/AdminCheckBoxes.jsx';
 import ChooseQuestionBlock from '../components/ChooseQuestionBlock.jsx';
 import ActionSelector from '../components/ActionSelector.jsx';
 import AddPlayer from '../components/AddPlayer.jsx';
-import { handleStartOfRound, setAllActiveIdle, setAllActiveEnterAnswer } from '../functions/handleRound.js';
+import { handleStartOfRound, setAllActiveIdle, setAllActiveEnterAnswer, setAllToVariant } from '../functions/handleRound.js';
 import { handleSetWorldMap } from '../functions/handleWorldMap.js';
 
 import { selectCurrentUserId } from '../store/usersSlice.js';
@@ -92,12 +92,21 @@ function AdminPage() {
                             </button>
                             <button
                                 onClick={() => {
-                                    handleStartOfRound(players.filter(pl => pl.active));
+                                    
                                     setAllActiveIdle(players.filter(pl => pl.active));
                                 }}
                                 className="btn">
                                 Idle
                             </button>
+                            <button
+                                onClick={() => {
+                                    setAllToVariant(players.filter(pl => pl.active));
+                                    
+                                }}
+                                className="btn">
+                                Выбор варианта 1-4
+                            </button>
+
                             <button
                                 onClick={() => {
                                     handleStartOfRound(players.filter(pl => pl.active));
@@ -140,9 +149,9 @@ function AdminPage() {
                         <AddPlayer />
                         
                     </div>
-                    <ChooseQuestionBlock admin={ admin} />
+                    <ChooseQuestionBlock admin={admin} players={players.filter(pl => pl.active)} />
 
-                  
+                 
                     <StatsManagment players={players.filter(pl => pl.active)} />  
                 </div>
                 : <p>Loading...</p>

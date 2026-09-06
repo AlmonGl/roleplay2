@@ -8,7 +8,7 @@ import { setupQuestions } from '../functions/handleQuestions.js';
 import { soloMonsters } from "../data/MonsterList.js"
 import { handleSetMonster } from '../functions/handleSoloMonster.js';
 
-function ChooseQuestionBlock({ admin }) {
+function ChooseQuestionBlock({ admin , players } ) {
 
     const [sameQuestions, setIsSameQuestions] = useState(false);
     const [section, setSection] = useState('');
@@ -19,7 +19,23 @@ function ChooseQuestionBlock({ admin }) {
         setSelectedMonster(e.target.value);
 
     };
+    async function updateWithDelay() {
+        // 1. Выполняем первое обновление и ждём его завершения
+        await updateDoc(doc(db, "players", admin.id), {
+            message: "таймер 30 Внимание вопрос!",
+            activeGlobalPageMessage: true
+        });
 
+        // 2. Ждём 30 секунд (30000 мс)
+        await new Promise(resolve => setTimeout(resolve, 30000));
+
+        // 3. Выполняем второе обновление (замените поля на свои)
+        await updateDoc(doc(db, "players", admin.id), {
+            // Пример: сбрасываем флаг или меняем сообщение
+            activeGlobalPageMessage: false,
+            // или что-то другое
+        });
+    }
     return (
         
         
@@ -47,14 +63,14 @@ function ChooseQuestionBlock({ admin }) {
                 onClick={() => {
 
                     if (!qid) {
-                        setupQuestions(section, -1, sameQuestions);
+                        setupQuestions(players, section, -1, sameQuestions);
                     } else
                         if (qid >= 0 && qid <= QuestionsTotal) {
-                            setupQuestions(section, qid, sameQuestions);
+                            setupQuestions(players, section, qid, sameQuestions);
                         } else {
-                            setupQuestions(section, -1, sameQuestions);
+                            setupQuestions(players, section, -1, sameQuestions);
                         }
-
+                    updateWithDelay();
                     console.log(section, qid);
                 }}
                 className="btn">
@@ -89,7 +105,7 @@ function ChooseQuestionBlock({ admin }) {
                     {
                         soloMonsters.map(m =>
 
-                            <option key={`${m.id}`} value={m.id}>{m.id, m.name}</option>
+                            <option key={`${m.id}`} value={m.id}>{m.id}, {m.name}, {m.tip}</option>
                         )
                     }
 

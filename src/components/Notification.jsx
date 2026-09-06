@@ -5,12 +5,12 @@ function Notification({ admin }) {
     // Разбор admin.message: извлечение таймера и очищенного текста
     const { text, timerSeconds } = useMemo(() => {
         const message = admin?.message || '';
-        const regex = /@таймер\s+(\d+)@/i;
+        const regex = /таймер\s+(\d+)/i;
         const match = message.match(regex);
         if (match) {
             const seconds = parseInt(match[1], 10);
             const cleanText = message.replace(regex, '').trim();
-            return { text: cleanText, timerSeconds: seconds };
+            return { text: cleanText, timerSeconds: seconds };мшу
         }
         return { text: message, timerSeconds: 0 };
     }, [admin?.message]);

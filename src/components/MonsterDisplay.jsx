@@ -78,7 +78,14 @@ const MonsterDisplay = ({ id, health, players }) => {
                         </div>
                     </div>
                     <div className = 'answer-icons'>
-                        {players.map(player => player.rightLastAnswer == 5 ? '✅' : player.rightLastAnswer == 2 ? '❌' : '')}
+                                {players.map(player =>
+                                    player.rightLastAnswer == 5 ? '✅' :
+                                        player.rightLastAnswer == 2 ? '❌' :
+                                            player.rightLastAnswer == "v1" ? '1️⃣' :
+                                                player.rightLastAnswer == "v2" ? '2️⃣' :
+                                                    player.rightLastAnswer == "v3" ? '3️⃣' :
+                                                        player.rightLastAnswer == "v4" ? '4️⃣' : ''
+                                        )}
                     </div>
                 </div>
 
@@ -104,14 +111,8 @@ const MonsterDisplay = ({ id, health, players }) => {
                                         <span className="damage-icon">💢</span>
                                         {attack.damage} урона
                                     </div>
-                                    <div className={`attack-type ${attack.type}`}>
-                                        {attack.type === 'Разные вопросы (командный итог)' ? '✨ Разные вопросы (командный итог)' :
-                                            attack.type === 'Разные вопросы' ? '✨ Разные вопросы' :
-                                                attack.type === 'Один вопрос всем (командный итог)' ? '⚡ Один вопрос всем (командный итог)' :
-                                                    attack.type === 'Один вопрос всем' ? '⚡ Один вопрос всем' :
-                                                        attack.type === 'Карта (командный итог)' ? '🗺️ Карта (командный итог)' :
-                                                            attack.type === 'Карта' ? '🗺️ Карта' :
-                                                    '⚽ error'}
+                                    <div className="attack-type">
+                                        {attack.type}
 
                                     </div>
                                     

@@ -67,7 +67,7 @@
 
 .table-header {
     display: grid;
-    grid-template-columns: 1fr 2fr 2fr 1fr;
+    grid-template-columns: 1fr 2fr 2fr 2fr 1fr;
     gap: 10px;
     padding: 15px;
     background: rgba(201, 169, 89, 0.2);
@@ -82,7 +82,7 @@
 
 .table-row {
     display: grid;
-    grid-template-columns: 1fr 2fr 2fr 1fr;
+    grid-template-columns: 1fr 2fr 2fr 2fr 1fr;
     gap: 10px;
     padding: 15px;
     margin-bottom: 8px;
@@ -176,7 +176,19 @@
     
     
 }
+.item-badges {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+}
 
+.item-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
 .score-value {
     font-size: 1.8rem;
     font-weight: bold;

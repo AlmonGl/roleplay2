@@ -13,42 +13,9 @@ function FantasyMap ({
     emptyCellSymbol
 })  {
   
-    //const [players, setPlayers] = useState([]);
-    const [map, setMap] = useState();
-     
-
-   // const [activeMap, setActiveMap] = useState("0");
-
-   /* useEffect(() => {
-
-        onSnapshot(doc(db, "players", "S2y1gyVwUbpJa4jf9v8y"), (docSnap1) => {
-            setActiveMap(docSnap1.data().activeMap);
-        });
-
-    }, []);*/
-
-
-
     
-  /*  useEffect(() => {
-        onSnapshot(collection(db, "players"), (querySnap) => {
-            let playerList = [];
-           
-            querySnap.forEach((it) => {
-
-               
-                if (it.data().currentMap.toString() == activeMap.toString() && it.data().login != "558899") { 
-                    playerList.push({ id: it.id, ...it.data() })
-                }
-                
-                
-            })
-            setPlayers(playerList);
-            
-        });
-
-    }, [activeMap]);*/
-
+    const [map, setMap] = useState();
+ 
 
     const regenerateMap = async () => {
 

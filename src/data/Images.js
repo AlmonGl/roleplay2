@@ -36,4 +36,7 @@ export const Images = [
     { id: 17, name: 'Секция: Николай I', path: '/assets/images/N1-18.jpg' },
     { id: 18, name: 'Секция: Николай I', path: '/assets/images/N1-19.jpg' },
     { id: 19, name: 'Секция: Николай I', path: '/assets/images/N1-20.png' },
+    { id: 20, name: 'Первобытность', path: '/assets/images/lascauxmap.jpg' },
+    { id: 21, name: 'Первобытность', path: '/assets/images/Lascaux18500.jpg' },
+    { id: 22, name: 'Первобытность', path: '/assets/images/Venus29500.jpg' },
 ];

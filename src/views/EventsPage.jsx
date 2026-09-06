@@ -7,6 +7,7 @@ import { db } from "../firebase/config.js";
 import { useEffect, useState } from "react";
 import { selectCurrentUserLogin, selectCurrentUserId } from '../store/usersSlice.js';
 import ChoicePage from './ChoicePage.jsx';
+import ChoiceVariantPage from './ChoiceVariantPage.jsx';
 import InfoPage from './InfoPage.jsx';
 import EnterChoicePage from './EnterChoicePage.jsx';
 import NavigateButtons from '../components/NavigateButtons.jsx';
@@ -62,6 +63,8 @@ function EventsPage() {
        <NavigateWorldButtons player={player} /> 
        : player.status == "enterAnswer" ?
        <EnterChoicePage player={player} /> 
+     :player.status == "chooseVariant" ?
+       <ChoiceVariantPage player={player} /> 
      :
      <p>ERROR</p>
      }
