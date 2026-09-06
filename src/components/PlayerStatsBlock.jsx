@@ -81,11 +81,23 @@ function PlayerStatsBlock({player}) {
                     }
                         className="btn">
                         Refresh act/que
-                    </button>
+                                </button>
+                                <button onClick={() => {
+                                    updateDoc(doc(db, "players", player.id), { rightLastAnswer: 5 });
+                                }
+                                }
+                                    className="btn">
+                                    {'✅'}
+                                </button>
+                                <button onClick={() => {
+                                    updateDoc(doc(db, "players", player.id), { rightLastAnswer: 2 });
+                                }
+                                }
+                                    className="btn">
+                                    {'❌'}
+                                </button>
 
                                     {/*BUTTONS END*/}
-
-
 
 
 
