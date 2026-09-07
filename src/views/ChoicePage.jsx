@@ -85,7 +85,7 @@ function ChoicePage ({player}) {
             <h3>Есть вопрос для вас, {player.name}
             :</h3>
             <br />
-            <h3>Тема вопроса: {question.topic || "общий вопрос"}.</h3>
+            <h3>Тема вопроса: { `${question.section}. ${question.topic}`   || "Общий вопрос"}.</h3>
             <br />
         {
         player.choiceIsMade ? 

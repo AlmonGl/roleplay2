@@ -2,7 +2,7 @@
 import './MonsterDisplay.scss';
 import { soloMonsters } from "../data/MonsterList.js"
 import { useState } from 'react';
-const MonsterDisplay = ({ id, health, players }) => {
+const MonsterDisplay = ({ id, health,symbols, players }) => {
 
 
     const [selectedAttacks, setSelectedAttacks] = useState(new Set());
@@ -76,17 +76,23 @@ const MonsterDisplay = ({ id, health, players }) => {
                         <div className="health-percentage">
                             {Math.round(healthPercentage)}%
                         </div>
-                    </div>
-                    <div className = 'answer-icons'>
-                                {players.map(player =>
-                                    player.rightLastAnswer == 5 ? '✅' :
-                                        player.rightLastAnswer == 2 ? '❌' :
-                                            player.rightLastAnswer == "v1" ? '1️⃣' :
-                                                player.rightLastAnswer == "v2" ? '2️⃣' :
-                                                    player.rightLastAnswer == "v3" ? '3️⃣' :
-                                                        player.rightLastAnswer == "v4" ? '4️⃣' : ''
-                                        )}
-                    </div>
+                            </div>
+
+                            <div style={{ display: 'flex', flexDirection: 'column'}} >
+                                <div className='answer-icons'>
+                                    {symbols}
+                                </div>
+                                <div className = 'answer-icons'>
+                                    {players.map(player =>
+                                        player.rightLastAnswer == 5 ? '✅' :
+                                            player.rightLastAnswer == 2 ? '❌' :
+                                                player.rightLastAnswer == "v1" ? '1️⃣' :
+                                                    player.rightLastAnswer == "v2" ? '2️⃣' :
+                                                        player.rightLastAnswer == "v3" ? '3️⃣' :
+                                                            player.rightLastAnswer == "v4" ? '4️⃣' : ''
+                                            )}
+                                </div>
+                            </div>
                 </div>
 
                 
@@ -106,10 +112,12 @@ const MonsterDisplay = ({ id, health, players }) => {
                                          console.log(12);
                                     }
                                     } >
-                                    <div className="attack-name">{attack.name}</div>
-                                    <div className="attack-damage">
-                                        <span className="damage-icon">💢</span>
-                                        {attack.damage} урона
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }} >
+                                            <div className="attack-name">{attack.name}</div>
+                                            <div className="attack-damage">
+                                                <span className="damage-icon">💢</span>
+                                                {attack.damage} урона
+                                                </div>
                                     </div>
                                     <div className="attack-type">
                                         {attack.type}
