@@ -53,7 +53,7 @@ const PlayerCard = ({ player }) => {
                     <div className="player2-stat-item">
                         <span className="player2-stat-icon">⭐</span>
                         <div className="player2-stat-content">
-                            <span className="player2-stat-label">Очки</span>
+                            <span className="player2-stat-label">Рейтинг</span>
                             <span className="player2-stat-value player2-score">{score}</span>
                         </div>
                     </div>
