@@ -6,7 +6,7 @@ import { ItemsList } from "../data/ItemsList.js"
 
 
 
-function StatsManagment({ players }) {
+function StatsManagment({ admin, players }) {
     
         
     
@@ -60,6 +60,27 @@ function StatsManagment({ players }) {
                         }
                             className="btn">
                             +item to all
+                        </button>
+                        <button onClick={() => {
+                            updateDoc(doc(db, "players", admin.id), { symbols: admin.symbols + " ☠️" })
+                        }
+                        }
+                            className="btn">
+                            +☠️
+                        </button>
+                        <button onClick={() => {
+                            updateDoc(doc(db, "players", admin.id), { symbols:  admin.symbols + " 🏆" })
+                        }
+                        }
+                            className="btn">
+                            +🏆
+                        </button>
+                        <button onClick={() => {
+                            updateDoc(doc(db, "players", admin.id), { symbols: "" })
+                        }
+                        }
+                            className="btn">
+                            del sym
                         </button>
                     </div>
                     

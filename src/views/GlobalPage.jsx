@@ -54,21 +54,21 @@ function GlobalPage() {
                 {!admin.id || !players ? <p>Loading... </p>
                     :  
 
-                        <div className="global-container">
-                            {admin.activeGlobalPageMap  &&
-                            <FantasyMap
-                                    players={players.filter(pl => pl.active && pl.currentMap.toString() == admin.activeMap)}
-                                    activeMap={admin.activeMap}
-                                    showTooltips={true}
-                                    gridSize={6}
-                                    emptyCellSymbol="🌿"
+                    <div className="global-container">
 
-                                />
-                            }
-                        
-                            
+
+                        {admin.activeGlobalPageMap  &&
+                        <FantasyMap
+                                players={players.filter(pl => pl.active && pl.currentMap.toString() == admin.activeMap)}
+                                activeMap={admin.activeMap}
+                                showTooltips={true}
+                                gridSize={6}
+                                emptyCellSymbol="🌿"
+
+                            />
+                        }
                         {admin.activeGlobalPageMonster &&
-                            <MonsterDisplay id={admin.currentMonster} health={admin.currentMonsterHP } players={players.filter(pl => pl.active) } />
+                            <MonsterDisplay id={admin.currentMonster} health={admin.currentMonsterHP} symbols={admin.symbols} players={players.filter(pl => pl.active) } />
                         }
                         {admin.activeGlobalPageWorldMap &&
                             <WorldMap admin={admin} players={players.filter(pl => pl.active)} />

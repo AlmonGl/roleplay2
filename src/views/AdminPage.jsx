@@ -152,7 +152,7 @@ function AdminPage() {
                     <ChooseQuestionBlock admin={admin} players={players.filter(pl => pl.active)} />
 
                  
-                    <StatsManagment players={players.filter(pl => pl.active)} />  
+                    <StatsManagment admin={admin} players={players.filter(pl => pl.active)} />  
                 </div>
                 : <p>Loading...</p>
             }
