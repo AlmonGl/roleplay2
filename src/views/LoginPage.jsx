@@ -25,35 +25,32 @@ function LoginPage() {
         getIdbyLogin();
     }
     }, [loginAttempt, dispatch])  
-    
-     
 
-    function handleLogIn(e) {
+    async function handleLogIn(e) {
+        
         e.preventDefault();
 
-        checkUser(document.getElementById('id-field').value).then(allowed => { setLoginAttempt(document.getElementById('id-field').value); });
+        const login = document.getElementById('id-field').value;
 
-       /* const allowed = await checkUser(document.getElementById('id-field').value);
-        if (allowed) { setLoginAttempt(document.getElementById('id-field').value); } else {
-
-            alert("no such user");
-
-        }*/
-        
-       /* if (checkUser(document.getElementById('id-field').value)) {
-            setLoginAttempt(document.getElementById('id-field').value);
+        try {
+            const userExists = await checkUser(login);
             
-        } else  {
-                        
-           alert("no such user");
-            
-        }*/
-        
-        
+            if (userExists) {
+                setLoginAttempt(login);
+                
+            } else {
+                alert("no such user");
+            }
+        } catch (error) {
+            console.error("Error checking user:", error);
+            alert("Произошла ошибка при проверке пользователя");
+        }
     }
-     
 
-// {isLoading && <FullPageLoader></FullPageLoader>}
+   
+   
+
+
     return (
         <>
            

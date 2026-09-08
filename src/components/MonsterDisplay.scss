@@ -184,7 +184,6 @@
             position: relative;
             filter: grayscale(1) brightness(0.7); /* серость и затемнение */
             opacity: 0.6;
-           
             border-color: #555; /* тусклая рамка */
             box-shadow: none;
             transition: filter 0.3s, opacity 0.3s;
@@ -197,7 +196,6 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 10;
-            
             /* Фэнтезийное оформление текста */
             font-family: 'Cinzel', 'Times New Roman', serif;
             font-size: 28px;
@@ -345,6 +343,81 @@
         font-weight: 700;
         color: #ffd700;
         text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+    }
+    /*DEFEATED*/
+
+    .defeated-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        pointer-events: none; /* Чтобы не блокировать клики, если нужно */
+        overflow: hidden;
+    }
+    /* Контейнер для брызг крови */
+    .blood-splashes {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image:
+        /* Большие брызги */
+        radial-gradient(circle at 15% 20%, rgba(139, 0, 0, 0.8) 8px, transparent 9px), radial-gradient(circle at 75% 35%, rgba(178, 34, 34, 0.7) 12px, transparent 13px), radial-gradient(circle at 30% 65%, rgba(139, 0, 0, 0.6) 10px, transparent 11px), radial-gradient(circle at 85% 75%, rgba(178, 34, 34, 0.75) 15px, transparent 16px), radial-gradient(circle at 50% 15%, rgba(139, 0, 0, 0.5) 6px, transparent 7px), radial-gradient(circle at 10% 50%, rgba(178, 34, 34, 0.65) 9px, transparent 10px), radial-gradient(circle at 90% 55%, rgba(139, 0, 0, 0.7) 11px, transparent 12px), radial-gradient(circle at 45% 85%, rgba(178, 34, 34, 0.6) 8px, transparent 9px), radial-gradient(circle at 65% 10%, rgba(139, 0, 0, 0.55) 7px, transparent 8px), radial-gradient(circle at 20% 90%, rgba(178, 34, 34, 0.7) 13px, transparent 14px),
+        /* Мелкие брызги */
+        radial-gradient(circle at 25% 40%, rgba(139, 0, 0, 0.4) 3px, transparent 4px), radial-gradient(circle at 55% 25%, rgba(178, 34, 34, 0.5) 2px, transparent 3px), radial-gradient(circle at 70% 45%, rgba(139, 0, 0, 0.45) 4px, transparent 5px), radial-gradient(circle at 35% 55%, rgba(178, 34, 34, 0.35) 2px, transparent 3px), radial-gradient(circle at 80% 65%, rgba(139, 0, 0, 0.5) 3px, transparent 4px), radial-gradient(circle at 15% 75%, rgba(178, 34, 34, 0.4) 2px, transparent 3px), radial-gradient(circle at 60% 70%, rgba(139, 0, 0, 0.45) 5px, transparent 6px), radial-gradient(circle at 40% 30%, rgba(178, 34, 34, 0.3) 2px, transparent 3px);
+        animation: bloodPulse 3s ease-in-out infinite;
+    }
+
+    .defeated-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+    }
+
+    .defeated-text {
+        font-family: 'Impact', 'Arial Black', sans-serif;
+        font-size: 5rem;
+        color: #8b0000;
+        text-shadow: 0 0 20px rgba(139, 0, 0, 0.8), 0 0 40px rgba(139, 0, 0, 0.6), 0 0 60px rgba(139, 0, 0, 0.4), 3px 3px 0 #4a0000;
+        letter-spacing: 8px;
+        text-transform: uppercase;
+        animation: defeatedAppear 0.5s ease-out;
+    }
+    /* Анимация появления надписи */
+    @keyframes defeatedAppear {
+        from {
+            transform: scale(0.5);
+            opacity: 0;
+        }
+
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+    /* Пульсация брызг */
+    @keyframes bloodPulse {
+        0%, 100% {
+            opacity: 0.8;
+        }
+
+        50% {
+            opacity: 1;
+        }
+    }
+    /* Медиа-запрос для мобильных устройств */
+    @media (max-width: 768px) {
+        .defeated-text {
+            font-size: 3rem;
+            letter-spacing: 4px;
+        }
     }
     /* Адаптивность для мобильных устройств */
     @media (max-width: 500px) {

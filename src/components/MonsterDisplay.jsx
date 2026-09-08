@@ -51,7 +51,13 @@ const MonsterDisplay = ({ id, health,symbols, players }) => {
                                 src={`/assets/monsters/${soloMonsters[id].imageId}.png`}
                                 alt={soloMonsters[id].name}
                                 className="monster-img-full"
-                            />
+                                    />
+                                    {health == 0 && <div className="defeated-overlay">
+                                        <div className="blood-splashes"></div>
+                                        <div className="defeated-content">
+                                            <h1 className="defeated-text">DEFEATED</h1>
+                                        </div>
+                                    </div>}
                             <div className="monster-glow"></div>
                         </div>
                     </div>

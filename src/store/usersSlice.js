@@ -35,13 +35,24 @@ export const usersSlice = createSlice({
    /* if (['L92N', 'R43J', 'NB7E', 'CFF3', 'WT57', 'O9NB', 'Y5RG', 'B4NH','ZH7R', '558899', 'TEST1'].includes(login)) { return true; }
             else { return false; }*/
 
-    export async function checkUser(login) {
+export async function checkUser(login) {
+    
+
+    const usersRef = collection(db, "players");
+    const querySnapshot = await getDocs(usersRef);
+
+    let found = false;
+    querySnapshot.forEach((doc) => {
+        const userData = doc.data();
         
-        const usersRef = collection(db, "users");
-        const q = query(usersRef, where("login", "==", login));
-        const querySnapshot = await getDocs(q);
-        return !querySnapshot.empty; // true, если найден хотя бы один документ
-    }
+        if (userData.login === login) {
+            found = true;
+        }
+    });
+
+    
+    return found;
+}
 
 export function checkAdmin(login) {
 
