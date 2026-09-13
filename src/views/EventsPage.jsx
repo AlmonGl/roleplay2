@@ -20,9 +20,29 @@ import NavigateWorldButtons from '../components/NavigateWorldButtons.jsx';
 
 function EventsPage() {
     const [player, setPlayer] = useState([]);
-    
     const currentUserId = useSelector(selectCurrentUserId);
-    
+
+    useEffect(() => {
+        const handleVisibility = () => {
+            if (document.hidden) {
+                updateDoc(doc(db, "players", currentUserId.toString()), {
+                    status: 'idle',
+                    
+                });
+               // console.log("Вкладка скрыта (переключились или свернули)");
+            } else {
+               // console.log("Вкладка снова активна");
+            }
+        };
+
+        document.addEventListener("visibilitychange", handleVisibility);
+
+        return () => {
+            document.removeEventListener("visibilitychange", handleVisibility);
+        };
+    }, []);
+
+
    // const pageTitle = "Events";
     console.log('event page render');
     useEffect(() => {

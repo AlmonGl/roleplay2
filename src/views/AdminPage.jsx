@@ -122,7 +122,7 @@ function AdminPage() {
                                     {
                                         WorldMaps.map(m =>
 
-                                            <option key={`${m.id}`} value={m.id}>{m.name}</option>
+                                            <option key={`${m.id}`} value={m.id}>{m.id}.{m.name} | {m.tip}</option>
                                         )
                                     }
 
