@@ -64,14 +64,17 @@ function ChooseQuestionBlock({ admin , players } ) {
 
                     if (!qid) {
                         setupQuestions(players, section, -1, sameQuestions);
+                        console.log(1, QuestionsTotal);
                     } else
                         if (qid >= 0 && qid <= QuestionsTotal) {
                             setupQuestions(players, section, qid, sameQuestions);
+                            console.log(2, QuestionsTotal);
                         } else {
                             setupQuestions(players, section, -1, sameQuestions);
+                            console.log(3, QuestionsTotal);
                         }
                     updateWithDelay();
-                    console.log(section, qid);
+                    
                 }}
                 className="btn">
                 {sameQuestions ? (qid ? `вопрос ${qid}` : section ? `один случайный из ${section}` : 'один случайный каждому') :
