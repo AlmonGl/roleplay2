@@ -9,8 +9,10 @@
         height: 100vh;
         background: rgba(0, 0, 0, 0.1);
         display: flex;
-        align-items: center;
-        justify-content: center;
+        align-items: flex-end; /* прижать к низу */
+        justify-content: flex-end; /* прижать к правому краю */
+        padding: 240px; /* отступ от краёв */
+        box-sizing: border-box;
         z-index: 1000;
     }
     /* Контент уведомления в фэнтези стиле */
@@ -52,7 +54,7 @@
     /* Текст сообщения */
     .fantasy-notification-text {
         font-family: 'Cinzel', 'Times New Roman', serif;
-        font-size: 32px;
+        font-size: 45px;
         color: #ffd700;
         text-shadow: 0 0 15px #ffd700;
         margin-bottom: 15px;

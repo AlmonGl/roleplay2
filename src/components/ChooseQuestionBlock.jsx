@@ -11,7 +11,7 @@ import { handleSetMonster } from '../functions/handleSoloMonster.js';
 function ChooseQuestionBlock({ admin , players } ) {
 
     const [sameQuestions, setIsSameQuestions] = useState(false);
-    const [section, setSection] = useState('');
+    const [sectionId, setSectionId] = useState(-1);
     const [qid, setQid] = useState('');
 
     const [selectedMonster, setSelectedMonster] = useState('-1');
@@ -52,33 +52,33 @@ function ChooseQuestionBlock({ admin , players } ) {
             <select
                 className="select-actions2"
                 placeholder="темы"
-                onChange={(e) => setSection(e.target.value)}
+                onChange={(e) => setSectionId(e.target.value)}
             >
                 <option value="">sections</option>
                 {QuestionsTopicCount.map(y => (
-                    <option key={y.id} value={y.section}>{y.section} ids: {y.idStart}-{y.idFinish}  </option>
+                    <option key={y.id} value={y.id}>{y.id}| {y.section} {y.topic} | ids: {y.idStart}-{y.idFinish}  </option>
                 ))}
             </select>
             <button
                 onClick={() => {
 
                     if (!qid) {
-                        setupQuestions(players, section, -1, sameQuestions);
+                        setupQuestions(players, sectionId, -1, sameQuestions);
                         console.log(1, QuestionsTotal);
                     } else
                         if (qid >= 0 && qid <= QuestionsTotal) {
-                            setupQuestions(players, section, qid, sameQuestions);
+                            setupQuestions(players, sectionId, qid, sameQuestions);
                             console.log(2, QuestionsTotal);
                         } else {
-                            setupQuestions(players, section, -1, sameQuestions);
+                            setupQuestions(players, sectionId, -1, sameQuestions);
                             console.log(3, QuestionsTotal);
                         }
                     updateWithDelay();
                     
                 }}
                 className="btn">
-                {sameQuestions ? (qid ? `вопрос ${qid}` : section ? `один случайный из ${section}` : 'один случайный каждому') :
-                    (qid ? `вопрос ${qid}` : section ? `разные случайные из  ${section}` : 'разный случайный каждому')}
+                {sameQuestions ? (qid ? `вопрос ${qid}` : sectionId ? `один случайный из ${sectionId}` : 'один случайный каждому') :
+                    (qid ? `вопрос ${qid}` : sectionId ? `разные случайные из  ${sectionId}` : 'разный случайный каждому')}
             </button>
             <div>
                 <label htmlFor="myCheck" style={{ fontSize: '14px', fontWeight: '500' }}>

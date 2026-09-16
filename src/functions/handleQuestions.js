@@ -4,14 +4,14 @@ import { db } from "../firebase/config.js";
 import { QuestionsTotal, QuestionsTopicCount } from "../data/Questions.js"
 
 
-export function setupQuestions(players, questionSection, questionId, same) {
+export function setupQuestions(players, questionSectionId, questionId, same) {
     const random = questionId == -1 ? true : false;
-    const topic = questionSection == "" ? false : true;
+    const topic = questionSectionId == -1 ? false : true;
     let id = questionId == -1 ? Math.floor(Math.random() * QuestionsTotal) : questionId;
     let topicIds = [];
     let topicQuestionId = 0;
-    if (random && questionSection != '') {
-        topicIds = QuestionsTopicCount.find(item => item.section == questionSection).ids;
+    if (random && questionSectionId != -1) {
+        topicIds = QuestionsTopicCount.find(item => item.id == questionSectionId).ids;
         
         topicQuestionId = topicIds[Math.floor(Math.random() * topicIds.length)]
     }
