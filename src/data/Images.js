@@ -18,8 +18,8 @@ export const WorldMaps = [
     { id: 16, name: 'IV до н.э.', tip: " 4 до н.э. Македонский", path: '/assets/maps/4centBC.jpg' },
     { id: 17, name: 'Древний Египет', tip: "политическая", path: '/assets/maps/ancient-egypt-map.jpg' },
     { id: 18, name: 'Древний Египет', tip: "пирамиды", path: '/assets/maps/map-of-ancient-egypt.png' },
+    { id: 19, name: 'Древний Египет', tip: "египет хетты греция", path: '/assets/maps/Hittites4.jpg' },
     
-
     
 ];
 
@@ -53,6 +53,8 @@ export const Images = [
     { id: 26, name: 'Древний Мир', tip: "Гомер", path: '/assets/images/Homeros.jpg' },
     { id: 27, name: 'Древний Мир', tip: "Давид и Голиаф", path: '/assets/images/Osmar_Schindler_David_und_Goliath.jpg' },
     { id: 28, name: 'Древний Мир', tip: "Фермопилы 480", path: '/assets/images/img020107-08.jpg' },
+    { id: 29, name: 'Древний Мир', tip: "рамзес 2", path: '/assets/images/Ramses_II_at_Kadesh.jpg' },
+    { id: 30, name: 'Древний Мир', tip: "тутмос 3", path: '/assets/images/TuthmosisIII.JPG' },
 ];
 
 
