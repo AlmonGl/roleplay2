@@ -19,6 +19,8 @@ export const WorldMaps = [
     { id: 17, name: 'Древний Египет', tip: "политическая", path: '/assets/maps/ancient-egypt-map.jpg' },
     { id: 18, name: 'Древний Египет', tip: "пирамиды", path: '/assets/maps/map-of-ancient-egypt.png' },
     { id: 19, name: 'Древний Египет', tip: "египет хетты греция", path: '/assets/maps/Hittites4.jpg' },
+    { id: 20, name: 'Средние века', tip: "BarbarKingdoms", path: '/assets/maps/mapBarbarKingdoms.jpg' },
+    { id: 21, name: 'Средние века', tip: "BarbarKingdomsBlank", path: '/assets/maps/mapBarbarKingdomsBlank.jpg' },
     
     
 ];
@@ -55,6 +57,8 @@ export const Images = [
     { id: 28, name: 'Древний Мир', tip: "Фермопилы 480", path: '/assets/images/img020107-08.jpg' },
     { id: 29, name: 'Древний Мир', tip: "рамзес 2", path: '/assets/images/Ramses_II_at_Kadesh.jpg' },
     { id: 30, name: 'Древний Мир', tip: "тутмос 3", path: '/assets/images/TuthmosisIII.JPG' },
+    { id: 31, name: 'Средние века', tip: "святая софия", path: '/assets/images/Hagia_Sophia_Mars_2013.jpg' },
+    { id: 32, name: 'Средние века', tip: "дворец Теодориха в Равенне", path: '/assets/images/teodPalace.jpg' },
 ];
 
 
