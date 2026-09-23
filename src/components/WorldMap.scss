@@ -148,8 +148,8 @@
     }
     /* Иконка игрока */
     .player-icon-wm {
-        width: 48px;
-        height: 48px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -159,6 +159,7 @@
         box-shadow: 0 0 20px rgba(0,0,0,0.5);
         position: relative;
         transition: all 0.3s ease;
+        
     }
     /* Подсказка при наведении */
     .player-tooltip-wm {

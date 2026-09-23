@@ -21,6 +21,8 @@ export const WorldMaps = [
     { id: 19, name: 'Древний Египет', tip: "египет хетты греция", path: '/assets/maps/Hittites4.jpg' },
     { id: 20, name: 'Средние века', tip: "BarbarKingdoms", path: '/assets/maps/mapBarbarKingdoms.jpg' },
     { id: 21, name: 'Средние века', tip: "BarbarKingdomsBlank", path: '/assets/maps/mapBarbarKingdomsBlank.jpg' },
+    { id: 22, name: 'Новое время', tip: "1898 колонии", path: '/assets/maps/World_1898_empires_colonies_territory.png' },
+    { id: 23, name: 'Новое время', tip: "13 колоний", path: '/assets/maps/13colonies.jpg' },
     
     
 ];
@@ -59,6 +61,9 @@ export const Images = [
     { id: 30, name: 'Древний Мир', tip: "тутмос 3", path: '/assets/images/TuthmosisIII.JPG' },
     { id: 31, name: 'Средние века', tip: "святая софия", path: '/assets/images/Hagia_Sophia_Mars_2013.jpg' },
     { id: 32, name: 'Средние века', tip: "дворец Теодориха в Равенне", path: '/assets/images/teodPalace.jpg' },
+    { id: 33, name: 'Древний Египет', tip: "суд Осириса", path: '/assets/images/The_judgement_of_the_dead_in_the_presence_of_Osiris.jpg' },
+    { id: 34, name: 'Древний Египет', tip: "лодка Ра", path: '/assets/images/raBoat.jpg' },
+    { id: 35, name: 'Новое время', tip: "колумб высадка", path: '/assets/images/columbLanding.jpg' },
 ];
 
 

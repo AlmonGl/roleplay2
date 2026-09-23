@@ -92,6 +92,24 @@ export const soloMonsters = [
             ],
         tip: "Из: img 20: Что изображено? отв: звездное небо", level: 1
     },
+    {
+        id: 8, name: 'Древий Египет п.9-10', imageId: '007_1', maxHealth: 15, attacks:
+            [
+                { name: '🏺 Древний Египет', damage: 1, type: '🌍 3х Карта 💰' },
+                { name: '🏺 Древний Египет', damage: 1, type: '📖 13х Один вопрос всем' },
+                { name: '🏺 Древний Египет', damage: 1, type: '🖼 2x Изображение 💰' },
+                { name: '🏺 Древний Египет', damage: 1, type: '📝 Устный ответ' },
+            ], tip: "", level: 1
+    },
+    {
+        id: 9, name: 'Новое время п. 1-3', imageId: '008_1', maxHealth: 15, attacks:
+            [
+                { name: '🌍 Новое Время', damage: 1, type: '🌍 3х Карта 💰' },
+                { name: '🌍 Новое Время', damage: 1, type: '📖 13х Один вопрос всем' },
+                { name: '🌍 Новое Время', damage: 1, type: '🖼 2x Изображение 💰' },
+                { name: '🌍 Новое Время', damage: 1, type: '📝 Устный ответ' },
+            ], tip: "", level: 1
+    },
    
 ];
 
