@@ -64,6 +64,17 @@ export const Images = [
     { id: 33, name: 'Древний Египет', tip: "суд Осириса", path: '/assets/images/The_judgement_of_the_dead_in_the_presence_of_Osiris.jpg' },
     { id: 34, name: 'Древний Египет', tip: "лодка Ра", path: '/assets/images/raBoat.jpg' },
     { id: 35, name: 'Новое время', tip: "колумб высадка", path: '/assets/images/columbLanding.jpg' },
+    { id: 36, name: 'Новое время', tip: "декларация прав и свобод", path: '/assets/images/Déclarations.jpg' },
+    { id: 37, name: 'Новое время', tip: "выборы в англии", path: '/assets/images/election.jpg' },
+    { id: 38, name: 'Новое время', tip: "суфражистка", path: '/assets/images/British_suffragette.jpg' },
+    { id: 39, name: 'Новое время', tip: "японский парламент", path: '/assets/images/japamParlament.jpg' },
+    { id: 40, name: 'Новое время', tip: "вольтер", path: '/assets/images/_Voltaire.png' },
+    { id: 41, name: 'Новое время', tip: "дидро", path: '/assets/images/Denis_Diderot_by_Louis-Michel_van_Loo.jpg' },
+    { id: 42, name: 'Новое время', tip: "монтескьё", path: '/assets/images/jMontesquieu_2.png' },
+    { id: 43, name: 'Новое время', tip: "локк", path: '/assets/images/JohnLocke.png' },
+    { id: 44, name: 'Новое время', tip: "японский парламент", path: '/assets/images/japamParlament.jpg' },
+    { id: 45, name: 'Новое время', tip: "энциклопедия", path: '/assets/images/encycloped.jpg' },
+    { id: 46, name: 'Новое время', tip: "вольтер памятник", path: '/assets/images/Voltaire-1781.jpg' },
 ];
 
 
