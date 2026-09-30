@@ -22,7 +22,7 @@ const WorldMap = ({ admin, players }) => {
 
     return (
         <>
-        {!players ? <p>Loading... </p>
+        {!admin || !players ? <p>Loading... </p>
         :
         <div className="world-map">
             <div className="worldmap-container">

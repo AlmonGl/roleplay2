@@ -32,8 +32,7 @@ export const usersSlice = createSlice({
 })
 
    
-   /* if (['L92N', 'R43J', 'NB7E', 'CFF3', 'WT57', 'O9NB', 'Y5RG', 'B4NH','ZH7R', '558899', 'TEST1'].includes(login)) { return true; }
-            else { return false; }*/
+   
 
 export async function checkUser(login) {
     
@@ -59,6 +58,12 @@ export function checkAdmin(login) {
             if (login == '558899')
             { return true; }
             else { return false; }
+}
+
+export function checkDemo(login) {
+
+    if (login == 'testDesk') { return true; }
+    else { return false; }
 }
 
 export const { setUserId, setUserLogin, logOut, setStatus } = usersSlice.actions;
