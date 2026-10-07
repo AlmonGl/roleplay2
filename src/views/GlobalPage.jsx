@@ -4,6 +4,7 @@ import Rating from '../components/Rating.jsx';
 import MonsterDisplay from '../components/MonsterDisplay.jsx';
 import WorldMap from '../components/WorldMap.jsx';
 import Notification from '../components/Notification.jsx';
+import ScoreLadder from '../components/ScoreLadder.jsx';
 
 import { useEffect, useState } from 'react'
 import { collection, query, where, getDocs, doc, getDoc, onSnapshot, updateDoc, setDoc } from "firebase/firestore";
@@ -78,6 +79,10 @@ function GlobalPage() {
                         }
                         {admin.activeGlobalPageImageView &&
                             <ImageView  admin={admin} />
+                        }
+                        
+                        {admin.activeGlobalPageLadder &&
+                            <ScoreLadder players={players.filter(pl => pl.active)} admin={admin} />
                         }
                         {admin.activeGlobalPageMessage &&
                             <Notification admin={admin} />

@@ -12,7 +12,8 @@ function AdminCheckBoxes({ currentUserId }) {
     const [isCheckedShowRightAnswer, setIsCheckedShowRightAnswer] = useState(false);
     const [isCheckedImageView, setIsCheckedImageView] = useState(false);
     const [isCheckedMessage, setIsCheckedMessage] = useState(false);
-    
+    const [isCheckedLadder, setIsCheckedLadder] = useState(false);
+
     const [message, setMessage] = useState("");
 
     const [rightNumber, setRightNumber] = useState(-1);
@@ -182,7 +183,28 @@ function AdminCheckBoxes({ currentUserId }) {
                         cursor: 'pointer'
                     }}
                 />
-            </div>
+                </div>
+                <div className="simple-border">
+                    <label htmlFor="myCheck" style={{ fontSize: '14px', fontWeight: '500' }}>
+                        Ladder
+                    </label>
+                    <input
+                        id="myCheck"
+                        type="checkbox"
+                        checked={isCheckedLadder}
+                        onChange={() => {
+
+                            updateDoc(doc(db, "players", currentUserId), { activeGlobalPageLadder: !isCheckedLadder });
+                            setIsCheckedLadder(!isCheckedLadder);
+
+                        }}
+                        style={{
+                            width: '18px',
+                            height: '18px',
+                            cursor: 'pointer'
+                        }}
+                    />
+                </div>
             <div className="simple-border">
                 <label htmlFor="myCheck" style={{ fontSize: '14px', fontWeight: '500' }}>
                     Диаграмма
@@ -245,7 +267,8 @@ function AdminCheckBoxes({ currentUserId }) {
                     onClick={() => {
                         if (rightNumber != -1) {
                         
-                            updateDoc(doc(db, "players", currentUserId), { rightAnswer: rightNumber });
+                            updateDoc(doc(db, "players", currentUserId), { rightAnswer: rightNumber, loseCount: rightNumber  });
+
 
                         }
                     }}
