@@ -1,0 +1,258 @@
+$score-ladder-bg: url('/assets/ladder/bgr1.jpg');
+$score-ladder-fire: url('/assets/ladder/Fire.jpg');
+
+$ladder-height: 800px; // фиксированная высота
+$scale-height: 60px; // высота верхней шкалы
+$side-padding: 60px; // отступ слева/справа под шкалу 0..10
+
+.score-ladder {
+    position: relative;
+    width: 100%;
+    height: $ladder-height;
+    padding: $scale-height $side-padding 20px;
+    box-sizing: border-box;
+    background-image: $score-ladder-bg;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 16px;
+    overflow: hidden;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    color: #eaf6ff;
+    --icon-size: 120px; // переопределяется из JS
+    // ─── Затемнение поверх фона ───
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient( 180deg, rgba(6, 12, 26, 0.55) 0%, rgba(6, 12, 26, 0.85) 100% );
+        pointer-events: none;
+        z-index: 0;
+    }
+    // ─── 🔥 Огонь ───
+    &__fire {
+        --fire-progress: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: calc(var(--fire-progress) * 100%);
+        background-image: $score-ladder-fire;
+        background-size: cover;
+        background-position: right center;
+        background-repeat: no-repeat;
+        transition: width 700ms cubic-bezier(0.22, 1, 0.36, 1);
+        pointer-events: none;
+        z-index: 1;
+        animation: score-ladder-fire-flicker 2.2s ease-in-out infinite;
+    }
+
+    &__fire-edge {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: -4px;
+        width: 12px;
+        background: linear-gradient( 90deg, rgba(255, 80, 0, 0.9) 0%, rgba(255, 160, 40, 0.7) 50%, rgba(255, 200, 80, 0) 100% );
+        filter: blur(2px);
+    }
+
+    &__fire-glow {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: -40px;
+        width: 80px;
+        background: radial-gradient( ellipse at left, rgba(255, 120, 40, 0.35) 0%, rgba(255, 60, 0, 0.15) 40%, transparent 75% );
+        filter: blur(12px);
+        animation: score-ladder-fire-glow 2.6s ease-in-out infinite;
+    }
+    // ─── Шкала очков сверху ───
+    &__scale {
+        position: absolute;
+        top: 0;
+        left: $side-padding;
+        right: $side-padding;
+        height: $scale-height;
+        z-index: 4;
+        pointer-events: none;
+    }
+
+    &__scale-tick {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        padding-bottom: 6px;
+        // вертикальная рисочка
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 12px;
+            background: rgba(234, 246, 255, 0.45);
+        }
+    }
+
+    &__scale-num {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: rgba(234, 246, 255, 0.85);
+        text-shadow: 0 0 6px rgba(127, 211, 255, 0.6);
+    }
+    // ─── Дорожка: игроки сверху вниз ───
+    &__track {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; // равномерно по всей высоте
+        gap: 12px;
+    }
+    // ─── Строка игрока ───
+    &__player {
+        --player-color: #7fd3ff;
+        --player-left: 0;
+        position: relative;
+        flex: 1 1 auto; // растягиваем строки равномерно
+        min-height: 0;
+    }
+    // ─── Иконка: центр по вертикали строки, X = score / 10 ───
+    &__icon-wrap {
+        position: absolute;
+        top: 50%;
+        left: calc(var(--player-left) * 100%);
+        transform: translate(-50%, -50%);
+        width: var(--icon-size);
+        height: var(--icon-size);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // ⚡ плавное движение вправо
+        transition: left 700ms cubic-bezier(0.22, 1, 0.36, 1), opacity 400ms ease, filter 400ms ease;
+        will-change: left;
+        font-size: 45px;
+
+        img {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            font-size: 25px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid var(--player-color);
+            background: rgba(10, 20, 40, 0.6);
+            filter: drop-shadow(0 0 10px var(--player-color)) drop-shadow(0 0 28px var(--player-color));
+            transition: transform 400ms ease, filter 400ms ease;
+        }
+    }
+
+    &__glow {
+        position: absolute;
+        inset: -12px;
+        border-radius: 50%;
+        background: radial-gradient(circle, var(--player-color) 0%, transparent 70%);
+        opacity: 0.35;
+        filter: blur(14px);
+        z-index: 1;
+        animation: score-ladder-pulse 2.4s ease-in-out infinite;
+    }
+    // ─── Исчезновение ───
+    &__player--fading {
+        .score-ladder__icon-wrap {
+            opacity: 0;
+            filter: grayscale(1) blur(8px) brightness(0.5);
+            pointer-events: none;
+            transition: opacity 600ms ease, filter 600ms ease;
+        }
+    }
+
+    &__empty {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        color: rgba(234, 246, 255, 0.5);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+    // ─── Бейдж loseCount ───
+    &__admin {
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(255, 60, 90, 0.12);
+        border: 1px solid rgba(255, 60, 90, 0.4);
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+
+    &__admin-label {
+        color: rgba(255, 200, 210, 0.8);
+    }
+
+    &__admin-value {
+        font-weight: 800;
+        font-size: 14px;
+        color: #ff5a78;
+        text-shadow: 0 0 8px rgba(255, 90, 120, 0.8);
+    }
+}
+
+@keyframes score-ladder-pulse {
+    0%, 100% {
+        opacity: 0.25;
+        transform: scale(0.95);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(1.08);
+    }
+}
+
+@keyframes score-ladder-fire-flicker {
+    0%, 100% {
+        filter: brightness(1) saturate(1);
+    }
+
+    25% {
+        filter: brightness(1.15) saturate(1.2);
+    }
+
+    50% {
+        filter: brightness(0.95) saturate(0.9);
+    }
+
+    75% {
+        filter: brightness(1.1) saturate(1.15);
+    }
+}
+
+@keyframes score-ladder-fire-glow {
+    0%, 100% {
+        opacity: 0.55;
+    }
+
+    50% {
+        opacity: 0.9;
+    }
+}

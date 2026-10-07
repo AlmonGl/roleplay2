@@ -26,6 +26,8 @@ function GlobalPage() {
     const [count, setCount] = useState(0);
     const [load, setLoad] = useState(true);
 
+    console.log("count ", count)
+
     useEffect(() => {
 
         onSnapshot(doc(db, "players", currentUserId), (docSnap1) => {
@@ -93,8 +95,8 @@ function GlobalPage() {
         
         updateDoc(doc(db, "players", player.id.toString()),
             {
-                status: "dialog", questionId: "450", rightLastAnswer: 0, lastAnswer: "",
-                choiceIsMade: false, task: "", currentActionBonus: -1, score: player.score + right
+                status: "idle",
+                score: player.score + right
             });
         
         updateDoc(doc(db, "players", demo.id.toString()),
@@ -104,7 +106,7 @@ function GlobalPage() {
                 activeGlobalPageWorldMap: true,
                 worldMapId: 0
             });
-        setCount(5);
+        setCount(0);
 
         
 
@@ -112,11 +114,12 @@ function GlobalPage() {
     };
     const handleConfirmStartMap = () => {
 
-        setCount(6);
+        setCount(1);
         updateDoc(doc(db, "players", demo.id.toString()),
             {
                 activeGlobalPageMessage: true,
-                message: "таймер 20"
+                message: "таймер 5",
+                worldMapId: 0
 
             });
         updateDoc(doc(db, "players", player.id.toString()),
@@ -137,10 +140,10 @@ function GlobalPage() {
                 {
                     activeGlobalPageMessage: false, 
                 });
-            setCount(7);
+            setCount(2);
 
 
-        }, 20000);
+        }, 5000);
 
 
     };
@@ -148,28 +151,35 @@ function GlobalPage() {
 
         updateDoc(doc(db, "players", demo.id.toString()),
             {
-                activeGlobalPageMessage: true,
-                message: "таймер 20",
+                
+                
                 worldMapId: 2
             });
-        setCount(8);
+        setTimeout(() => {
+            setCount(3);
+
+
+        }, 1000);
+        
        
     };
     const handleConfirmStartSecondMap = () => {
 
-        setCount(9);
+        
         updateDoc(doc(db, "players", demo.id.toString()),
             {
+                activeGlobalPageMessage: true,
+                message: "таймер 5",
                 
-                worldMapId: 2
             });
         updateDoc(doc(db, "players", player.id.toString()),
             {
                 status: "navigateWorld",
-                x: Math.floor(Math.random() * 100) + 1,
-                y: Math.floor(Math.random() * 100) + 1,
+                x: 20,
+                y: 20,
 
             });
+        setCount(4);
         setTimeout(() => {
             console.log("time is out");
             updateDoc(doc(db, "players", player.id.toString()),
@@ -180,21 +190,19 @@ function GlobalPage() {
                 {
                     activeGlobalPageMessage: false,
                 });
-            setCount(10);
-        }, 20000);
+            setCount(5);
+        }, 5000);
 
 
     };
     const handleConfirmEndMaps = () => {
 
-        setCount(10);
+        setCount(0);
         updateDoc(doc(db, "players", demo.id.toString()),
             {
                 stage: 3
 
             });
-
-
 
     };
 
@@ -211,7 +219,7 @@ function GlobalPage() {
         dispatch(logOut());
     }
 
-    
+    console.log(count);
     
 	return (
 		<>
@@ -229,14 +237,16 @@ function GlobalPage() {
 
                         {
                         (demo.stage == 0) ?
-                            <MessageBox
+                                <MessageBox
+                                key={1}
                                 message="Добрый день! Это демонстрация возможностей интерактивной платформы по геймификации образовательных процессов! Хотите узнать больше?"
                                 buttonText="Второй кнопки всё равно нет, поехали!"
                                 onButtonClick={handleConfirmStart}
                             />
                             :
                         (demo.stage == 1 && count == 0 && player.status == "idle") ?
-                        <MessageBox
+                            <MessageBox
+                            key={2}
                             message="Начнем с нескольких вопросов против нашего лучшего ученика. Не забудьте открыть сайт со смартфона с логина testSmart. После этого перейдите на вкладку события(events), где появятся вопросы."
                             buttonText="Принять вызов"
                             onButtonClick={handleConfirmStartQuestions}
@@ -244,48 +254,55 @@ function GlobalPage() {
                         :
                         (demo.stage == 1 && count <= 3 && player.status == "idle") ?
                             <MessageBox
+                                key={3}
                                 message="Следующий вопрос!"
                                 buttonText="Готовы!"
                                 onButtonClick={handleConfirmNextQuestion}
                             />
                         :
                         (demo.stage == 1 && count >= 4 && player.status == "idle") ?
-                            <MessageBox
+                        <MessageBox
+                                key={4}
                                 message="Это был последний вопрос. Ваш соперник получил дополнительный балл за хорошее поведение! Перейдем к следующему испытанию!"
                                 buttonText="Да!"
                                 onButtonClick={handleConfirmLastQuestion}
                                             />
                         :
-                        (demo.stage == 2 && count == 5) ?
+                        (demo.stage == 2 && count == 0) ?
                         <MessageBox
+                            key={5}
                             message="Используйте кнопки на экране телефона для перемещения. Ваше задание найти на карте родину Адама Смита за 20 секунд. Вперед!"
                             buttonText="Да!"
                             onButtonClick={handleConfirmStartMap}
                         />
                         :
-                        (demo.stage == 2 && count == 7) ?
+                        (demo.stage == 2 && count == 2) ?
                         <MessageBox
+                            key = {6}
                             message="Время вышло. Он родился в Шотландии, отлично!"
                             buttonText="Да!"
                             onButtonClick={handleConfirmEndFirstMap}
                         />
                         :
-                        (demo.stage == 2 && count == 8) ?
-                            <MessageBox
-                                message="Следующее задание: Проплывите как Ричард Львиное Серце, который отправился в Крестовый поход!"
+                        (demo.stage == 2 && count == 3) ?
+                                                        <MessageBox
+                                                            key={7}
+                                message="Следующее задание: Проплывите как Ричард Львиное Сердце, который отправился в Крестовый поход!"
                                 buttonText="Отчаливаем.."
                                 onButtonClick={handleConfirmStartSecondMap}
                             />
                         :
-                        (demo.stage == 2 && count == 10) ?
-                            <MessageBox
+                        (demo.stage == 2 && count == 5) ?
+                                                            <MessageBox
+                                                                key={8}
                                 message="Неплохо, но вы не вписались в Гибралтарский пролив."
                                 buttonText="Ту-ту.."
                                 onButtonClick={handleConfirmEndMaps}
                             />
                             :
                         (demo.stage == 3) ?
-                        <MessageBox
+                                                                <MessageBox
+                                                                    key={9}
                                 message="На этом всё, спасибо!"
                                 buttonText="Ок"
                                 onButtonClick={handleConfirmEnd}

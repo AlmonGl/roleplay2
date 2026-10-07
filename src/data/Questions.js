@@ -1,4 +1,5 @@
-
+import { QuestionsPart2 } from "./QuestionsPart2";
+import { QuestionsPart3 } from "./QuestionsPart3";
 
 export const QuestionsTopicCount = [
     {
@@ -185,6 +186,14 @@ export const QuestionsTopicCount = [
         ids: [527, 528, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 544],
         idStart: 527,
         idFinish: 544
+    },
+    {
+        id: 19,
+        section: "Древний Вавилон и Финикия",
+        topic: "класс 5 п.10,12",
+        ids: [545,546],
+        idStart: 545,
+        idFinish: 546
     },
 
 ];
@@ -7519,7 +7528,9 @@ export const Questions = [
         "v5": "Жан-Жак Руссо",
         "v6": "Дени Дидро",
         "used": false
-    }
+    },
+    ...QuestionsPart2,
+    ...QuestionsPart3,
 ];
 
 
