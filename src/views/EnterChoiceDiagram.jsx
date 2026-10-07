@@ -139,9 +139,8 @@ function EnterChoiceDiagram({ players, admin }) {
                                     {/* Отклонение */}
                                     {deviation !== null && (
                                         <div className="diagram-deviation">
-                                            {Number(deviation) > 0
-                                                ? `+${deviation}`
-                                                : deviation}
+                                            {` Ответ: ${player.lastEnterAnswerNum}`}
+                                            
                                         </div>
                                     )}
 

@@ -65,7 +65,7 @@ function GlobalPage() {
         
         updateDoc(doc(db, "players", player.id.toString()),
             {
-                status: "dialog", questionId: "450", rightLastAnswer: 0,
+                status: "dialog", questionId: (Math.floor(Math.random() * 100)+414).toString(), rightLastAnswer: 0,
                 lastAnswer: "", choiceIsMade: false, task: "", currentActionBonus: -1
             });
         setCount(count + 1);
@@ -78,7 +78,7 @@ function GlobalPage() {
         
         updateDoc(doc(db, "players", player.id.toString()),
             {
-                status: "dialog", questionId: "450", rightLastAnswer: 0, lastAnswer: "",
+                status: "dialog", questionId: (Math.floor(Math.random() * 100) + 414).toString() , rightLastAnswer: 0, lastAnswer: "",
                 choiceIsMade: false, task: "", currentActionBonus: -1, score: player.score + right
             });
         
@@ -175,8 +175,8 @@ function GlobalPage() {
         updateDoc(doc(db, "players", player.id.toString()),
             {
                 status: "navigateWorld",
-                x: 20,
-                y: 20,
+                x: 32,
+                y: 37,
 
             });
         setCount(4);
@@ -200,12 +200,99 @@ function GlobalPage() {
         setCount(0);
         updateDoc(doc(db, "players", demo.id.toString()),
             {
-                stage: 3
-
+                stage: 3,
+                score: demo.score + 2,
+                
+                activeGlobalPageWorldMap: false,
+                activeGlobalPageImageView: true,
+                imageViewId: 6,
             });
 
     };
+    const handleConfirmImage = () => {
 
+        setCount(1);
+        updateDoc(doc(db, "players", player.id.toString()),
+            {
+                status: "dialog", questionId: "0", rightLastAnswer: 0, lastAnswer: "",
+                choiceIsMade: false, task: "", currentActionBonus: -1
+            });
+
+    };
+    const handleConfirmImageDate = () => {
+        setCount(2);
+        const right = player.rightLastAnswer == 5 ? 1 : 0
+
+        updateDoc(doc(db, "players", player.id.toString()),
+            {
+                status: "idle",
+                score: player.score + right
+            });
+
+        updateDoc(doc(db, "players", demo.id.toString()),
+            {
+                score: demo.score + 1,
+                imageViewId: 9,
+            });
+        
+
+    };
+
+    const handleConfirmImageDiagram = () => {
+        setCount(3);
+        updateDoc(doc(db, "players", player.id.toString()),
+            {
+                status: "enterAnswer",
+                lastEnterAnswer: 0
+                
+            });
+        setTimeout(() => {
+            updateDoc(doc(db, "players", demo.id.toString()),
+                {
+                    showRightAnswer: false,
+
+                    activeEnterChoiceDiagram: true,
+                    activeGlobalPageImageView: false,
+                    lastEnterAnswer: Math.floor(Math.random() * 25) + 1850,
+                    rightAnswer: "1860"
+                });
+        }, 5000);
+        
+
+    };
+    const handleConfirmImageDiagramShowAnswer = () => {
+        setCount(4);
+        
+        updateDoc(doc(db, "players", demo.id.toString()),
+            {
+                
+                showRightAnswer: true
+            });
+
+    };
+    const handleConfirmEndDiagram = () => {
+        setCount(0);
+        if (Math.abs(player.lastEnterAnswer - 1860) >= Math.abs(demo.lastEnterAnswer - 1860)) {
+            updateDoc(doc(db, "players", demo.id.toString()),
+                {
+                    score: demo.score + 1,
+                });
+        } else {
+            updateDoc(doc(db, "players", player.id.toString()),
+                {
+                    score: player.score + 1,
+                });
+        }
+        updateDoc(doc(db, "players", demo.id.toString()),
+            {
+                stage: 4,
+                showRightAnswer: false,
+                activeEnterChoiceDiagram: false,
+
+            });
+        
+
+    };
     
 
     const handleConfirmEnd = () => {
@@ -213,7 +300,9 @@ function GlobalPage() {
             {
                 stage: 0,
                 activeGlobalPageWorldMap: false,
-                activeGlobalPageRating: false
+                activeGlobalPageRating: false,
+                activeEnterChoiceDiagram: false,
+                activeGlobalPageImageView: false,
 
             });
         dispatch(logOut());
@@ -240,7 +329,7 @@ function GlobalPage() {
                                 <MessageBox
                                 key={1}
                                 message="Добрый день! Это демонстрация возможностей интерактивной платформы по геймификации образовательных процессов! Хотите узнать больше?"
-                                buttonText="Второй кнопки всё равно нет, поехали!"
+                                buttonText="Поехали!"
                                 onButtonClick={handleConfirmStart}
                             />
                             :
@@ -255,7 +344,10 @@ function GlobalPage() {
                         (demo.stage == 1 && count <= 3 && player.status == "idle") ?
                             <MessageBox
                                 key={3}
-                                message="Следующий вопрос!"
+                                message={player.rightLastAnswer == 5 ?
+                                    "Правильно! Следующий вопрос! Не сворачивайте приложение на смартфоне, иначе мы поймем, что вы жульничаете!"
+                                    :
+                                    "Не совсем.. Следующий вопрос!"}
                                 buttonText="Готовы!"
                                 onButtonClick={handleConfirmNextQuestion}
                             />
@@ -263,7 +355,11 @@ function GlobalPage() {
                         (demo.stage == 1 && count >= 4 && player.status == "idle") ?
                         <MessageBox
                                 key={4}
-                                message="Это был последний вопрос. Ваш соперник получил дополнительный балл за хорошее поведение! Перейдем к следующему испытанию!"
+                                message={player.rightLastAnswer == 5 ?
+                                    "Верно! Это был последний вопрос. Ваш соперник получил дополнительный балл за хорошее поведение! Перейдем к следующему испытанию!"
+                                    :
+                                    "Близко, но нет.. Это был последний вопрос. Ваш соперник получил дополнительный балл за хорошее поведение! Перейдем к следующему испытанию!"
+                                }
                                 buttonText="Да!"
                                 onButtonClick={handleConfirmLastQuestion}
                                             />
@@ -295,18 +391,58 @@ function GlobalPage() {
                         (demo.stage == 2 && count == 5) ?
                                                             <MessageBox
                                                                 key={8}
-                                message="Неплохо, но вы не вписались в Гибралтарский пролив."
+                                message="Неплохо, но вы не вписались в Гибралтарский пролив. Перейдем к следующему заданию."
                                 buttonText="Ту-ту.."
                                 onButtonClick={handleConfirmEndMaps}
                             />
                             :
-                        (demo.stage == 3) ?
-                                                                <MessageBox
-                                                                    key={9}
-                                message="На этом всё, спасибо!"
-                                buttonText="Ок"
-                                onButtonClick={handleConfirmEnd}
+                            (demo.stage == 3 && count == 0) ?
+                                 <MessageBox
+                                key={9}
+                                message="Проверим вашу визуальную память! Кто это?"
+                                buttonText="Посмотрим варианты..."
+                                onButtonClick={handleConfirmImage}
                             />
+                        :
+                            (demo.stage == 3 && count == 1 && player.status == "idle") ?
+                                 <MessageBox
+                                key={10}
+                                message={player.rightLastAnswer == 5 ? "Ничего себе!! Правильно! Ловите балл!" : "Ничего себе.. К сожалению, нет." }
+                                buttonText="Дальше."
+                                onButtonClick={handleConfirmImageDate}
+                            />
+                        :     
+                        (demo.stage == 3 && count == 2) ?
+                                 <MessageBox
+                                key={11}
+                                message="Посмотрите на изображение и предположите, в каком году оно создано. Поле для ввода появиться на телефоне."
+                                buttonText="Считаем..."
+                                onButtonClick={handleConfirmImageDiagram}
+                            />
+                        :    
+                        (demo.stage == 3 && count == 3 && player.status == "idle") ?
+                            <MessageBox
+                                key={12}
+                                message="Посмотрим на правильный ответ"
+                                buttonText="Считаем..."
+                                onButtonClick={handleConfirmImageDiagramShowAnswer}
+                            />
+                        :  
+                        (demo.stage == 3 && count == 4 ) ?
+                            <MessageBox
+                                key={13}
+                                message={Math.abs(player.lastEnterAnswer - 1860) >= Math.abs(demo.lastEnterAnswer - 1860) ? "Кажется, наш лучший студент немного ближе!" : "Вы были ближе!"}
+                                buttonText="Дальше..."
+                                onButtonClick={handleConfirmEndDiagram}
+                            />
+                            :  
+                        (demo.stage == 4) ?
+                        <MessageBox
+                            key={14}
+                            message="На этом всё, спасибо!"
+                            buttonText="Ок"
+                            onButtonClick={handleConfirmEnd}
+                        />
                         :
                         <></>
                         }
@@ -334,7 +470,7 @@ function GlobalPage() {
                                     <WorldMap admin={demo} players={[player]} />
                                 }
                                 {demo.activeEnterChoiceDiagram &&
-                                    <EnterChoiceDiagram players={[player]} admin={demo} />
+                                    <EnterChoiceDiagram players={[player, demo]} admin={demo} />
                                 }
                                 {demo.activeGlobalPageImageView &&
                                     <ImageView admin={demo} />
