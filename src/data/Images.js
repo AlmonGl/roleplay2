@@ -24,6 +24,8 @@ export const WorldMaps = [
     { id: 22, name: 'Новое время', tip: "1898 колонии", path: '/assets/maps/World_1898_empires_colonies_territory.png' },
     { id: 23, name: 'Новое время', tip: "13 колоний", path: '/assets/maps/13colonies.jpg' },
     
+
+    
     
 ];
 
@@ -75,6 +77,12 @@ export const Images = [
     { id: 44, name: 'Новое время', tip: "японский парламент", path: '/assets/images/japamParlament.jpg' },
     { id: 45, name: 'Новое время', tip: "энциклопедия", path: '/assets/images/encycloped.jpg' },
     { id: 46, name: 'Новое время', tip: "вольтер памятник", path: '/assets/images/Voltaire-1781.jpg' },
+    { id: 47, name: 'Древний Мир', tip: "висячие сады барельеф", path: '/assets/images/Gardens_of_Ninevah.png' },
+    { id: 48, name: 'Древний Мир', tip: "врата иштар реплика", path: '/assets/images/Ishtar_gate_in_Pergamon_museum_in_Berlin.jpg' },
+    { id: 49, name: 'Средние века', tip: "", path: '/assets/images/Clipboard_10-07-2026_01.jpg' },
+    { id: 50, name: 'Средние века', tip: "схема замка", path: '/assets/images/замокДонжон.jpg' },
+    { id: 51, name: 'Средние века', tip: "рыцарский турнир", path: '/assets/images/рыцарскийТурнир.jpg' },
+    { id: 52, name: 'Средние века', tip: "феодальная лестница", path: '/assets/images/феод_лестн.jpg' },
 ];
 
 
