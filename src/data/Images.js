@@ -83,6 +83,7 @@ export const Images = [
     { id: 50, name: 'Средние века', tip: "схема замка", path: '/assets/images/замокДонжон.jpg' },
     { id: 51, name: 'Средние века', tip: "рыцарский турнир", path: '/assets/images/рыцарскийТурнир.jpg' },
     { id: 52, name: 'Средние века', tip: "феодальная лестница", path: '/assets/images/феод_лестн.jpg' },
+    { id: 53, name: 'QR code', tip: "QR code", path: '/assets/images/qr-code.png' },
 ];
 
 

@@ -5,6 +5,7 @@ import MonsterDisplay from '../components/MonsterDisplay.jsx';
 import WorldMap from '../components/WorldMap.jsx';
 import Notification from '../components/Notification.jsx';
 import MessageBox from '../components/MessageBox.jsx';
+import ScoreLadder from '../components/ScoreLadder.jsx';
 
 import { useEffect, useState } from 'react'
 import { collection, query, where, getDocs, doc, getDoc, onSnapshot, updateDoc, setDoc } from "firebase/firestore";
@@ -52,13 +53,17 @@ function GlobalPage() {
             {
                 stage: 1,
                 activeGlobalPageRating: true,
-                score: 0
+                score: 0,
+                activeGlobalPageImageView: true,
+                imageViewId: 53,
+
             });
         updateDoc(doc(db, "players", player.id.toString()),
             {
                 status: "idle",
                 score: 0
             });
+        
     }
     
     const handleConfirmStartQuestions = () => {
@@ -68,7 +73,10 @@ function GlobalPage() {
                 status: "dialog", questionId: (Math.floor(Math.random() * 100)+414).toString(), rightLastAnswer: 0,
                 lastAnswer: "", choiceIsMade: false, task: "", currentActionBonus: -1
             });
+        
         setCount(count + 1);
+
+
         // здесь ваша логика в родительском компоненте
         
     };
@@ -84,7 +92,8 @@ function GlobalPage() {
         
         updateDoc(doc(db, "players", demo.id.toString()),
             {
-                score: demo.score + 1
+                score: demo.score + 1,
+                activeGlobalPageImageView: false,
             });
         setCount(count + 1);
         // здесь ваша логика в родительском компоненте
@@ -155,6 +164,12 @@ function GlobalPage() {
                 
                 worldMapId: 2
             });
+        updateDoc(doc(db, "players", player.id.toString()),
+            {
+                
+                score: player.score + 1,
+
+            });
         setTimeout(() => {
             setCount(3);
 
@@ -171,12 +186,14 @@ function GlobalPage() {
                 activeGlobalPageMessage: true,
                 message: "таймер 5",
                 
+                
             });
         updateDoc(doc(db, "players", player.id.toString()),
             {
                 status: "navigateWorld",
                 x: 32,
                 y: 37,
+                
 
             });
         setCount(4);
@@ -201,7 +218,7 @@ function GlobalPage() {
         updateDoc(doc(db, "players", demo.id.toString()),
             {
                 stage: 3,
-                score: demo.score + 2,
+                score: demo.score + 1,
                 
                 activeGlobalPageWorldMap: false,
                 activeGlobalPageImageView: true,
@@ -216,6 +233,13 @@ function GlobalPage() {
             {
                 status: "dialog", questionId: "0", rightLastAnswer: 0, lastAnswer: "",
                 choiceIsMade: false, task: "", currentActionBonus: -1
+            });
+        updateDoc(doc(db, "players", demo.id.toString()),
+            {
+                
+                activeGlobalPageWorldMap: false,
+                activeGlobalPageImageView: true,
+                imageViewId: 6,
             });
 
     };
@@ -293,8 +317,148 @@ function GlobalPage() {
         
 
     };
-    
+    const handleConfirmStartLadder = () => {
+        setCount(1);
+        if (demo.score == 11) {
+            setCount(3);
+            
+        }
+        const loseCo = player.score <= 2 ? 0 : player.score - 2;
+        updateDoc(doc(db, "players", demo.id.toString()),
+            {
+           
+                activeGlobalPageLadder: true,
+                activeGlobalPageRating: false,
+                loseCount: loseCo
 
+            });
+        updateDoc(doc(db, "players", player.id.toString()),
+            {
+                status: "idle",  rightLastAnswer: 0, lastAnswer: "",
+                choiceIsMade: false, task: "", currentActionBonus: -1
+            });
+    }
+
+    const handleConfirmStartLadderQuestions = () => {
+        setCount(2);
+        updateDoc(doc(db, "players", player.id.toString()),
+            {
+                status: "dialog", questionId: (Math.floor(Math.random() * 100) + 414).toString(), rightLastAnswer: 0,
+                lastAnswer: "", choiceIsMade: false, task: "", currentActionBonus: -1,
+            });
+        
+    }
+    const handleNextLadderQuestion = () => {
+        if (player.score == 10 && player.rightLastAnswer == 5) {
+            setCount(5);
+            updateDoc(doc(db, "players", player.id.toString()),
+                {
+                    score: 11,
+                });
+        } else {
+            if ((player.score <= demo.loseCount + 1) && (player.rightLastAnswer != 5)) {
+                updateDoc(doc(db, "players", demo.id.toString()),
+                    {
+                        loseCount: demo.loseCount + 1,
+                    });
+                setCount(6);
+                if (demo.score == 10) {
+                    updateDoc(doc(db, "players", demo.id.toString()),
+                        {
+                            score: 11,
+                        });
+                    setCount(7);
+                }
+
+            } else 
+            {
+                if (demo.score == 10) {
+                    setCount(3);
+                    updateDoc(doc(db, "players", demo.id.toString()),
+                        {
+                            score: 11,
+                            loseCount: demo.loseCount + 1,
+                        });
+                    const right = player.rightLastAnswer == 5 ? 1 : 0
+                    updateDoc(doc(db, "players", player.id.toString()),
+                        {
+                            rightLastAnswer: 0,
+                            lastAnswer: "", choiceIsMade: false, task: "", currentActionBonus: -1, score: player.score + right
+                        });
+                } else {
+                    if (demo.loseCount >= 10) {
+                        setCount(6);
+                    } else {
+                        const right = player.rightLastAnswer == 5 ? 1 : 0
+                        updateDoc(doc(db, "players", player.id.toString()),
+                            {
+                                status: "dialog", questionId: (Math.floor(Math.random() * 100) + 414).toString(), rightLastAnswer: 0,
+                                lastAnswer: "", choiceIsMade: false, task: "", currentActionBonus: -1, score: player.score + right
+                            });
+
+                        updateDoc(doc(db, "players", demo.id.toString()),
+                            {
+                                score: demo.score + 1,
+                                loseCount: demo.loseCount + 1,
+                            });
+                    }
+                }
+            }
+        }
+    }
+    const handleStudentWin = () => {
+        setCount(4);
+        const right = player.rightLastAnswer == 5 ? 1 : 0
+        updateDoc(doc(db, "players", player.id.toString()),
+            {
+                status: "dialog", questionId: (Math.floor(Math.random() * 100) + 414).toString(), rightLastAnswer: 0,
+                lastAnswer: "", choiceIsMade: false, task: "", currentActionBonus: -1, score: player.score + right
+            });
+    
+    }
+    const handleSoloQuestions = () => {
+        if (player.score == 10 && player.rightLastAnswer == 5) {
+            setCount(5);
+            updateDoc(doc(db, "players", player.id.toString()),
+                {
+                    score: 11,
+                });
+        } else
+            {
+                if ((player.score <= demo.loseCount + 1) && (player.rightLastAnswer != 5)) {
+                    updateDoc(doc(db, "players", demo.id.toString()),
+                        {
+                            loseCount: demo.loseCount + 1,
+                        });
+                    setCount(6);
+                } else {
+                    const right = player.rightLastAnswer == 5 ? 1 : 0
+                    updateDoc(doc(db, "players", player.id.toString()),
+                        {
+                            status: "dialog", questionId: (Math.floor(Math.random() * 100) + 414).toString(), rightLastAnswer: 0,
+                            lastAnswer: "", choiceIsMade: false, task: "", currentActionBonus: -1, score: player.score + right
+
+                        });
+                    updateDoc(doc(db, "players", demo.id.toString()),
+                        {
+
+                            loseCount: demo.loseCount + 1,
+                        });
+                }
+            }
+
+    }
+    const handleEndLadder = () => {
+        updateDoc(doc(db, "players", demo.id.toString()),
+            {
+                stage: 5,
+                activeGlobalPageLadder: false,
+
+            });
+
+    }
+
+    
     const handleConfirmEnd = () => {
         updateDoc(doc(db, "players", demo.id.toString()),
             {
@@ -303,6 +467,7 @@ function GlobalPage() {
                 activeGlobalPageRating: false,
                 activeEnterChoiceDiagram: false,
                 activeGlobalPageImageView: false,
+                activeGlobalPageLadder: false,
 
             });
         dispatch(logOut());
@@ -375,7 +540,7 @@ function GlobalPage() {
                         (demo.stage == 2 && count == 2) ?
                         <MessageBox
                             key = {6}
-                            message="Время вышло. Он родился в Шотландии, отлично!"
+                            message="Время вышло. Он родился в Шотландии, отлично! А вот наш лучший студент выбрал Кенингсберг..."
                             buttonText="Да!"
                             onButtonClick={handleConfirmEndFirstMap}
                         />
@@ -436,11 +601,82 @@ function GlobalPage() {
                                 onButtonClick={handleConfirmEndDiagram}
                             />
                             :  
-                        (demo.stage == 4) ?
+                        (demo.stage == 4 && count == 0) ?
+                            <MessageBox
+                                key={15}
+                                message={"Все предыдущие задания были подготовкой к последнему испытанию!"}
+                                buttonText="?"
+                                onButtonClick={handleConfirmStartLadder}
+                            />
+                            :
+                            (demo.stage == 4 && count == 1) ?
+                            <MessageBox
+                                key={16}
+                                message={"Достигните выхода из подземелья прежде, чем огонь достигнет вас! Учеными доказано, что опасность стимулирует работу мозга, вперёд! Первый вопрос уже у вас в телефоне."}
+                                buttonText="?!?"
+                                onButtonClick={handleConfirmStartLadderQuestions}
+                            />
+                            :
+                            (demo.stage == 4 && count == 2 && player.status == "idle") ?
+                            <MessageBox
+                                key={17}
+                                message={player.rightLastAnswer == 5 ?
+                                    "Правильно! Сейчас начислим баллы!"
+                                    :
+                                    "Не совсем.."}
+                                buttonText={demo.score == 10 ? "Как там дела у лучшего студента?" : "Следующий вопрос!"}
+                                onButtonClick={handleNextLadderQuestion}
+                            />
+                            :
+                            (demo.stage == 4 && count == 3) ?
+                            <MessageBox
+                                key={18}
+                                message={"Лучший студент тем временем покинул подземелье!"}
+                                buttonText="Ещё вопрос..."
+                                onButtonClick={handleStudentWin}
+                            />
+                            :
+
+                            (demo.stage == 4 && count == 4 && player.status == "idle") ?
+                            <MessageBox
+                                key={19}
+                                message={player.rightLastAnswer == 5 ?
+                                    "Правильно! Сейчас начислим баллы! Поторопитесь!"
+                                    :
+                                    "Не совсем.. Поторопитесь!"}
+                                buttonText="Вперёд!"
+                                onButtonClick={handleSoloQuestions}
+                            />
+                            :
+                            (demo.stage == 4 && count == 5) ?
+                            <MessageBox
+                                key={20}
+                                message={"Получилось!"}
+                                buttonText="Ура!"
+                                onButtonClick={handleEndLadder}
+                            />
+                            :
+                            (demo.stage == 4 && count == 6) ?
+                            <MessageBox
+                                key={21}
+                                message={"Почти получилось..."}
+                                buttonText=":("
+                                onButtonClick={handleEndLadder}
+                            />
+                            :
+                            (demo.stage == 4 && count == 7) ?
+                            <MessageBox
+                                key={22}
+                                message={"У вас почти получилось... А наш лучший студент тем временм выбрался!"}
+                                buttonText=":("
+                                onButtonClick={handleEndLadder}
+                            />
+                            :
+                        (demo.stage == 5) ?
                         <MessageBox
-                            key={14}
-                            message="На этом всё, спасибо!"
-                            buttonText="Ок"
+                            key={23}
+                            message="На этом всё, надеемся вам было интересно!"
+                            buttonText="Спасибо!"
                             onButtonClick={handleConfirmEnd}
                         />
                         :
@@ -477,6 +713,9 @@ function GlobalPage() {
                                 }
                                 {demo.activeGlobalPageMessage &&
                                     <Notification admin={demo} />
+                                }
+                                {demo.activeGlobalPageLadder &&
+                                    <ScoreLadder players={[demo, player]} admin={demo} />
                                 }
                                 {demo.activeGlobalPageRating &&
                                     <Rating players={[demo, player]} />

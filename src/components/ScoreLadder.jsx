@@ -5,52 +5,100 @@ import './ScoreLadder.scss';
 import bgImage from '/assets/ladder/bgr1.jpg';
 import fireImage from '/assets/ladder/Fire.jpg';
 import loseSound from '/assets/ladder/44207.mp3';
+import winSound from '/assets/ladder/win.mp3'; // 👈 победный звук
 
-const MAX_SCORE = 10; // шкала 0..10
+const MAX_SCORE = 10;
 
 const ScoreLadder = ({ players, admin }) => {
     const loseCount = admin?.loseCount ?? 0;
 
-    // Видимые игроки — в исходном порядке массива (без сортировки)
     const visiblePlayers = useMemo(
-        () => players.filter(p => p.score > loseCount),
+        () => players.filter(p => p.score > loseCount && p.score <= MAX_SCORE),
         [players, loseCount]
     );
 
-    // Позиция огня по шкале 0..10 → 0..1
     const fireProgress = Math.min(1, Math.max(0, loseCount / MAX_SCORE));
 
-    // Отслеживаем исчезающих
-    const prevVisibleIdsRef = useRef(new Set());
+    // Храним снимок ВСЕХ игроков + значение loseCount на момент снимка
+    const prevSnapshotRef = useRef({ loseCount: -1, players: new Map() });
     const [fadingOut, setFadingOut] = useState(new Set());
 
     const visibleKey = visiblePlayers.map(p => p.id ?? p.name).join('|');
 
+    // Разблокировка аудио по первому пользовательскому жесту
     useEffect(() => {
-        const prevIds = prevVisibleIdsRef.current;
-        const currentIds = new Set(visiblePlayers.map(p => p.id ?? p.name));
-        const disappeared = [...prevIds].filter(id => !currentIds.has(id));
+        const unlock = () => {
+            try {
+                const a = new Audio();
+                a.muted = true;
+                a.play().catch(() => { });
+            } catch (e) { /* ignore */ }
+            window.removeEventListener('click', unlock);
+            window.removeEventListener('touchstart', unlock);
+            window.removeEventListener('keydown', unlock);
+        };
+        window.addEventListener('click', unlock);
+        window.addEventListener('touchstart', unlock);
+        window.addEventListener('keydown', unlock);
+        return () => {
+            window.removeEventListener('click', unlock);
+            window.removeEventListener('touchstart', unlock);
+            window.removeEventListener('keydown', unlock);
+        };
+    }, []);
+
+    useEffect(() => {
+        const prev = prevSnapshotRef.current;
+        const currentPlayersMap = new Map(
+            players.map(p => [p.id ?? p.name, p])
+        );
+
+        // Кто был виден при СТАРОМ loseCount (используем prev.loseCount!)
+        const prevVisibleIds = new Set(
+            [...prev.players.entries()]
+                .filter(([, p]) => p.score > prev.loseCount && p.score <= MAX_SCORE)
+                .map(([id]) => id)
+        );
+
+        // Кто виден при НОВОМ loseCount
+        const currentVisibleIds = new Set(
+            visiblePlayers.map(p => p.id ?? p.name)
+        );
+
+        const disappeared = [...prevVisibleIds].filter(id => !currentVisibleIds.has(id));
 
         if (disappeared.length > 0) {
+            // Причина: если у игрока текущий score > MAX_SCORE — победа, иначе поражение
+            const isWinExit = disappeared.some(id => {
+                const current = currentPlayersMap.get(id);
+                return current && current.score > MAX_SCORE;
+            });
+
             try {
-                const audio = new Audio(loseSound);
+                const audio = new Audio(isWinExit ? winSound : loseSound);
                 audio.volume = 0.6;
-                audio.play().catch(() => { });
-            } catch (e) { /* ignore */ }
+                audio.play().catch(err => {
+                    // Не глушим ошибку полностью — помогает при отладке
+                    console.warn('Audio play failed:', err);
+                });
+            } catch (e) {
+                console.warn('Audio init failed:', e);
+            }
 
             setFadingOut(new Set(disappeared));
             const t = setTimeout(() => setFadingOut(new Set()), 700);
-            prevVisibleIdsRef.current = currentIds;
+
+            // Обновляем снимок ПОСЛЕ обработки
+            prevSnapshotRef.current = { loseCount, players: currentPlayersMap };
             return () => clearTimeout(t);
         }
 
-        prevVisibleIdsRef.current = currentIds;
-    }, [visibleKey]);
+        prevSnapshotRef.current = { loseCount, players: currentPlayersMap };
+    }, [visibleKey, loseCount, players]);
 
-    // Размер иконки зависит от количества видимых игроков
     const playersCount = Math.max(visiblePlayers.length, 1);
     const iconSize = useMemo(() => {
-        const usable = 1000 - 60 - 20; // высота минус шкала и нижний отступ
+        const usable = 1000 - 60 - 20;
         const raw = Math.floor(usable / playersCount) - 12;
         return Math.max(40, Math.min(200, raw));
     }, [playersCount]);
@@ -65,7 +113,6 @@ const ScoreLadder = ({ players, admin }) => {
         >
             <div className="score-ladder__overlay" />
 
-            {/* 🔥 Огонь: растёт слева направо */}
             <div
                 className="score-ladder__fire"
                 style={{
@@ -77,7 +124,6 @@ const ScoreLadder = ({ players, admin }) => {
                 <div className="score-ladder__fire-glow" />
             </div>
 
-            {/* Шкала очков сверху */}
             <div className="score-ladder__scale">
                 {Array.from({ length: MAX_SCORE + 1 }).map((_, i) => (
                     <div
@@ -90,7 +136,6 @@ const ScoreLadder = ({ players, admin }) => {
                 ))}
             </div>
 
-            {/* Дорожка с иконками */}
             <div className="score-ladder__track">
                 {visiblePlayers.map((player, index) => {
                     const id = player.id ?? player.name;
@@ -119,8 +164,6 @@ const ScoreLadder = ({ players, admin }) => {
                     <div className="score-ladder__empty">Нет активных игроков</div>
                 )}
             </div>
-
-            
         </div>
     );
 };
