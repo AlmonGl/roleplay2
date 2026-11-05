@@ -1,5 +1,4 @@
 import FantasyMap from "../components/FantasyMap.jsx"
-import Header from '../components/Header.jsx';
 import Rating from '../components/Rating.jsx';
 import MonsterDisplay from '../components/MonsterDisplay.jsx';
 import WorldMap from '../components/WorldMap.jsx';
@@ -8,7 +7,7 @@ import MessageBox from '../components/MessageBox.jsx';
 import ScoreLadder from '../components/ScoreLadder.jsx';
 
 import { useEffect, useState } from 'react'
-import { collection, query, where, getDocs, doc, getDoc, onSnapshot, updateDoc, setDoc } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../firebase/config.js";
 
 import { selectCurrentUserId } from '../store/usersSlice.js';
@@ -19,7 +18,6 @@ import ImageView from "./ImageView.jsx";
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut} from '../store/usersSlice.js';
 function GlobalPage() {
-    const pageTitle = "Let's see what is going on.";
     const [demo, setDemo] = useState([]);
     const [player, setPlayer] = useState([]);
     const currentUserId = useSelector(selectCurrentUserId);
@@ -70,14 +68,12 @@ function GlobalPage() {
         
         updateDoc(doc(db, "players", player.id.toString()),
             {
-                status: "dialog", questionId: (Math.floor(Math.random() * 100)+414).toString(), rightLastAnswer: 0,
+                status: "dialog", questionId: (Math.floor(Math.random() * 400)+60).toString(), rightLastAnswer: 0,
                 lastAnswer: "", choiceIsMade: false, task: "", currentActionBonus: -1
             });
         
         setCount(count + 1);
 
-
-        // здесь ваша логика в родительском компоненте
         
     };
     const handleConfirmNextQuestion = () => {
@@ -86,7 +82,7 @@ function GlobalPage() {
         
         updateDoc(doc(db, "players", player.id.toString()),
             {
-                status: "dialog", questionId: (Math.floor(Math.random() * 100) + 414).toString() , rightLastAnswer: 0, lastAnswer: "",
+                status: "dialog", questionId: (Math.floor(Math.random() * 400) + 60).toString() , rightLastAnswer: 0, lastAnswer: "",
                 choiceIsMade: false, task: "", currentActionBonus: -1, score: player.score + right
             });
         
@@ -96,7 +92,7 @@ function GlobalPage() {
                 activeGlobalPageImageView: false,
             });
         setCount(count + 1);
-        // здесь ваша логика в родительском компоненте
+       
 
     };
     const handleConfirmLastQuestion = () => {
@@ -127,7 +123,7 @@ function GlobalPage() {
         updateDoc(doc(db, "players", demo.id.toString()),
             {
                 activeGlobalPageMessage: true,
-                message: "таймер 5",
+                message: "таймер 20",
                 worldMapId: 0
 
             });
@@ -152,7 +148,7 @@ function GlobalPage() {
             setCount(2);
 
 
-        }, 5000);
+        }, 20000);
 
 
     };
@@ -184,7 +180,7 @@ function GlobalPage() {
         updateDoc(doc(db, "players", demo.id.toString()),
             {
                 activeGlobalPageMessage: true,
-                message: "таймер 5",
+                message: "таймер 20",
                 
                 
             });
@@ -208,7 +204,7 @@ function GlobalPage() {
                     activeGlobalPageMessage: false,
                 });
             setCount(5);
-        }, 5000);
+        }, 20000);
 
 
     };
@@ -343,7 +339,7 @@ function GlobalPage() {
         setCount(2);
         updateDoc(doc(db, "players", player.id.toString()),
             {
-                status: "dialog", questionId: (Math.floor(Math.random() * 100) + 414).toString(), rightLastAnswer: 0,
+                status: "dialog", questionId: (Math.floor(Math.random() * 400) + 60).toString(), rightLastAnswer: 0,
                 lastAnswer: "", choiceIsMade: false, task: "", currentActionBonus: -1,
             });
         
@@ -392,7 +388,7 @@ function GlobalPage() {
                         const right = player.rightLastAnswer == 5 ? 1 : 0
                         updateDoc(doc(db, "players", player.id.toString()),
                             {
-                                status: "dialog", questionId: (Math.floor(Math.random() * 100) + 414).toString(), rightLastAnswer: 0,
+                                status: "dialog", questionId: (Math.floor(Math.random() * 400) + 60).toString(), rightLastAnswer: 0,
                                 lastAnswer: "", choiceIsMade: false, task: "", currentActionBonus: -1, score: player.score + right
                             });
 
@@ -411,7 +407,7 @@ function GlobalPage() {
         const right = player.rightLastAnswer == 5 ? 1 : 0
         updateDoc(doc(db, "players", player.id.toString()),
             {
-                status: "dialog", questionId: (Math.floor(Math.random() * 100) + 414).toString(), rightLastAnswer: 0,
+                status: "dialog", questionId: (Math.floor(Math.random() * 400) + 60).toString(), rightLastAnswer: 0,
                 lastAnswer: "", choiceIsMade: false, task: "", currentActionBonus: -1, score: player.score + right
             });
     
@@ -435,7 +431,7 @@ function GlobalPage() {
                     const right = player.rightLastAnswer == 5 ? 1 : 0
                     updateDoc(doc(db, "players", player.id.toString()),
                         {
-                            status: "dialog", questionId: (Math.floor(Math.random() * 100) + 414).toString(), rightLastAnswer: 0,
+                            status: "dialog", questionId: (Math.floor(Math.random() * 400) + 60).toString(), rightLastAnswer: 0,
                             lastAnswer: "", choiceIsMade: false, task: "", currentActionBonus: -1, score: player.score + right
 
                         });
