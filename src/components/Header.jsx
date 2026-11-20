@@ -32,7 +32,7 @@ function Header({ pageTitle }) {
             </div>
             <div className="buttons-container">
 
-                    <NavLink to="/">
+                <NavLink to="/playerPage">
                       <button className="btn">
                           Stats
                       </button>

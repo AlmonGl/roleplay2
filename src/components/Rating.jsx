@@ -1,4 +1,4 @@
-// FantasyScoreTable.jsx
+
 import  { useState, useEffect, useRef } from 'react';
 import './Rating.css';
 
@@ -69,7 +69,7 @@ const Rating = ({ players }) => {
     // Получение ранга игрока
     const getRank = (index) => {
         const ranks = ['👑', '🥈', '🥉'];
-        return ranks[index] || `${index + 1} место`;
+        return ranks[index] || `${index + 1}`;
     };
 
     return (
@@ -79,55 +79,71 @@ const Rating = ({ players }) => {
                 <div className="magical-divider"></div>
             </div>
 
-            <div className="fantasy-table">
-                <div className="table-header">
-                    <div className="header-rank">Ранг</div>
-                    <div className="header-player">Игрок</div>
-                    <div className="header-class">Hitpoints</div>
-                    <div className="header-class">Items</div>
-                    <div className="header-score">Рейтинг</div>
-                </div>
+            <div className={`fantasy-table ${sortedPlayers.length > 8 ? 'two-columns' : ''}`}>
+                {(() => {
+                    const columns = sortedPlayers.length > 8
+                        ? [
+                            sortedPlayers.slice(0, Math.ceil(sortedPlayers.length / 2)),
+                            sortedPlayers.slice(Math.ceil(sortedPlayers.length / 2))
+                        ]
+                        : [sortedPlayers];
 
-                {sortedPlayers.map((player, index) => (
-                    <div
-                        key={player.id}
-                        className={`table-row ${index < 3 ? 'top-player' : ''}`}
-                        style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                        <div className="row-rank">
-                            <span className="rank-badge">{getRank(index)}</span>
-                        </div>
+                    let globalIndex = 0;
 
-                        <div className="row-player">
-                            <span className="player-avatar">{player.icon || '🧙'}</span>
-                            <span className="player-name">{player.name}</span>
-                        </div>
-
-                        <div className="row-class">
-                            
-                            <span className="hp-value">{player.HP}</span>
-                        </div>
-                        <div className="row-class">
-
-                            <div className="item-badges">
-                                {player.items && player.items.length > 0 ? (
-                                    player.items.map((item, index) => (
-                                        <div
-                                            key={item.id || index}
-                                            className="item-badge"
-                                        >
-                                            {item.icon || '📦'}
-                                        </div>
-                                    ))
-                                ) : null}
+                    return columns.map((column, columnIndex) => (
+                        <div className="fantasy-table-column" key={columnIndex}>
+                            <div className="table-header">
+                                <div className="header-rank">Ранг</div>
+                                <div className="header-player">Игрок</div>
+                                <div className="header-class">Hp</div>
+                                <div className="header-class">Items</div>
+                                <div className="header-score">Рейтинг</div>
                             </div>
+
+                            {column.map((player) => {
+                                const index = globalIndex++;
+
+                                return (
+                                    <div
+                                        key={player.id}
+                                        className={`table-row ${index < 3 ? 'top-player' : ''}`}
+                                        style={{ animationDelay: `${index * 0.1}s` }}
+                                    >
+                                        <div className="row-rank">
+                                            <span className="rank-badge">{getRank(index)}</span>
+                                        </div>
+
+                                        <div className="row-player">
+                                            <span className="player-avatar">{player.icon || '🧙'}</span>
+                                            <span className="player-name">{player.name}</span>
+                                        </div>
+
+                                        <div className="row-class">
+                                            <span className="hp-value">{player.HP}</span>
+                                        </div>
+
+                                        <div className="row-class">
+                                            <div className="item-badges">
+                                                {player.items?.map((item, itemIndex) => (
+                                                    <div
+                                                        key={item.id || itemIndex}
+                                                        className="item-badge"
+                                                    >
+                                                        {item.icon || '📦'}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <div className={`row-score ${getAnimationClass(player.id)}`}>
+                                            <span className="score-value">{player.score}</span>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
-                        <div className={`row-score ${getAnimationClass(player.id)}`}>
-                            <span className="score-value">{player.score}</span>
-                           
-                        </div>
-                    </div>
-                ))}
+                    ));
+                })()}
             </div>
 
             

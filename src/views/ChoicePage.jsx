@@ -13,11 +13,13 @@ function ChoicePage ({player}) {
     const [question, setQuestion] = useState("");
     function handleTestChoice(e, choice) {
         e.preventDefault();
+        
         updateDoc(doc(db, "players", player.id), {
             status: 'idle',
             choiceIsMade: true,
             lastAnswer: `${choice}`,
-            rightLastAnswer: choice == question.right ? 5 : 2
+            rightLastAnswer: choice == question.right ? 5 : 2,
+            score: choice == question.right ? player.score + 1 : player.score,
         });
         setQuestion("");
 
@@ -85,7 +87,7 @@ function ChoicePage ({player}) {
             <h3>Есть вопрос для вас, {player.name}
             :</h3>
             <br />
-            <h3>Тема вопроса: { `${question.section}. ${question.topic}`   || "Общий вопрос"}.</h3>
+            
             <br />
         {
         player.choiceIsMade ? 

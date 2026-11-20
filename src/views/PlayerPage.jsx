@@ -2,11 +2,11 @@
 import Header from '../components/Header.jsx';
 import {useSelector} from 'react-redux';
 
-import { collection, query, where, getDocs, doc, getDoc, onSnapshot, updateDoc  } from "firebase/firestore";
+import {  doc, onSnapshot  } from "firebase/firestore";
 import { db } from "../firebase/config.js";
 import { useEffect, useState } from "react";
 import {  selectCurrentUserId } from '../store/usersSlice.js';
-import PlayerStatsFullTable from '../components/PlayerStatsFullTable.jsx';
+
 import PlayerCard from '../components/PlayerCard.jsx';
 import ItemUsageSelection from '../components/ItemUsageSelection.jsx';
 

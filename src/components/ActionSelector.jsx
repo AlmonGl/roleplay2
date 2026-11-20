@@ -20,6 +20,7 @@ const ActionSelector = ({ players }) => {
         { id: 4, name: "class6" },
         { id: 5, name: "class5" },
         { id: 6, name: "testGroup" },
+        { id: 6, name: "students" },
         
     ]
 

@@ -336,3 +336,62 @@
         font-size: 1.5rem;
     }
 }
+/* Контейнер двух колонок */
+.fantasy-table.two-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    align-items: start;
+}
+
+.fantasy-table-column {
+    min-width: 0;
+}
+
+    /* Убираем лишние отступы */
+    .fantasy-table-column .table-row {
+        margin-bottom: 8px;
+    }
+
+/* Компактнее заголовки и строки в двух колонках */
+.two-columns .table-header,
+.two-columns .table-row {
+    grid-template-columns: 45px minmax(0, 2fr) 55px 55px 65px;
+    gap: 5px;
+    padding: 10px 6px;
+}
+
+.two-columns .player-name {
+    font-size: 0.9rem;
+    overflow-wrap: anywhere;
+}
+
+.two-columns .player-avatar {
+    font-size: 1.5rem;
+}
+
+.two-columns .score-value,
+.two-columns .hp-value {
+    font-size: 1.3rem;
+}
+
+.two-columns .item-badge {
+    font-size: 1.1rem;
+}
+
+.two-columns .table-header {
+    font-size: 0.7rem;
+    letter-spacing: 0;
+}
+
+/* На мобильных устройствах */
+@media (max-width: 600px) {
+    .fantasy-table.two-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .two-columns .table-header,
+    .two-columns .table-row {
+        grid-template-columns: 60px 1fr 80px;
+    }
+}

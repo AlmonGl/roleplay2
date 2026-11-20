@@ -1,4 +1,4 @@
-import { collection, query, where, getDocs, doc, getDoc, onSnapshot, updateDoc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/config.js";
 
 
@@ -8,23 +8,16 @@ function MapMaking() {
 
     const handleAddMap = async () => {
 
-
-        /* const m1Ref = doc(db, "maps", "1");
-         const m1Snap = await getDoc(m1Ref);
-         console.log(m1Snap.data());*/
-
         const map2 = [];
         for (let i = 0; i < 6; i++) {
             const row = [];
             for (let j = 0; j < 6; j++) {
                 row.push({
-                    //type: mapData[i][j].type,
+                    
                     type: 'empty',
                     treasure: -1,
-                    // treasure: i+j ==7,
                     exit: false,
                     monster: -1,
-                    //   trap: i+j==8,
                     player: null,
                     players: []
 
@@ -59,13 +52,6 @@ function MapMaking() {
                 isSet = isSet - 1;
             }
         }
-
-
-
-        
-
-        
-
         setDoc(doc(db, "maps", "1"), { ...map2 });
         console.log(map2)
     }
