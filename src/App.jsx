@@ -20,10 +20,10 @@ function App() {
       userLogin ? 
       <BrowserRouter>
         <Routes>
-          <Route index element={userAdmin ? <AdminPage /> : userDemo ? <GlobalPageDemo /> : <PlayerPage />  } /> 
+          <Route index element={userAdmin ? <AdminPage /> : userDemo ? <GlobalPageDemo /> : <EventsPage />  } /> 
         
           <Route path="events" element={<EventsPage />} />
-          
+          <Route path="playerPage" element={<PlayerPage />} />
           <Route path="global" element={<GlobalPage />} />
           <Route path="demo" element={<GlobalPageDemo />} />
         </Routes>
